@@ -12,14 +12,14 @@ tools:context=".NewOrderActivity">
     android:layout_height="wrap_content"
     android:padding="16dp"
     android:textSize="20sp"
-    app:layout_constraintBottom_toTopOf="@id/button_home_second"
+    app:layout_constraintBottom_toTopOf="@id/button_orderConfirm"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
     android:text="THIS IS NEW ORDER"/>
 
 <Button
-    android:id="@+id/button_home_second"
+    android:id="@+id/button_orderConfirm"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="Confirm"
