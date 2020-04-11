@@ -13,15 +13,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Button;
 
 import com.fullstack.frontend.R;
 
 public class NewOrderRecommend extends DialogFragment {
 
-    private NewOrderInfoViewModel mViewModel;
+    private NewOrderRecommendViewModel mViewModel;
 
     public static NewOrderRecommend newInstance() {
         return new NewOrderRecommend();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -33,8 +40,9 @@ public class NewOrderRecommend extends DialogFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(NewOrderInfoViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(NewOrderRecommendViewModel.class);
         // TODO: Use the ViewModel
+
     }
 
     @Override
