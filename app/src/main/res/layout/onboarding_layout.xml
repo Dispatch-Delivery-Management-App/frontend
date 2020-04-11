@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="20dp"
+    android:layout_marginTop="40dp"
+    android:orientation="vertical">
+
+    <!-- username tag-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Account:"
+        android:textCursorDrawable="@null"
+        android:fontFamily="Roboto"
+        android:textColor="#000000"
+        android:textSize="20sp"/>
+
+    <!-- username edit area-->
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:fontFamily="Roboto"
+        android:textColor="#000000"
+        android:layout_marginVertical="20dp"
+        android:cursorVisible="true"
+        android:background="@drawable/border"
+        android:id="@+id/editTextLogin"
+        android:layout_gravity="center_horizontal" />
+
+    <!-- password tag-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="Roboto"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:text="Password:" />
+
+    <!-- password edit area-->
+    <EditText
+        android:fontFamily="Roboto"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/editTextPassword"
+        android:background="@drawable/border"
+        android:layout_marginVertical="20dp"
+        android:cursorVisible="true"
+        android:inputType="textPassword"
+        android:textColor="#000000"
+        android:layout_gravity="center_horizontal" />
+
+    <!-- button to onboard_layout-->
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:fontFamily="Roboto"
+        android:textColor="@android:color/white"
+        android:background="@drawable/login_buttons"
+        android:id="@+id/submit" />
+
+
+</LinearLayout>
