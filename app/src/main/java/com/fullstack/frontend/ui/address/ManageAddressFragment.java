@@ -1,4 +1,4 @@
-package com.fullstack.frontend.ui.slideshow;
+package com.fullstack.frontend.ui.address;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,17 +14,17 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.fullstack.frontend.R;
 
-public class SlideshowFragment extends Fragment {
+public class ManageAddressFragment extends Fragment {
 
-    private SlideshowViewModel slideshowViewModel;
+    private AddressViewModel addressViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        slideshowViewModel =
-                ViewModelProviders.of(this).get(SlideshowViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_slideshow, container, false);
-        final TextView textView = root.findViewById(R.id.text_slideshow);
-        slideshowViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        addressViewModel =
+                ViewModelProviders.of(this).get(AddressViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_address, container, false);
+        final TextView textView = root.findViewById(R.id.text_gallery);
+        addressViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

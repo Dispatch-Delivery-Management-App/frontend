@@ -5,39 +5,65 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/nav_home">
 
+    <action
+        android:id="@+id/any_to_detail"
+        app:destination="@id/nav_detail"/>
+
     <fragment
         android:id="@+id/nav_home"
         android:name="com.fullstack.frontend.ui.home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home">
+        <argument android:name="myarg" android:defaultValue="@null" />
 
         <action
-            android:id="@+id/action_HomeFragment_to_HomeSecondFragment"
-            app:destination="@id/nav_home_second" />
+            android:id="@+id/action_nav_home_to_nav_placeOrder"
+            app:destination="@id/nav_placeOrder" />
     </fragment>
+
+
     <fragment
-        android:id="@+id/nav_home_second"
-        android:name="com.fullstack.frontend.ui.home.HomeSecondFragment"
-        android:label="@string/home_second"
-        tools:layout="@layout/fragment_home_second">
+        android:id="@+id/nav_addresses"
+        android:name="com.fullstack.frontend.ui.address.ManageAddressFragment"
+        android:label="@string/menu_manage_address"
+        tools:layout="@layout/fragment_address" />
+
+
+    <fragment
+        android:id="@+id/nav_placeOrder"
+        android:name="com.fullstack.frontend.ui.newOrder.PlaceOrderFragment"
+        android:label="place order label"
+        tools:layout="@layout/place_order_fragment">
+        <argument android:name="myarg" android:defaultValue="@null" />
         <action
-            android:id="@+id/action_HomeSecondFragment_to_HomeFragment"
-            app:destination="@id/nav_home" />
-
-        <argument
-            android:name="myArg"
-            app:argType="string" />
+            android:id="@+id/place_to_recommend"
+            app:destination="@+id/nav_recommend"/>
     </fragment>
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.fullstack.frontend.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_recommend"
+        android:name="com.fullstack.frontend.ui.newOrder.NewOrderRecommend"
+        android:label="recommend label"
+        tools:layout="@layout/new_order_recommend_fragment">
+        <argument android:name="myarg" android:defaultValue="@null" />
+        <action
+            android:id="@+id/recommend_to_detail"
+            app:destination="@+id/nav_detail"/>
+    </fragment>
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.fullstack.frontend.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_detail"
+        android:name="com.fullstack.frontend.ui.tracking.OrderDetail"
+        android:label="detail"
+        tools:layout="@layout/order_detail_fragment">
+        <argument android:name="myarg" android:defaultValue="@null" />
+        <action
+            android:id="@+id/detail_to_home"
+            app:destination="@+id/nav_home"
+            app:popUpTo="@+id/nav_home"
+            app:popUpToInclusive="true"/>
+    </fragment>
+
+
+
 </navigation>

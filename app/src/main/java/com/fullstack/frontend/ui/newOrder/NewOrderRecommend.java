@@ -1,6 +1,7 @@
 package com.fullstack.frontend.ui.newOrder;
 
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.app.Dialog;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +19,7 @@ import android.widget.Button;
 
 import com.fullstack.frontend.R;
 
-public class NewOrderRecommend extends DialogFragment {
+public class NewOrderRecommend extends Fragment {
 
     private NewOrderRecommendViewModel mViewModel;
 
@@ -38,6 +40,18 @@ public class NewOrderRecommend extends DialogFragment {
     }
 
     @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Button buttonConfirm = getActivity().findViewById(R.id.button_orderConfirm);
+        buttonConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.any_to_detail);
+            }
+        });
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(NewOrderRecommendViewModel.class);
@@ -45,15 +59,5 @@ public class NewOrderRecommend extends DialogFragment {
 
     }
 
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        // The only reason you might override this method when using onCreateView() is
-        // to modify any dialog characteristics. For example, the dialog includes a
-        // title by default, but your custom layout might not need it. So here you can
-        // remove the dialog title, but you must call the superclass to get the Dialog.
-        Dialog dialog = super.onCreateDialog(savedInstanceState);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        return dialog;
-    }
 
 }
