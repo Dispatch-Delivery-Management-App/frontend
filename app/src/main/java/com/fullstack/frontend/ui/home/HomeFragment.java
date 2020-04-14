@@ -11,8 +11,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.fullstack.frontend.R;
+import com.fullstack.frontend.ui.newOrder.PlaceOrderFragment;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class HomeFragment extends Fragment {
 
@@ -32,4 +36,23 @@ public class HomeFragment extends Fragment {
         });
         return root;
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        FloatingActionButton fab = getActivity().findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                getActivity().getSupportFragmentManager()
+////                        .beginTransaction()
+////                        .replace(R.id.content_main, PlaceOrderFragment.newInstance())
+////                        .commit();
+                NavController navController = Navigation.findNavController(view);
+                navController.navigate(R.id.action_nav_home_to_nav_placeOrder);
+
+            }
+        });
+    }
+
 }

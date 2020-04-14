@@ -12,4 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="413dp" />
 
+    <include layout="@layout/order_detail_fragment"/>
+
 </FrameLayout>

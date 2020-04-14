@@ -5,12 +5,19 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.fullstack.frontend.MainActivity;
 import com.fullstack.frontend.R;
 import com.fullstack.frontend.base.OnBoardingBaseFragment;
 
-public class LoginFragment extends OnBoardingBaseFragment {
+public class LoginFragment extends Fragment {
 
     public static LoginFragment newInstance() {
         Bundle args = new Bundle();
@@ -29,26 +36,30 @@ public class LoginFragment extends OnBoardingBaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = super.onCreateView(inflater, container, savedInstanceState);
-        submitButton.setText(getString(R.string.login));
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openMainPage();
-            }
-
-        });
-        return view;
-    }
-
-    private void openMainPage() {
-        Intent intent = new Intent(submitButton.getContext(), MainActivity.class);
-        startActivity(intent);
+        return inflater.inflate(R.layout.fragment_login, container, false);
     }
 
     @Override
-    protected int getLayout() {
-        return R.layout.fragment_login;
-    }
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
+        final NavController navController = Navigation.findNavController(view);
+
+        Button button = view.findViewById(R.id.btnLogin);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.navigate(R.id.action_loginFragment_to_nav_home);
+            }
+        });
+
+        Button buttonSignUp = view.findViewById(R.id.btnSignUpPage);
+        buttonSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.navigate(R.id.action_loginFragment_to_registerFragment);
+            }
+        });
+
+    }
 }
