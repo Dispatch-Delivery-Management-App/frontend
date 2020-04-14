@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/loginFragment">
+    app:startDestination="@+id/onBoardingFragment">
 
     <action
         android:id="@+id/any_to_detail"
@@ -82,6 +82,10 @@
             android:id="@+id/action_registerFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/onBoardingFragment"
+        android:name="com.fullstack.frontend.onboard.OnBoardingFragment"
+        android:label="OnBoardingFragment" />
 
 
 </navigation>
