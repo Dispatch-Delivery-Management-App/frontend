@@ -9,9 +9,7 @@
 
     <string name="menu_home">Home</string>
     <string name="menu_manage_address">Manage My Addresses</string>
-    <string name="menu_slideshow">Slideshow</string>
-
-    <string name="home_second">Home Second</string>
+    
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -26,4 +24,23 @@
     <string name="swipe_right_for_login">Swipe Right for Login</string>
     <string name="register">Register</string>
     <string name="re_type_password">Re-type Password</string>
+
+    <!--    place order-->
+    <string name="from">SHIPPING FROM</string>
+    <string name="to">SHIPPING TO</string>
+    <string name="weight">Weight in Kg</string>
+    <string name="type">Item Category</string>
+    <string name="pack">PACKAGE TYPE</string>
+    <string name="window">WHEN TO PICK UP</string>
+    
+    <string name="firstName">First Name</string>
+    <string name="lastName">Last Name</string>
+    <string name="address">Address Line</string>
+    <string name="city">City</string>
+    <string name="state">State</string>
+    <string name="orderCountry">Country</string>
+    <string name="zip">ZIP Code</string>
+
+    <string name="showPrice_button">"Show Price"</string>
+
 </resources>
