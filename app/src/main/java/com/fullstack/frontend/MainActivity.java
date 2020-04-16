@@ -20,9 +20,6 @@ import androidx.appcompat.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "MainActivity";
-    ApiInterface apiInterface;
-
     private AppBarConfiguration mAppBarConfiguration;
 
     @Override
@@ -33,9 +30,6 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-
-        //
         setupNavigation();
 
     }
