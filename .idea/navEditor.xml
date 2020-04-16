@@ -135,6 +135,18 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="onBoardingActivity">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="242" />
+                            <option name="y" value="-705" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="onBoardingFragment">
                     <value>
                       <LayoutPositions>
