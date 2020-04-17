@@ -73,6 +73,9 @@
         <action
             android:id="@+id/action_loginFragment_to_nav_home"
             app:destination="@id/nav_home" />
+        <action
+            android:id="@+id/action_loginFragment_to_onBoardingActivity"
+            app:destination="@id/onBoardingActivity" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -82,6 +85,15 @@
             android:id="@+id/action_registerFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/onBoardingFragment"
+        android:name="com.fullstack.frontend.onboard.OnBoardingFragment"
+        android:label="OnBoardingFragment" />
+    <activity
+        android:id="@+id/onBoardingActivity"
+        android:name="com.fullstack.frontend.OnBoardingActivity"
+        android:label="activity_on_boarding"
+        tools:layout="@layout/activity_on_boarding" />
 
 
 </navigation>

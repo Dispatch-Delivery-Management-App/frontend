@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Frontend</string>
+    <string name="app_name">Dispatch</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -18,9 +18,12 @@
 
 
     <!--    onboard-->
-    <string name="country">America</string>
-
-
-    <string name="register">Register</string>
+    <string name="swipe_left_for_register">Swipe Left for Register</string>
     <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="e_mail">Email</string>
+    <string name="tag">Let\'s join us and \nBuild your relationship with others</string>
+    <string name="swipe_right_for_login">Swipe Right for Login</string>
+    <string name="register">Register</string>
+    <string name="re_type_password">Re-type Password</string>
 </resources>
