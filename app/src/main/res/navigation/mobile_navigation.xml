@@ -54,7 +54,7 @@
     <fragment
         android:id="@+id/nav_detail"
         android:name="com.fullstack.frontend.ui.tracking.OrderDetail"
-        android:label="detail"
+        android:label="Home"
         tools:layout="@layout/order_detail_fragment">
         <argument android:name="myarg" android:defaultValue="@null" />
         <action

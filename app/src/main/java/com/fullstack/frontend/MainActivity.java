@@ -1,6 +1,9 @@
 package com.fullstack.frontend;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
 import android.view.Menu;
 
 import com.fullstack.frontend.Retro.ApiClient;
@@ -73,19 +76,19 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
     }
 
+
     @Override
-    public void onBackPressed() {
-        NavHostFragment navHost = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);  // Hostfragment
-        Fragment fragment = navHost.getChildFragmentManager().getPrimaryNavigationFragment();
-        if (fragment != null && fragment.isResumed()) {
-            if (fragment.getChildFragmentManager().getBackStackEntryCount() > 0) {
-                fragment.getChildFragmentManager().popBackStack();
-            }
-        } else {
-            super.onBackPressed();
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // API 5+ solution
+                onBackPressed();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
