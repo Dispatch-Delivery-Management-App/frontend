@@ -1,25 +1,20 @@
 package com.fullstack.frontend.ui.home;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
-
-import com.fullstack.frontend.NewOrderActivity;
-import com.fullstack.frontend.Order;
 import com.fullstack.frontend.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class HomeFragment extends Fragment {
 
@@ -27,43 +22,50 @@ public class HomeFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-//        homeViewModel =
-//                ViewModelProviders.of(this).get(HomeViewModel.class);
-//        View root = inflater.inflate(R.layout.fragment_home, container, false);
-//        final TextView textView = root.findViewById(R.id.text_home);
+        homeViewModel =
+                ViewModelProviders.of(this).get(HomeViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_home, container, false);
+//        final TextView textView = root.findViewById(R.id.button);
 //        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
 //            @Override
 //            public void onChanged(@Nullable String s) {
 //                textView.setText(s);
 //            }
 //        });
-//        return root;
+        return root;
+    }
 
 
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
-        String items[] = new String[] {"Order1", "Order2"};
-        ListView eventListView = (ListView) view.findViewById(R.id.event_list);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                getActivity(),
-                R.layout.activity_order,
-                R.id.event_name,
-                items);
-
-        // Assign adapter to ListView.
-
-
-        eventListView.setAdapter(adapter);
-        eventListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        FloatingActionButton fab = getActivity().findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                if(position == 0) {
-                    Intent myintent = new Intent(view.getContext(), Order.class);
-                    startActivityForResult(myintent,0);
-                }
+            public void onClick(View view) {
+//                getActivity().getSupportFragmentManager()
+////                        .beginTransaction()
+////                        .replace(R.id.content_main, PlaceOrderFragment.newInstance())
+////                        .commit();
+                NavController navController = Navigation.findNavController(view);
+                navController.navigate(R.id.action_nav_home_to_nav_placeOrder);
+
             }
         });
 
-        return view;
+        Button orderDetail = getActivity().findViewById(R.id.button);
+        orderDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                NavController navController = Navigation.findNavController(view);
+                navController.navigate(R.id.any_to_detail);
+
+            }
+        });
     }
+
+
+
 
 }
