@@ -22,7 +22,11 @@ public interface ApiInterface {
 //
 //    @GET("/todos")
 //    Call<Todo> getTodoUsingQuery(@Query("id") int id);
-//
-//    @POST("/todos")
-//    Call<Todo> postTodo(@Body Todo todo);
+
+    @POST("orders")
+    Call<NewOrder> postOrderGetPlans2(@Body NewOrder newOrder);
+
+    @POST("/api/orderlist/")
+    Call<OrderMainResponse> postOrderGetPlans(@Body OrderDetailRequest orderDetailRequest);
+
 }
