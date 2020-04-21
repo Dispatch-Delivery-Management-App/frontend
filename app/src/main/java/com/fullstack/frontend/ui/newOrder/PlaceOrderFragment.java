@@ -109,41 +109,5 @@ public class PlaceOrderFragment extends BaseFragment<PlaceOrderViewModel, PlaceO
         return new PlaceOrderRepository();
     }
 
-    private NewOrder setPlaceOrderInfo(View view) {
 
-        String fromFirstname = binding.fromAddForm.fromFirst.getText().toString();
-        String fromLastname = binding.fromAddForm.fromLast.getText().toString();
-        String fromAddress = binding.fromAddForm.fromAdd1.getText().toString()+ binding.fromAddForm.fromAdd2.getText().toString();
-//        String toFirstname;
-//        String toLastname;
-//        String toAddress;
-
-        String toFirstname = binding.toAddForm.fromFirst.getText().toString();
-        String toLastname = binding.toAddForm.fromLast.getText().toString();
-        String toAddress = binding.toAddForm.fromAdd1.getText().toString()+binding.toAddForm.fromAdd2.getText().toString();
-
-        return new NewOrder(15,fromFirstname,fromLastname,fromAddress,toFirstname,toLastname,toAddress);
-
-    }
-    @Override
-    protected ViewModelProvider.Factory getFactory() {
-        return new ViewModelProvider.Factory() {
-            @NonNull
-            @Override
-            public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-                return (T) new PlaceOrderViewModel(getRepository());
-            }
-        };
-    }
-
-    @Override
-    protected PlaceOrderViewModel getViewModel() {
-        return new ViewModelProvider(requireActivity(), getFactory()).get(PlaceOrderViewModel.class);
-    }
-
-
-    @Override
-    protected PlaceOrderRepository getRepository() {
-        return new PlaceOrderRepository();
-    }
 }

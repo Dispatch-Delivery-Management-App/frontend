@@ -6,4 +6,16 @@ public class BaseResponse<T> {
     public T response;
     public int status;
     public String error;
+
+    public T getResponse() {
+        return response;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public String getError() {
+        return error;
+    }
 }

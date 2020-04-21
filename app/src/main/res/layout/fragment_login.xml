@@ -33,7 +33,7 @@
             android:src="@drawable/ic_account_circle_black_36dp" />
 
         <EditText
-            android:id="@+id/et_email"
+            android:id="@+id/et_username"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_above="@id/et_password"
@@ -41,7 +41,7 @@
             android:layout_marginRight="20dp"
             android:background="@drawable/et_custom"
             android:fontFamily="@font/roboto_regular"
-            android:hint="@string/e_mail"
+            android:hint="Username"
             android:inputType="textEmailAddress"
             android:padding="15dp"
             android:textSize="15sp" />
@@ -71,11 +71,10 @@
             android:background="@drawable/btn_custom"
             android:fontFamily="@font/roboto_regular"
             android:text="@string/login"
-            android:onClick="getTodos"
             android:textColor="@android:color/white" />
 
         <Button
-            android:id="@+id/btnSignUpPage"
+            android:id="@+id/register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
@@ -86,17 +85,7 @@
             android:text="Register"
             android:textColor="@android:color/white" />
 
-        <Button
-            android:id="@+id/btnRetrofit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="20dp"
-            android:background="@drawable/btn_custom"
-            android:fontFamily="@font/roboto_regular"
-            android:text="Test Retrofit page"
-            />
+
 
 
 
