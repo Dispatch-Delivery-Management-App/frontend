@@ -7,12 +7,8 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
-import com.fullstack.frontend.R;
 import com.fullstack.frontend.Retro.ApiClient;
 import com.fullstack.frontend.Retro.ApiInterface;
-import com.fullstack.frontend.Retro.Todo;
-import com.fullstack.frontend.onboard.OnBoardingPageAdapter;
-import com.google.android.material.tabs.TabLayout;
 
 import java.util.List;
 
@@ -39,20 +35,20 @@ public class OnBoardingActivity extends AppCompatActivity {
      * Call the API by clicking the button
      */
 
-    public void getTodos(View view) {
-        Call<List<Todo>> call = apiInterface.getTodos();
-        call.enqueue(new Callback<List<Todo>>() {
-            @Override
-            public void onResponse(Call<List<Todo>> call, Response<List<Todo>> response) {
-                Log.e(TAG, "onResponse: " + response.body() );
-            }
-
-            @Override
-            public void onFailure(Call<List<Todo>> call, Throwable t) {
-                Log.e(TAG, "onFaile: " + t.getLocalizedMessage() );
-            }
-        });
-    }
+//    public void getTodos(View view) {
+//        Call<List<Todo>> call = apiInterface.getTodos();
+//        call.enqueue(new Callback<List<Todo>>() {
+//            @Override
+//            public void onResponse(Call<List<Todo>> call, Response<List<Todo>> response) {
+//                Log.e(TAG, "onResponse: " + response.body() );
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<Todo>> call, Throwable t) {
+//                Log.e(TAG, "onFaile: " + t.getLocalizedMessage() );
+//            }
+//        });
+//    }
 
 //    public void getTodoUsingRouteParameter(View view) {
 //
