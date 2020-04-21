@@ -26,7 +26,7 @@ public interface ApiInterface {
             @Field("username") String username,
             @Field("password") String password);
 
-    @POST("orders")
+    @POST("/api/placeorder/")
     Call<NewOrder> postOrderGetPlans2(@Body NewOrder newOrder);
 
     @POST("/api/orderlist/")
