@@ -1,6 +1,5 @@
 package com.fullstack.frontend.onboard;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -11,23 +10,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import com.fullstack.frontend.MainActivity;
 import com.fullstack.frontend.R;
 import com.fullstack.frontend.Retro.ApiClient;
 import com.fullstack.frontend.Retro.ApiInterface;
-import com.fullstack.frontend.Retro.OnBoardingResponse;
-import com.fullstack.frontend.base.OnBoardingBaseFragment;
+import com.fullstack.frontend.Retro.BaseResponse;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 
 public class LoginFragment extends Fragment {
@@ -108,31 +106,42 @@ public class LoginFragment extends Fragment {
     private void loginUser(String username, String password) {
         //making api call
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        Call<OnBoardingResponse> login = apiService.login(username, password);
-        login.enqueue(new Callback<OnBoardingResponse>() {
+        Call<BaseResponse> login = apiService.login(username, password);
+        login.enqueue(new Callback<BaseResponse>() {
             @Override
-            public void onResponse(Call<OnBoardingResponse> call, Response<OnBoardingResponse> response) {
-//              if (response.body().getStatus() == 200) {
-//                    Log.e(TAG, "onResponse: " + response.body().getResponse());
-//                    Toast.makeText(getActivity(), "Login Successfully!", Toast.LENGTH_SHORT).show();
-//                    navController.navigate(R.id.action_loginFragment_to_nav_home);
-//              }
-//              else {
-//                  Toast.makeText(getActivity(), "Incorrect!", Toast.LENGTH_SHORT).show();
-//              }
-                if (response.body() == null) {
-                    Log.e(TAG, "onResponse: " + response.body());
-                    Toast.makeText(getActivity(), "Incorrect!", Toast.LENGTH_SHORT).show();
-                } else if (response.body().getStatus() == 200) {
-                    Log.e(TAG, "onResponse: " + response.body().getStatus());
+            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+
+              if (response.isSuccessful()) {
+                    Log.e(TAG, "onResponse: " + response.body().getResponse());
                     Toast.makeText(getActivity(), "Login Successfully!", Toast.LENGTH_SHORT).show();
                     navController.navigate(R.id.action_loginFragment_to_nav_home);
-                }
+              } else {
+                  // A 404 will go here
+                  Gson gson = new GsonBuilder().create();
+                  BaseResponse error = new BaseResponse();
+                  try {
+                      error = gson.fromJson(response.errorBody().string(), BaseResponse.class);
+                      Toast.makeText(getContext(), error.getError(), Toast.LENGTH_LONG).show();
+                  } catch (IOException e) { }
+
+              }
+
+
+//                if (response.body() == null) {
+//                    Log.e(TAG, "onResponse: " + response.body());
+//                    Toast.makeText(getActivity(), "Incorrect!", Toast.LENGTH_SHORT).show();
+//                } else if (response.body().getStatus() == 200) {
+//                    Log.e(TAG, "onResponse: " + response.body().getStatus());
+//                    Toast.makeText(getActivity(), "Login Successfully!", Toast.LENGTH_SHORT).show();
+//                    navController.navigate(R.id.action_loginFragment_to_nav_home);
+//                }
+
+
 
             }
 
             @Override
-            public void onFailure(Call<OnBoardingResponse> call, Throwable t) {
+            public void onFailure(Call<BaseResponse> call, Throwable t) {
                 Log.e(TAG, "onResponse: None");
                 Toast.makeText(getActivity(), "Incorrect!", Toast.LENGTH_SHORT).show();
             }

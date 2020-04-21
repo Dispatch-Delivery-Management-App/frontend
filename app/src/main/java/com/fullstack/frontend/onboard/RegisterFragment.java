@@ -10,8 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -19,8 +17,11 @@ import androidx.navigation.Navigation;
 import com.fullstack.frontend.R;
 import com.fullstack.frontend.Retro.ApiClient;
 import com.fullstack.frontend.Retro.ApiInterface;
-import com.fullstack.frontend.Retro.OnBoardingResponse;
-import com.fullstack.frontend.base.OnBoardingBaseFragment;
+import com.fullstack.frontend.Retro.BaseResponse;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -120,22 +121,28 @@ public class RegisterFragment extends Fragment {
 
         // call retrofit
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        Call<OnBoardingResponse> register = apiService.register(user_name, user_email, user_pass);
-        register.enqueue(new Callback<OnBoardingResponse>() {
+        Call<BaseResponse> register = apiService.register(user_name, user_email, user_pass);
+        register.enqueue(new Callback<BaseResponse>() {
             @Override
-            public void onResponse(Call<OnBoardingResponse> call, Response<OnBoardingResponse> response) {
-                if (response.body().getStatus() == 201) {
+            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                if (response.isSuccessful()) {
                     Log.e(TAG, "onResponse: " + response.body());
                     Toast.makeText(getActivity(), "Registered Successfully!", Toast.LENGTH_SHORT).show();
+                    navController.navigate(R.id.action_registerFragment_to_loginFragment);
+                } else {
+                    // A 404 will go here
+                    Gson gson = new GsonBuilder().create();
+                    BaseResponse error = new BaseResponse();
+                    try {
+                        error = gson.fromJson(response.errorBody().string(), BaseResponse.class);
+                        Toast.makeText(getContext(), error.getError(), Toast.LENGTH_LONG).show();
+                    } catch (IOException e) { }
                 }
-                if (response.body().getStatus() == 400) {
-                    Log.e(TAG, "onResponse: " + response.body());
-                    Toast.makeText(getActivity(), "Registered Successfully!", Toast.LENGTH_SHORT).show();
-                }
+
             }
 
             @Override
-            public void onFailure(Call<OnBoardingResponse> call, Throwable t) {
+            public void onFailure(Call<BaseResponse> call, Throwable t) {
                 Log.e(TAG, "onResponse: None");
                 Toast.makeText(getActivity(), "Register Fail!", Toast.LENGTH_SHORT).show();
             }

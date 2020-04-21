@@ -15,14 +15,14 @@ public interface ApiInterface {
 
     @POST("/api/user-signup/")
     @FormUrlEncoded
-    Call<OnBoardingResponse> register(
+    Call<BaseResponse> register(
             @Field("username") String username,
             @Field("email") String email,
             @Field("password") String password);
 
     @POST("/api/user-login/")
     @FormUrlEncoded
-    Call<OnBoardingResponse> login(
+    Call<BaseResponse> login(
             @Field("username") String username,
             @Field("password") String password);
 
