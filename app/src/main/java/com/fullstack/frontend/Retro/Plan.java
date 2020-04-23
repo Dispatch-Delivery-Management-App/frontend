@@ -1,4 +1,4 @@
 package com.fullstack.frontend.Retro;
 
-public class Plans {
+public class Plan {
 }
