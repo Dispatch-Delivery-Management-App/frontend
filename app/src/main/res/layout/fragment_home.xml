@@ -30,7 +30,7 @@
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/imageButton" />
     
-    <TextView
+   <!-- <TextView
     android:id="@+id/history"
     android:layout_width="wrap_content"
     android:layout_height="19dp"
@@ -41,9 +41,9 @@
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintHorizontal_bias="1.0"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/order1" />
+    app:layout_constraintTop_toBottomOf="@+id/order1" />-->
     
-    <TextView
+    <!--<TextView
     android:id="@+id/draft"
     android:layout_width="wrap_content"
     android:layout_height="19dp"
@@ -54,7 +54,7 @@
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintHorizontal_bias="0.434"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/order2" />
+    app:layout_constraintTop_toBottomOf="@+id/order2" />-->
     
     <ImageButton
     android:id="@+id/imageButton"
@@ -71,7 +71,7 @@
     app:layout_constraintTop_toTopOf="parent" />
     
     <EditText
-    android:id="@+id/editText6"
+    android:id="@+id/search_bar"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginStart="9dp"
@@ -81,11 +81,11 @@
     android:inputType="textPersonName"
     android:text="@android:string/search_go"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toEndOf="@+id/searchView2"
+    app:layout_constraintStart_toEndOf="@+id/search_view"
     app:layout_constraintTop_toTopOf="parent" />
     
     <SearchView
-    android:id="@+id/searchView2"
+    android:id="@+id/search_view"
     android:layout_width="30dp"
     android:layout_height="30dp"
     android:layout_marginStart="12dp"
@@ -96,134 +96,16 @@
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toEndOf="@+id/imageButton"
     app:layout_constraintTop_toTopOf="parent" />
-    
-    <LinearLayout
-        android:id="@+id/order1"
-        android:layout_width="341dp"
-        android:layout_height="143dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/order_card_custom"
-        android:orientation="vertical"
-        android:padding="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/shipping"
-        tools:ignore="MissingConstraints">
-        
-        <TextView
-        android:id="@+id/status"
-        android:layout_width="192dp"
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_order_list"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:text="Status"
-        android:textStyle="bold" />
-        
-        <TextView
-        android:id="@+id/order_id"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="Order ID" />
-        
-        <TextView
-        android:id="@+id/category"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Category" />
-        
-        <TextView
-        android:id="@+id/receiver"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Deliver to" />
-        
-        <Button
-        android:id="@+id/btn_detail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Detail" />
-        
-        
-    </LinearLayout>
-    
-    <LinearLayout
-        android:id="@+id/order2"
-        android:layout_width="341dp"
-        android:layout_height="146dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/order_card_custom"
-        android:orientation="vertical"
-        android:padding="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/history"
-        tools:ignore="MissingConstraints">
-        
-        <TextView
-        android:id="@+id/status2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Delivered"
-        android:textStyle="bold" />
-        
-        <TextView
-        android:id="@+id/order_id2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="Order ID" />
-        
-        <TextView
-        android:id="@+id/category2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Category" />
-        
-        <TextView
-        android:id="@+id/receiver2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Deliver to" />
-        
-        <Button
-        android:id="@+id/btn_detail2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Detail" />
-        
-    </LinearLayout>
-    
-    <LinearLayout
-        android:id="@+id/order3"
-        android:layout_width="346dp"
-        android:layout_height="103dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/order_card_custom"
-        android:orientation="vertical"
-        android:padding="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/draft"
-        tools:ignore="MissingConstraints">
-        
-        <TextView
-        android:id="@+id/category3"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:text="Category" />
-        
-        <TextView
-        android:id="@+id/receiver3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Deliver to" />
-        
-        <Button
-        android:id="@+id/btn_detail3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Detail" />
-        
-        
-    </LinearLayout>
-    
+        android:layout_marginTop="116dp"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="31dp"
+        tools:ignore="MissingConstraints" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

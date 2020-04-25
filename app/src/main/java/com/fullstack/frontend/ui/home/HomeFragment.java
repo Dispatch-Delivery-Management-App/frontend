@@ -17,6 +17,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.fullstack.frontend.R;
 import com.fullstack.frontend.Retro.ApiClient;
@@ -40,21 +42,8 @@ public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
 
-    private LinearLayout shipOrder;
-    private TextView status;
-    private TextView orderId;
-    private TextView category;
-    private TextView receiver;
-
-    private LinearLayout historyOrder;
-    private TextView status2;
-    private TextView orderId2;
-    private TextView category2;
-    private TextView receiver2;
-
-    private LinearLayout draftOrder;
-    private TextView category3;
-    private TextView receiver3;
+    private RecyclerView mOrderListRV;
+    private OrderListAdapter mOrderListAdapter;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -63,44 +52,9 @@ public class HomeFragment extends Fragment {
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-        status = root.findViewById(R.id.status);
-        orderId = root.findViewById(R.id.order_id);
-        category = root.findViewById(R.id.category);
-        receiver = root.findViewById(R.id.receiver);
-
-        status2 = root.findViewById(R.id.status2);
-        orderId2 = root.findViewById(R.id.order_id2);
-        category2 = root.findViewById(R.id.category2);
-        receiver2 = root.findViewById(R.id.receiver2);
-
-        category3 = root.findViewById(R.id.category3);
-        receiver3 = root.findViewById(R.id.receiver2);
-
-
-
-
         homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-            }
-        });
-
-        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        Call<BaseResponse<List<OrderResponse>>> getOrders = apiService.getOrderList(new OrderDetailRequest(1));
-        getOrders.enqueue(new Callback<BaseResponse<List<OrderResponse>>>() {
-            @Override
-            public void onResponse(Call<BaseResponse<List<OrderResponse>>> call, Response<BaseResponse<List<OrderResponse>>> response) {
-                if (response.isSuccessful()) {
-                    List<OrderResponse> orderResponses = response.body().response;
-                    for (OrderResponse response1 :orderResponses) {
-                        Log.d("test ", response1.category + response1.lastname);
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<BaseResponse<List<OrderResponse>>> call, Throwable t) {
-
             }
         });
 
@@ -110,6 +64,30 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+//        setContentView(R.layout.fragment_home);
+//        rv_orderList = getActivity().findViewById(R.id.rv_grid_home);
+//        rv_orderList.setLayoutManager(new LinearLayoutManager(HomeFragment.this));
+//        rv_orderList.setAdapter(new OrderListAdapter(HomeFragment.this));
+
+        // get RecyclerView
+        mOrderListRV = (RecyclerView)view.findViewById(R.id.rv_order_list);
+        // build adapter
+        mOrderListAdapter = new OrderListAdapter(getActivity());
+        // set adapter for RecyclerView
+        mOrderListRV.setAdapter(mOrderListAdapter);
+        // set layoutManager
+        mOrderListRV.setLayoutManager((new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false)));
+
+//        mOrderListAdapter.setOnItemClickListener(new OrderListAdapter.onItemClickListener(){
+//            @Override
+//            public void OnItemClick(View view) {
+//
+//            }
+//
+//        });
+
+
+
 
         // the button for going to place a new order page
         FloatingActionButton order = getActivity().findViewById(R.id.btn_order);
@@ -126,40 +104,17 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        // Button for shipping order details
-        Button detail1 = getActivity().findViewById(R.id.btn_detail);
-        // Button for history order details
-        Button detail2 = getActivity().findViewById(R.id.btn_detail2);
-        // Button for draft box details
-        Button detail3 = getActivity().findViewById(R.id.btn_detail3);
+        // Button for order details
+        Button detail = getActivity().findViewById(R.id.btn_detail);
 
-        detail1.setOnClickListener(new View.OnClickListener() {
+        detail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(v).navigate(R.id.nav_detail);
             }
         });
-
-        detail2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.nav_detail);
-            }
-        });
-
-        detail3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.nav_detail);
-            }
-        });
-
+//
     }
-
-
-
-
-
 
 
 }
