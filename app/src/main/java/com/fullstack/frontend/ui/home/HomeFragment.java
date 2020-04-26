@@ -63,13 +63,10 @@ public class HomeFragment extends Fragment {
         });
 
         initRecyclerView();
-        initData();
+
         return root;
     }
 
-    private void initData() {
-
-    }
 
     private void initRecyclerView() {
         // get RecyclerView
@@ -92,12 +89,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        setContentView(R.layout.fragment_home);
-//        rv_orderList = getActivity().findViewById(R.id.rv_grid_home);
-//        rv_orderList.setLayoutManager(new LinearLayoutManager(HomeFragment.this));
-//        rv_orderList.setAdapter(new OrderListAdapter(HomeFragment.this));
-
-
 
 
 

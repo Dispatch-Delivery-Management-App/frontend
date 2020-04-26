@@ -36,12 +36,12 @@
         android:text="Deliver to"
         android:textSize="14dp"/>
 
-    <Button
+<!--    <Button
         android:id="@+id/btn_detail"
         android:layout_width="match_parent"
         android:layout_height="36dp"
         android:text="Detail"
-        android:textSize="14dp" />
+        android:textSize="14dp" />-->
 
 </LinearLayout>
 
