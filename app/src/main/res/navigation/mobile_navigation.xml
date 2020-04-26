@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/loginFragment">
+    app:startDestination="@+id/nav_home">
 
     <action
         android:id="@+id/any_to_detail"
@@ -54,14 +54,12 @@
     <fragment
         android:id="@+id/nav_detail"
         android:name="com.fullstack.frontend.ui.tracking.OrderDetailFragment"
-        android:label="Orders"
+        android:label="Home"
         tools:layout="@layout/order_detail_fragment">
         <argument android:name="myarg" android:defaultValue="@null" />
         <action
             android:id="@+id/detail_to_home"
-            app:destination="@+id/nav_home"
-            app:popUpTo="@+id/nav_home"
-            app:popUpToInclusive="true"/>
+            app:destination="@+id/nav_home"/>
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -73,6 +71,9 @@
         <action
             android:id="@+id/action_loginFragment_to_nav_home"
             app:destination="@id/nav_home" />
+        <action
+            android:id="@+id/action_loginFragment_to_onBoardingActivity"
+            app:destination="@id/onBoardingActivity" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -82,6 +83,15 @@
             android:id="@+id/action_registerFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/onBoardingFragment"
+        android:name="com.fullstack.frontend.onboard.OnBoardingFragment"
+        android:label="OnBoardingFragment" />
+    <activity
+        android:id="@+id/onBoardingActivity"
+        android:name="com.fullstack.frontend.OnBoardingActivity"
+        android:label="activity_on_boarding"
+        tools:layout="@layout/activity_on_boarding" />
 
 
 </navigation>

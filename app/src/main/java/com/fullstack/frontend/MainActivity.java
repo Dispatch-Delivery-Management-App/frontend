@@ -1,14 +1,13 @@
 package com.fullstack.frontend;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 
-import com.fullstack.frontend.ui.newOrder.PlaceOrderFragment;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.fullstack.frontend.Retro.ApiClient;
+import com.fullstack.frontend.Retro.ApiInterface;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.fragment.app.Fragment;
@@ -30,12 +29,38 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         setupNavigation();
+
     }
 
+//    /**
+//     ** Retrofit Login
+//     */
+//    public void getTodos(View view) {
+//
+//        Call<List<ResModel>> call = apiInterface.getTodos();
+//        ((Call) call).enqueue(new Callback<List<ResModel>>() {
+//            @Override
+//            public void onResponse(Call<List<ResModel>> call, Response<List<ResModel>> response) {
+//                Log.e(TAG, "onResponse: " +  response.body());
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<ResModel>> call, Throwable t) {
+//                Log.e(TAG, "onFailure: " + t.getLocalizedMessage() );
+//            }
+//        });
+//
+//    }
+
+    /**
+     * setupNavigation
+     *
+     */
     private void setupNavigation() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
 
@@ -78,4 +103,5 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
 }
