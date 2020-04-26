@@ -31,6 +31,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -39,18 +40,21 @@ import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
 
-
     private HomeViewModel homeViewModel;
 
+    private View root;
     private RecyclerView mOrderListRV;
     private OrderListAdapter mOrderListAdapter;
 
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater,
+                             @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
+
+        root = inflater.inflate(R.layout.fragment_home, container, false);
 
         homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
@@ -58,7 +62,31 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        initRecyclerView();
+        initData();
         return root;
+    }
+
+    private void initData() {
+
+    }
+
+    private void initRecyclerView() {
+        // get RecyclerView
+        mOrderListRV = (RecyclerView)root.findViewById(R.id.rv_order_list);
+        // build adapter
+        mOrderListAdapter = new OrderListAdapter(getActivity());
+        // set adapter for RecyclerView
+        mOrderListRV.setAdapter(mOrderListAdapter);
+        // set layoutManager
+        mOrderListRV.setLayoutManager((new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false)));
+        // item listener
+        mOrderListAdapter.setOnItemClickListener(new OrderListAdapter.OnItemClickListener() {
+            @Override
+            public void OnItemClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.nav_detail);
+            }
+        });
     }
 
     @Override
@@ -69,22 +97,6 @@ public class HomeFragment extends Fragment {
 //        rv_orderList.setLayoutManager(new LinearLayoutManager(HomeFragment.this));
 //        rv_orderList.setAdapter(new OrderListAdapter(HomeFragment.this));
 
-        // get RecyclerView
-        mOrderListRV = (RecyclerView)view.findViewById(R.id.rv_order_list);
-        // build adapter
-        mOrderListAdapter = new OrderListAdapter(getActivity());
-        // set adapter for RecyclerView
-        mOrderListRV.setAdapter(mOrderListAdapter);
-        // set layoutManager
-        mOrderListRV.setLayoutManager((new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false)));
-
-//        mOrderListAdapter.setOnItemClickListener(new OrderListAdapter.onItemClickListener(){
-//            @Override
-//            public void OnItemClick(View view) {
-//
-//            }
-//
-//        });
 
 
 
@@ -104,15 +116,15 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        // Button for order details
-        Button detail = getActivity().findViewById(R.id.btn_detail);
-
-        detail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.nav_detail);
-            }
-        });
+//        // Button for order details
+//        Button detail = getActivity().findViewById(R.id.btn_detail);
+//
+//        detail.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Navigation.findNavController(v).navigate(R.id.nav_detail);
+//            }
+//        });
 //
     }
 

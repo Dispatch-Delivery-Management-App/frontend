@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -33,7 +34,9 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Line
     @NonNull
     @Override
     public LinearViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new LinearViewHolder(LayoutInflater.from(mContext).inflate(R.layout.orderlist_item,parent,false));
+        //return new LinearViewHolder(LayoutInflater.from(mContext).inflate(R.layout.orderlist_item,parent,false));
+        View itemView = View.inflate(mContext, R.layout.orderlist_item, null);
+        return new LinearViewHolder(itemView);
     }
 
     @Override
@@ -46,6 +49,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Line
 
     @Override
     public int getItemCount() {
+
         return  OrderListRepository.statuses.size();
     }
 
@@ -59,6 +63,27 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Line
             order_id = itemView.findViewById(R.id.order_id);
             category = itemView.findViewById(R.id.category);
             receiver = itemView.findViewById(R.id.receiver);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (onItemClickListener != null) {
+                        onItemClickListener.OnItemClick(v);
+                    }
+                }
+            });
         }
     }
+
+
+    public interface OnItemClickListener {
+        public void OnItemClick(View view);
+    }
+
+    private OnItemClickListener onItemClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
 }
+

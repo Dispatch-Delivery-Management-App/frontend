@@ -11,6 +11,7 @@ import com.fullstack.frontend.Retro.BaseResponse;
 import com.fullstack.frontend.Retro.OrderDetailRequest;
 import com.fullstack.frontend.Retro.OrderResponse;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,16 +20,16 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class OrderListRepository {
+public class OrderListRepository implements Serializable {
 
     public List<OrderResponse> orderResponses;
-    public List<OrderResponse> sortedOrderResponses;
+    public static List<OrderResponse> sortedOrderResponses;
     public static ArrayList<Integer> statuses = new ArrayList<Integer>();
     public static ArrayList<Integer> ids = new ArrayList<Integer>();
     public static ArrayList<String> categories = new ArrayList<String>();
     public static ArrayList<String> receivers = new ArrayList<String>();
 
-     public void getOrders(OrderDetailRequest request) {
+    public void getOrders(OrderDetailRequest request) {
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
         Call<BaseResponse<List<OrderResponse>>> getOrders = apiService.getOrderList(new OrderDetailRequest(1));
         getOrders.enqueue(new Callback<BaseResponse<List<OrderResponse>>>() {
@@ -56,6 +57,7 @@ public class OrderListRepository {
         });
     }
 
+    // sort the orders based on status to suit the partition
     public List<OrderResponse> sort(List<OrderResponse> orderResponses) {
          List<OrderResponse> result = new ArrayList<OrderResponse>();
          List<OrderResponse> notStartOrders = new ArrayList<OrderResponse>();
@@ -82,12 +84,10 @@ public class OrderListRepository {
          for (OrderResponse response1 : shippedOrders) {
              result.add(response1);
          }
-
          // delivered
          for (OrderResponse response1 : completeOrders) {
              result.add(response1);
          }
-
          // draft
          for (OrderResponse response1 : draft) {
              result.add(response1);
