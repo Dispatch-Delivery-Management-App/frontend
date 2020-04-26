@@ -14,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -52,15 +54,17 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         homeViewModel =
-                ViewModelProviders.of(this).get(HomeViewModel.class);
+                ViewModelProviders.of(this, new ViewModelProvider.Factory() {
+                    @NonNull
+                    @Override
+                    public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
+                        return (T) new HomeViewModel(new OrderListRepository());
+                    }
+                }).get(HomeViewModel.class);
 
         root = inflater.inflate(R.layout.fragment_home, container, false);
 
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-            }
-        });
+        homeViewModel.setOrderRequest(new OrderDetailRequest(1));
 
         initRecyclerView();
 
@@ -70,26 +74,23 @@ public class HomeFragment extends Fragment {
 
     private void initRecyclerView() {
         // get RecyclerView
-        mOrderListRV = (RecyclerView)root.findViewById(R.id.rv_order_list);
+        mOrderListRV = root.findViewById(R.id.rv_order_list);
         // build adapter
-        mOrderListAdapter = new OrderListAdapter(getActivity());
+        mOrderListAdapter = new OrderListAdapter();
         // set adapter for RecyclerView
         mOrderListRV.setAdapter(mOrderListAdapter);
         // set layoutManager
-        mOrderListRV.setLayoutManager((new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false)));
+        mOrderListRV.setLayoutManager(new LinearLayoutManager(getContext()));
         // item listener
-        mOrderListAdapter.setOnItemClickListener(new OrderListAdapter.OnItemClickListener() {
-            @Override
-            public void OnItemClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.nav_detail);
-            }
+        mOrderListAdapter.setOnItemClickListener(view -> Navigation.findNavController(view).navigate(R.id.nav_detail));
+        homeViewModel.getOrders().observe(getViewLifecycleOwner(), orderResponses -> {
+            mOrderListAdapter.setOrders(orderResponses);
         });
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
 
 
         // the button for going to place a new order page

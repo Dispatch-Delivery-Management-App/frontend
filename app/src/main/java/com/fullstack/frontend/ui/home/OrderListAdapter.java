@@ -20,37 +20,47 @@ import com.fullstack.frontend.Retro.BaseResponse;
 import com.fullstack.frontend.Retro.OrderDetailRequest;
 import com.fullstack.frontend.Retro.OrderResponse;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 
-public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.LinearViewHolder>{
-    private Context mContext;
+public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.LinearViewHolder> {
+    private List<OrderResponse> orderResponses = new LinkedList<>();
 
-    public OrderListAdapter(Context context){
-        this.mContext=context;
+    public OrderListAdapter() {
     }
+
+    public void setOrders(List<OrderResponse> orders) {
+        this.orderResponses.clear();;
+        this.orderResponses.addAll(orders);
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public LinearViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //return new LinearViewHolder(LayoutInflater.from(mContext).inflate(R.layout.orderlist_item,parent,false));
-        View itemView = View.inflate(mContext, R.layout.orderlist_item, null);
+        View itemView = View.inflate(parent.getContext(), R.layout.orderlist_item, null);
         return new LinearViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull LinearViewHolder holder, int position) {
-        holder.status.setText(OrderListRepository.statuses.get(position));
-        holder.order_id.setText(OrderListRepository.ids.get(position));
-        holder.category.setText(OrderListRepository.categories.get(position));
-        holder.receiver.setText(OrderListRepository.receivers.get(position));
+        OrderResponse orderResponse = orderResponses.get(position);
+
+        holder.status.setText(String.valueOf(orderResponse.status));
+        // Bug
+        holder.order_id.setText(String.valueOf(orderResponse.id));
+        holder.category.setText(orderResponse.category);
+        holder.receiver.setText(orderResponse.lastname);
     }
 
     @Override
     public int getItemCount() {
 
-        return  OrderListRepository.statuses.size();
+        return orderResponses.size();
     }
 
     public class LinearViewHolder extends RecyclerView.ViewHolder {
@@ -74,7 +84,6 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Line
             });
         }
     }
-
 
     public interface OnItemClickListener {
         public void OnItemClick(View view);
