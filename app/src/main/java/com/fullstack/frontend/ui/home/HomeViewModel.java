@@ -2,18 +2,29 @@ package com.fullstack.frontend.ui.home;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
+
+import com.fullstack.frontend.Retro.OrderDetailRequest;
+import com.fullstack.frontend.Retro.OrderResponse;
+
+import java.util.List;
 
 public class HomeViewModel extends ViewModel {
 
-    private MutableLiveData<String> mText;
+    private final OrderListRepository orderListRepository;
 
-    public HomeViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is home fragment");
+    private MutableLiveData<OrderDetailRequest> userIdInput = new MutableLiveData<>();
+
+    public HomeViewModel(OrderListRepository orderListRepository) {
+        this.orderListRepository = orderListRepository;
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public void setOrderRequest(OrderDetailRequest request) {
+        userIdInput.setValue(request);
+    }
+
+    public LiveData<List<OrderResponse>> getOrders() {
+        return Transformations.switchMap(userIdInput, orderListRepository::getOrders);
     }
 }
