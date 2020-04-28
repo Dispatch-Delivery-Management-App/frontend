@@ -1,69 +1,67 @@
 package com.fullstack.frontend.Retro;
-import androidx.annotation.NonNull;
-import com.google.gson.annotations.SerializedName;
-import java.io.Serializable;
 
 public class OrderDetailResponse {
-//    public OrderDetailResponse(){
-//    }
+    public OrderDetailResponse(){
+        this.id = id;
+    }
 
-    public Long id;
-    public Long User_id;
-    public Long from_address;
-    public Long to_address;
+    public long id;
+    public long User_id;
+    public long from_address;
+    public long to_address;
     public int status;
-    public Long tracking_id;
+    public long tracking_id;
     public String category;
     public String item_info;
-    public Double capacity;
+    public double capacity;
     public String create_time;
     public String depart_time;
     public String pickup_time;
     public String complete_time;
-    public Long station_id;
+    public long station_id;
     public String shipping_method;
     public int shipping_member;
-    public Double totalCost;
-    public Integer feedback;
+    public double totalCost;
+    public int feedback;
 
-    public Long getId(){
+    public long get_id(){
         return id;
     }
 
-    public Long getUser_id(){
+    public long get_User_id(){
         return User_id;
     }
 
-    public Long get_from_address(){
+    public long get_from_address(){
         return from_address;
     }
 
-    public Long get_to_address(){
+    public long get_to_address(){
         return to_address;
     }
 
-    public Long get_tracking_id(){
+    public long get_tracking_id(){
         return tracking_id;
     }
 
-    public Long get_station_id(){
+    public long get_station_id(){
         return station_id;
     }
 
-    public Integer get_status(){
+    public int get_status(){
         return status;
     }
 
-    public Integer get_shipping_member(){
+    public int get_shipping_member(){
         return shipping_member;
     }
-    public Integer get_feedback(){
+    public int get_feedback(){
         return feedback;
     }
-    public Double get_capacity(){
+    public double get_capacity(){
         return capacity;
     }
-    public Double get_totalCost(){
+    public double get_totalCost(){
         return totalCost;
     }
     public String get_category(){
