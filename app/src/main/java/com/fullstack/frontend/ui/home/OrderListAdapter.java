@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.fullstack.frontend.R;
 import com.fullstack.frontend.Retro.OrderResponse;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,34 +20,61 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public static final int order_item = 2;
     public static int index = 0;
     private List<OrderResponse> orderResponses = new LinkedList<>();
-    private List<Integer> itemViewType = new LinkedList<>();
+    //private List<Integer> itemViewType = new LinkedList<>();
+    private HashMap<Integer, Object> itemHashmap= new HashMap<>();
 
     @Override
     public int getItemViewType(int position) {
-        return itemViewType.get(position);
+        if(itemHashmap.get(position) instanceof String){
+            return text_item;
+        }
+        return order_item;
     }
 
     public OrderListAdapter() {
     }
 
     public void setOrders(List<OrderResponse> orders) {
-        this.orderResponses.clear();;
+        this.orderResponses.clear();
         this.orderResponses.addAll(orders);
-        itemViewType.add(text_item);
-        for(int i = 0; i < orders.size()-1; i++) {
-            if(orders.get(i).status != orders.get(i+1).status) {
-                itemViewType.add(order_item);
-                itemViewType.add(text_item);
-            }else {
-                itemViewType.add(order_item);
-            }
+
+        int i = 1;
+        int j = 0;
+        itemHashmap.put(0, "draft");
+        while(j < orderResponses.size() && orderResponses.get((j)).status < 2){
+            itemHashmap.put(i, orderResponses.get(j));
+            i++;
+            j++;
         }
-        itemViewType.add(order_item);
+        itemHashmap.put(i, "notstart");
+        i++;
+        while(j < orderResponses.size() && orderResponses.get((j)).status < 3){
+            itemHashmap.put(i, orderResponses.get(j));
+            i++;
+            j++;
+        }
+        itemHashmap.put(i, "shipped");
+        i++;
+        while(j < orderResponses.size() && orderResponses.get((j)).status < 4){
+            itemHashmap.put(i, orderResponses.get(j));
+            i++;
+            j++;
+        }
+        itemHashmap.put(i, "complete");
+        i++;
+        while(j < orderResponses.size() && orderResponses.get((j)).status < 5){
+            itemHashmap.put(i, orderResponses.get(j));
+            i++;
+            j++;
+        }
+
         notifyDataSetChanged();
     }
 
 
-    
+
+
+
 
 
     @NonNull
@@ -75,32 +103,18 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        int type =  getItemViewType(position);
+        //  int type =  getItemViewType(position);
         OrderResponse orderResponse;
-        if(type == text_item) {
-            if (index == 0) {
-                StatusTextHolder textHolder = (StatusTextHolder) holder;
-                textHolder.status_text.setText("draft");
-                index = 1;
-            } else if (index == 1) {
-                StatusTextHolder textHolder = (StatusTextHolder) holder;
-                textHolder.status_text.setText("notstart");
-                index = 2;
-            } else if (index == 2) {
-                StatusTextHolder textHolder = (StatusTextHolder) holder;
-                textHolder.status_text.setText("shipped");
-                index = 3;
-            } else if (index == 3) {
-                StatusTextHolder textHolder = (StatusTextHolder) holder;
-                textHolder.status_text.setText("complete");
-                index = 4;
-            }
+        if(holder instanceof StatusTextHolder) {
+            String statusText = (String) itemHashmap.get(position);
+            StatusTextHolder textHolder = (StatusTextHolder) holder;
+            textHolder.status_text.setText(statusText);
         }
 
-        if(type == order_item) {
+        if(holder instanceof LinearViewHolder) {
             LinearViewHolder itemHolder = (LinearViewHolder) holder;
             String statusString = "undecided";
-            orderResponse = orderResponses.get(position - index);
+            orderResponse = (OrderResponse) itemHashmap.get(position);
             if (orderResponse.status == 1) {
                 statusString = "draft";
             }
@@ -127,7 +141,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public int getItemCount() {
-        return itemViewType.size();
+        return itemHashmap.size();
     }
 
     public class LinearViewHolder extends RecyclerView.ViewHolder {
