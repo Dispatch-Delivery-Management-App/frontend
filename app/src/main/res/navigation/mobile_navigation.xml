@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/onBoardingFragment">
 
     <action
         android:id="@+id/any_to_detail"
@@ -51,10 +51,6 @@
         </action>
 
 
-
-
-
-
     </fragment>
 
     <fragment
@@ -91,26 +87,12 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.fullstack.frontend.onboard.LoginFragment"
-        android:label="LoginFragment" >
-        <action
-            android:id="@+id/action_loginFragment_to_registerFragment"
-            app:destination="@id/registerFragment" />
-        <action
-            android:id="@+id/action_loginFragment_to_nav_home"
-            app:destination="@id/nav_home" />
-        <action
-            android:id="@+id/action_loginFragment_to_onBoardingActivity"
-            app:destination="@id/onBoardingActivity" />
-    </fragment>
+        android:name="com.fullstack.frontend.onboard.login.LoginFragment"
+        android:label="LoginFragment" />
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.fullstack.frontend.onboard.RegisterFragment"
-        android:label="RegisterFragment" >
-        <action
-            android:id="@+id/action_registerFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
-    </fragment>
+        android:name="com.fullstack.frontend.onboard.register.RegisterFragment"
+        android:label="RegisterFragment" />
     <fragment
         android:id="@+id/onBoardingFragment"
         android:name="com.fullstack.frontend.onboard.OnBoardingFragment"
