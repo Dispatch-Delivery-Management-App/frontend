@@ -89,7 +89,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "Notification", NotificationManager.IMPORTANCE_HIGH);
 
             //Configure Notification Channel
-            notificationChannel.setDescription("Matrix Notfication");
+            notificationChannel.setDescription("Dispatch notification");
             notificationChannel.enableLights(true);
             notificationChannel.setVibrationPattern(new long[]{0, 1000, 500, 1000});
             notificationChannel.enableVibration(true);
