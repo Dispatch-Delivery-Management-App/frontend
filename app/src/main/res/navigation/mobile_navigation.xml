@@ -43,10 +43,10 @@
                 app:nullable="true"
                 app:argType="com.fullstack.frontend.Retro.Plan[]"/>
 
-<!--            <argument android:name="returnedRequest"-->
-<!--                android:defaultValue="@null"-->
-<!--                app:nullable="true"-->
-<!--                app:argType="com.fullstack.frontend.Retro.GetPlansRequest"/>-->
+            <argument android:name="returnedRequest"
+                android:defaultValue="@null"
+                app:nullable="true"
+                app:argType="com.fullstack.frontend.Retro.GetPlansRequest"/>
 
         </action>
 
@@ -67,10 +67,10 @@
             app:nullable="false"
             app:argType="com.fullstack.frontend.Retro.Plan[]"/>
 
-<!--        <argument android:name="OrderInfo"-->
-<!--            android:defaultValue="@null"-->
-<!--            app:nullable="true"-->
-<!--            app:argType="com.fullstack.frontend.Retro.GetPlansRequest"/>-->
+        <argument android:name="returnedRequest"
+            android:defaultValue="@null"
+            app:nullable="true"
+            app:argType="com.fullstack.frontend.Retro.GetPlansRequest"/>
 
         <action
             android:id="@+id/recommend_to_detail"

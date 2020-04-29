@@ -73,7 +73,7 @@ public class NewOrderRecommendFragment extends BaseFragment<NewOrderRecommendVie
         super.onViewCreated(view, savedInstanceState);
 
         Plan[] plans = NewOrderRecommendFragmentArgs.fromBundle(getArguments()).getReturnedPlans();
-        //GetPlansRequest request = NewOrderRecommendFragmentArgs.fromBundle(getArguments()).getOrderInfo();
+        GetPlansRequest request = NewOrderRecommendFragmentArgs.fromBundle(getArguments()).getReturnedRequest();
         for (Plan plan:plans) {
             inflatePlan(plan);
         }
@@ -82,25 +82,26 @@ public class NewOrderRecommendFragment extends BaseFragment<NewOrderRecommendVie
         buttonConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ConfirmOrderRequest request = confirmOrder();
+                setRequest(request);
                 viewModel.confirmOrder(request);
                 Navigation.findNavController(v).navigate(R.id.any_to_detail);
             }
         });
     }
 
-    private ConfirmOrderRequest confirmOrder() {
-        ConfirmOrderRequest finalResult = new ConfirmOrderRequest();
-        //finalResult.order_info = NewOrderRecommendFragmentArgs.fromBundle(getArguments()).getOrderInfo();
+    private void setRequest(GetPlansRequest request) {
+        Plan plan;
         int selectedID =  binding.cardGroup.getCheckedRadioButtonId();
         if (selectedID == binding.recommendedPlan.radioButton5.getId()){
-            finalResult.plan = viewModel.getBest();
+            plan = viewModel.getBest();
         }else if (selectedID == binding.cheapPlan.radioButton5.getId()){
-            finalResult.plan = viewModel.getCheap();
+            plan = viewModel.getCheap();
         }else {
-            finalResult.plan = viewModel.getFast();
+            plan = viewModel.getFast();
         }
-        return finalResult;
+        request.amount = plan.amount;
+        request.station = plan.station;
+        request.shipping_method = plan.shipping_method;
     }
 
     private void inflatePlan(Plan plan) {

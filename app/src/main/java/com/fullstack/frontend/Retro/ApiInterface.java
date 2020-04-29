@@ -34,7 +34,7 @@ public interface ApiInterface {
     Call<BaseResponse<List<OrderResponse>>> getOrderList(@Body OrderDetailRequest orderDetailRequest);
 
     @POST("/api/placeorder/")
-    Call<BaseResponse<String>> confirmOrder(@Body ConfirmOrderRequest confirmOrderRequest);
+    Call<BaseResponse<String>> confirmOrder(@Body GetPlansRequest confirmOrderRequest);
 
 
 

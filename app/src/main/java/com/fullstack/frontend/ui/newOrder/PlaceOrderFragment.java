@@ -123,7 +123,7 @@ public class PlaceOrderFragment extends BaseFragment<PlaceOrderViewModel, PlaceO
 
                         PlaceOrderFragmentDirections.PlaceToRecommend action = PlaceOrderFragmentDirections.placeToRecommend();
                         action.setReturnedPlans(plans1);
-                        //action.setOrderInfo(request);
+                        action.setReturnedRequest(request);
 
                         Navigation.findNavController(v).navigate(action);
                     }

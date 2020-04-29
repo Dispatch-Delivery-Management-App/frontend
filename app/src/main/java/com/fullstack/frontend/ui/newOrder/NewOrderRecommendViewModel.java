@@ -19,7 +19,7 @@ public class NewOrderRecommendViewModel extends BaseViewModel<ConfirmOrderReposi
         super(baseRepository);
     }
 
-    public void confirmOrder(ConfirmOrderRequest request){
+    public void confirmOrder(GetPlansRequest request){
         repository.confirmOrder(request);
     }
 
