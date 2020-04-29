@@ -30,7 +30,10 @@ public interface ApiInterface {
     Call<BaseResponse<String>> postOrderGetPlans(@Body GetPlansRequest getPlansRequest);
 
     @POST("/api/orderdetail/")
-    Call<OrderDetailResponse> postOrderDetail(@Body OrderDetailRequest orderDetailRequest);
+    Call<BaseResponse<OrderDetailResponse>> postOrderDetail(@Body OrderDetailRequest orderDetailRequest);
+
+//    @POST<"/api/map/")
+//    Call<OrderMapResponse> postOrderMap(@Body OrderMapRequest orderMapRequest);
 
     @POST("/api/orderlist/")
     Call<OrderMainResponse> postOrderGetOrders(@Body OrderDetailRequest orderDetailRequest);

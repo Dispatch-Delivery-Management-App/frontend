@@ -5,38 +5,47 @@ import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import android.util.Log;
+import android.widget.TextView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.fullstack.frontend.R;
 import android.widget.Button;
+import android.widget.Toast;
+
 import com.fullstack.frontend.Retro.ApiClient;
 import com.fullstack.frontend.Retro.ApiInterface;
 import com.fullstack.frontend.Retro.BaseResponse;
 import com.fullstack.frontend.Retro.OrderDetailRequest;
 import com.fullstack.frontend.Retro.OrderDetailResponse;
 import com.fullstack.frontend.Retro.Response;
-//import com.fullstack.frontend.databinding.OrderDetailFragmentBinding;
+import com.fullstack.frontend.databinding.OrderDetailFragmentBinding;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 
+import java.text.BreakIterator;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 
 
 
-public class OrderDetailFragment extends Fragment implements OnMapReadyCallback {
+public class OrderDetailFragment<newtext> extends Fragment implements OnMapReadyCallback {
 
     private MapView mapView;
     private View view;
-    //private OrderDetailViewModel detailViewModel;
-    //private OrderDetailFragmentBinding view;
-//    private OrderDetailFragmentBinding binding;
+
+    private TextView textElement;
+
+
+    private OrderDetailFragmentBinding binding;
+
+
     public OrderDetailFragment(){
 
     }
@@ -57,20 +66,19 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback 
         return view;
     }
 
-
+//
 //    public View onCreateView(LayoutInflater inflater, ViewGroup container,
 //                             Bundle savedInstanceState) {
 //
 //        //view = OrderDetailFragmentBinding.inflate(R.layout.order_detail_fragment, container, false);
-//        view = inflater.inflate(R.layout.order_detail_fragment, container, false);
+////        view = inflater.inflate(R.layout.order_detail_fragment, container, false);
 //
-////        detailViewModel = ViewModelProviders.of(this).get(OrderDetailViewModel.class);
-////        View root  = inflater.inflate(R.layout.orderdetail_fragment, container, false );
+//        detailViewModel = ViewModelProviders.of(this).get(OrderDetailViewModel.class);
+//        View root  = inflater.inflate(R.layout.order_detail_fragment, container, false );
 //
-//        //return binding.getRoot();
-//        return view;
+//        return binding.getRoot();
+//       // return view;
 //    }
-
 
 
     // call API
@@ -81,32 +89,29 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback 
             mapView.onCreate(null);
             mapView.onResume();// needed to get the map to display immediately
             mapView.getMapAsync(this);
-
-
         }
 
 
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        Call<OrderDetailResponse> OrderDetailResponse = apiService.postOrderDetail(new OrderDetailRequest(2));
+        Call<BaseResponse<OrderDetailResponse>> orderDetailResponse = apiService.postOrderDetail(new OrderDetailRequest(2));
 
-
-        OrderDetailResponse.enqueue(new Callback<OrderDetailResponse>() {
-
+        orderDetailResponse.enqueue(new Callback<BaseResponse<OrderDetailResponse>>() {
             @Override
-            public void onResponse(Call<com.fullstack.frontend.Retro.OrderDetailResponse> call, retrofit2.Response<com.fullstack.frontend.Retro.OrderDetailResponse> response) {
+            public void onResponse(Call<BaseResponse<OrderDetailResponse>> call, retrofit2.Response<BaseResponse<OrderDetailResponse>> response) {
                 if (response.isSuccessful()) {
-                    OrderDetailResponse Body = response.body();
-                    Log.d("test:::::", String.valueOf(Body));
+                    OrderDetailResponse response1 = response.body().response;
+                    Log.d("test:", String.valueOf(response1.category));
+
+//                    TextView newtext = (TextView) textElement.findViewById(R.id.this_is_id_name);
+//                    textElement.setText("I love you");
                 }
             }
 
             @Override
-            public void onFailure(Call<com.fullstack.frontend.Retro.OrderDetailResponse> call, Throwable t) {
+            public void onFailure(Call<BaseResponse<com.fullstack.frontend.Retro.OrderDetailResponse>> call, Throwable t) {
 
             }
-
         });
-
 
         super.onViewCreated(view, savedInstanceState);
 

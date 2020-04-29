@@ -51,4 +51,6 @@
     <string name="showPrice_button">"Show Price"</string>
 
     <string name="google_maps_key">AIzaSyDJbJ_YioN6K3qHCR6wEs86OZS9KH8zcAc</string>
+    <string name="hello" />
+    <string name="my_best_text" />
 </resources>
