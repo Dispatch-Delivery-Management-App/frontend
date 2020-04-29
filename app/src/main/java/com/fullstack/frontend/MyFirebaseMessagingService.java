@@ -50,7 +50,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
-            // sendNotification(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
+            sendNotification(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
         }
     }
@@ -74,41 +74,41 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      * @param body FCM message body received.
      */
 
-//    private void sendNotification(String title, String body) {
-//
-//        Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-//
-//        Intent intent = new Intent(getApplicationContext(), ControlPanel.class);
-//        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
-//
-//        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-//        String NOTIFICATION_CHANNEL_ID = "101";
-//
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "Notification", NotificationManager.IMPORTANCE_HIGH);
-//
-//            //Configure Notification Channel
-//            notificationChannel.setDescription("Matrix Notfication");
-//            notificationChannel.enableLights(true);
-//            notificationChannel.setVibrationPattern(new long[]{0, 1000, 500, 1000});
-//            notificationChannel.enableVibration(true);
-//
-//            notificationManager.createNotificationChannel(notificationChannel);
-//        }
-//
-//        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
-//                .setSmallIcon(R.drawable.boy)
-//                .setContentTitle(title)
-//                .setAutoCancel(true)
-//                .setSound(defaultSound)
-//                .setContentText(body)
-//                .setContentIntent(pendingIntent)
-//                .setWhen(System.currentTimeMillis())
-//                .setPriority(Notification.PRIORITY_MAX);
-//
-//        notificationManager.notify(1, notificationBuilder.build());
-//    }
+    private void sendNotification(String title, String body) {
+
+        Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        String NOTIFICATION_CHANNEL_ID = "101";
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "Notification", NotificationManager.IMPORTANCE_HIGH);
+
+            //Configure Notification Channel
+            notificationChannel.setDescription("Matrix Notfication");
+            notificationChannel.enableLights(true);
+            notificationChannel.setVibrationPattern(new long[]{0, 1000, 500, 1000});
+            notificationChannel.enableVibration(true);
+
+            notificationManager.createNotificationChannel(notificationChannel);
+        }
+
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
+                .setSmallIcon(R.drawable.boy)
+                .setContentTitle(title)
+                .setAutoCancel(true)
+                .setSound(defaultSound)
+                .setContentText(body)
+                .setContentIntent(pendingIntent)
+                .setWhen(System.currentTimeMillis())
+                .setPriority(Notification.PRIORITY_MAX);
+
+        notificationManager.notify(1, notificationBuilder.build());
+    }
 
 
 }
