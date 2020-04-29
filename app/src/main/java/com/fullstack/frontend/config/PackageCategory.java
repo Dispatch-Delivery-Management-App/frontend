@@ -1,7 +1,7 @@
 package com.fullstack.frontend.config;
 
 public enum PackageCategory {
-    Grociery,
+    Grocery,
     Electronics,
     Collectibles,
     Industrial,

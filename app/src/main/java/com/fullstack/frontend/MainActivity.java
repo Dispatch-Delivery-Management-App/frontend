@@ -6,8 +6,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 
+import com.ashokvarma.gander.Gander;
+import com.ashokvarma.gander.imdb.GanderIMDB;
+import com.ashokvarma.gander.persistence.GanderPersistence;
 import com.fullstack.frontend.Retro.ApiClient;
 import com.fullstack.frontend.Retro.ApiInterface;
+import com.fullstack.frontend.Retro.MyApp;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.fragment.app.Fragment;
@@ -28,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = findViewById(R.id.toolbar);

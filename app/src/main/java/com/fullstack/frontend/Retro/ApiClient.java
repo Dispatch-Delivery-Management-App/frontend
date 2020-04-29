@@ -1,5 +1,6 @@
 package com.fullstack.frontend.Retro;
 
+import com.ashokvarma.gander.GanderInterceptor;
 import com.google.gson.Gson;
 
 import okhttp3.OkHttpClient;
@@ -15,7 +16,7 @@ public class ApiClient {
     public static Retrofit getClient() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(new GanderInterceptor(MyApp.getContext()).showNotification(true)).build();
 
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()

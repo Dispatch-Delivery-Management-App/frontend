@@ -61,10 +61,33 @@ dependencies {
 
     implementation 'com.google.android.material:material:<version>'
     implementation "androidx.viewpager2:viewpager2:1.0.0"
+    implementation 'androidx.room:room-runtime:2.2.5'
+    annotationProcessor 'androidx.room:room-compiler:2.2.5'
+
+
+    //debug
+    // if persistence is needed (Uses Room to store the calls in DB)
+    debugImplementation 'com.ashokvarma.android:gander-persistence:3.1.0'
+
+// if persistence is not needed (Data retained in memory lost on app close)
+    debugImplementation 'com.ashokvarma.android:gander-imdb:3.1.0'
+
+
+    releaseImplementation 'com.ashokvarma.android:gander-no-op:3.1.0'
+
+    // if persistence is needed (Uses Room to store the calls in DB)
+    implementation 'com.ashokvarma.android:gander-persistence:3.1.0'
+
+// if persistence is not needed (Data retained in memory lost on app close)
+    implementation 'com.ashokvarma.android:gander-imdb:3.1.0'
+
+
+//recycleview
 
 
 
     implementation 'androidx.recyclerview:recyclerview:1.2.0-alpha02'
+
 
 
 }

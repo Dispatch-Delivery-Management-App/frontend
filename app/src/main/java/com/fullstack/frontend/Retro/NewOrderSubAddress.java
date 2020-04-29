@@ -1,6 +1,8 @@
 package com.fullstack.frontend.Retro;
 
-public class NewOrderSubAddress {
+import java.io.Serializable;
+
+public class NewOrderSubAddress implements Serializable {
     public String firstname;
     public String lastname;
     public String street;

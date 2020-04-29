@@ -2,9 +2,11 @@ package com.fullstack.frontend.ui.newOrder;
 
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.fullstack.frontend.Retro.BaseResponse;
+import com.fullstack.frontend.Retro.ConfirmOrderRequest;
 import com.fullstack.frontend.Retro.GetPlansRequest;
 import com.fullstack.frontend.Retro.Plan;
 import com.fullstack.frontend.base.BaseRepository;
@@ -17,27 +19,28 @@ import retrofit2.Response;
 
 public class PlaceOrderRepository extends BaseRepository {
 
-    public void getPlans(GetPlansRequest request){
-        MutableLiveData<List<Plan>> responseLiveData = new MutableLiveData<>();
+    public void getPlans(GetPlansRequest request,MutableLiveData<List<Plan>> plans){
 
         plansRequestApi.postOrderGetPlans(request)
-                .enqueue(new Callback<BaseResponse<String>>() {
+                .enqueue(new Callback<BaseResponse<List<Plan>>>() {
                     @Override
-                    public void onResponse(Call<BaseResponse<String>> call, Response<BaseResponse<String>> response) {
+                    public void onResponse(Call<BaseResponse<List<Plan>>> call, Response<BaseResponse<List<Plan>>> response) {
                         if (!response.isSuccessful()){
                             Log.d("TTT","response code "+response.code());
                             return;
                         }
                         if (response.body() != null) {
-                            Log.d("TTT",response.body().toString());
+                            Log.d("TTT","Success");
+                            plans.setValue(response.body().response);
                         }
                     }
 
                     @Override
-                             public void onFailure(Call<BaseResponse<String>> call, Throwable t) {
+                             public void onFailure(Call<BaseResponse<List<Plan>>> call, Throwable t) {
                                  Log.d("TTT","failed: "+t.getMessage());
                              }
                          }
                 );
     }
+
 }

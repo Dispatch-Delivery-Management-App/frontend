@@ -3,49 +3,49 @@ package com.fullstack.frontend.ui.newOrder;
 
 
 import androidx.annotation.RequiresApi;
-import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
-
-import android.app.Dialog;
 
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import android.os.Debug;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.ashokvarma.gander.Gander;
+import com.ashokvarma.gander.imdb.GanderIMDB;
+import com.ashokvarma.gander.persistence.GanderPersistence;
 import com.fullstack.frontend.R;
 import com.fullstack.frontend.Retro.GetPlansRequest;
-import com.fullstack.frontend.Retro.NewOrder;
-import com.fullstack.frontend.Retro.NewOrderSubAddress;
-import com.fullstack.frontend.Retro.OrderDetailRequest;
-import com.fullstack.frontend.Retro.OrderResponse;
+import com.fullstack.frontend.Retro.MyApp;
+import com.fullstack.frontend.Retro.Plan;
 import com.fullstack.frontend.base.BaseFragment;
-import com.fullstack.frontend.base.BaseRepository;
-import com.fullstack.frontend.base.BaseViewModel;
 import com.fullstack.frontend.databinding.PlaceOrderFragmentBinding;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class PlaceOrderFragment extends BaseFragment<PlaceOrderViewModel, PlaceOrderRepository> implements AdapterView.OnItemSelectedListener {
     private PlaceOrderFragmentBinding binding;
 
     public PlaceOrderFragment() {
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     public static PlaceOrderFragment newInstance() {
@@ -100,23 +100,59 @@ public class PlaceOrderFragment extends BaseFragment<PlaceOrderViewModel, PlaceO
 
                 // NewOrder order
                 GetPlansRequest request = new GetPlansRequest();
-    request.user_id= 1;
-    request.station= 1;
-    request.tracking= 1;
                 setPlaceOrderInfo(request);
+    request.user_id= 2;
+    request.order_status=2;
+    request.fromAddress.street="1000 W Maude Ave";
+    request.fromAddress.city="Sunnyvale";
+    request.fromAddress.state="CA";
+    request.toAddress.street="1200 Getty Center Dr";
+    request.toAddress.city="Los Angeles";
+    request.toAddress.state="CA";
+    request.item_info="Ling's order";
+    request.packageWeight=4.0;
+
                 viewModel.postOrder(request);
-                Navigation.findNavController(v).navigate(R.id.place_to_recommend);
+
+                MutableLiveData<List<Plan>> planLiveData = viewModel.getReturnedPlans();
+               // Observer<List<Plan>> bookObserver = planLiveData::postValue;
+                planLiveData.observe(requireActivity(), new Observer<List<Plan>>() {
+                    @Override
+                    public void onChanged(List<Plan> plans) {
+                        Plan[] plans1 = PlaceOrderFragment.this.convert(plans);
+
+                        PlaceOrderFragmentDirections.PlaceToRecommend action = PlaceOrderFragmentDirections.placeToRecommend();
+                        action.setReturnedPlans(plans1);
+                        action.setReturnedRequest(request);
+
+                        Navigation.findNavController(v).navigate(action);
+                    }
+                });
+
+
+
             }
         });
 
-
     }
 
-    private void setPlaceOrderInfo(GetPlansRequest request) {
+    private Plan[] convert(List<Plan> ps){
+        Plan[] plans = new Plan[ps.size()];
+        for (int i=0;i<ps.size();i++){
+            plans[i]=ps.get(i);
+        }
+        return plans;
+    }
+
+    private boolean setPlaceOrderInfo(GetPlansRequest request) {
         request.item_info = binding.itemInfo.getText().toString();
 
         request.fromAddress.firstname = binding.fromAddForm.fromFirst.getText().toString();
+//        if(!validateUserData(binding.fromAddForm.fromFirst,"please enter first name"))
+//            return false;
         request.fromAddress.lastname = binding.fromAddForm.fromLast.getText().toString();
+//        if(!validateUserData(binding.fromAddForm.fromLast,"please enter last name"))
+//            return false;
         request.fromAddress.street = binding.fromAddForm.fromAdd1.getText().toString()+ binding.fromAddForm.fromAdd2.getText().toString();
         request.fromAddress.city = binding.fromAddForm.fromCity.getText().toString();
         request.fromAddress.state = binding.fromAddForm.fromState.getText().toString();
@@ -134,6 +170,7 @@ public class PlaceOrderFragment extends BaseFragment<PlaceOrderViewModel, PlaceO
         request.MMDD = binding.pickupDay.getSelectedItem().toString();
         request.startSlot = binding.pickupSlot.getSelectedItem().toString();
 
+        return true;
     }
 
     private boolean isInteger(String s) {
@@ -160,6 +197,19 @@ public class PlaceOrderFragment extends BaseFragment<PlaceOrderViewModel, PlaceO
             valid = 0.0;
         }
         return valid;
+    }
+
+    /**
+     * ValidateUserData
+     */
+    private boolean validateUserData(EditText view, String errorMessage) {
+        String userInput = view.getText().toString();
+        if (!TextUtils.isEmpty(userInput)) {
+            return true;
+        }
+        view.setError(errorMessage);
+        view.requestFocus();
+        return false;
     }
 
     @Override
