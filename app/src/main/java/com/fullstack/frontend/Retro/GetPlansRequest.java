@@ -9,6 +9,5 @@ public class GetPlansRequest {
     public String MMDD;//e.g. 23-04-2020
     public String startSlot;//e.g.14 => 14:00 - 16:00
     public String item_info;
-    public int station;
-    public int tracking;
+    public int order_status;//2 normal, 1 draft
 }
