@@ -54,12 +54,14 @@
     <fragment
         android:id="@+id/nav_detail"
         android:name="com.fullstack.frontend.ui.tracking.OrderDetailFragment"
-        android:label="Home"
+        android:label="Detail"
         tools:layout="@layout/order_detail_fragment">
         <argument android:name="myarg" android:defaultValue="@null" />
         <action
             android:id="@+id/detail_to_home"
-            app:destination="@+id/nav_home"/>
+            app:destination="@+id/nav_home"
+            app:popUpTo="@+id/nav_home"
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/loginFragment"

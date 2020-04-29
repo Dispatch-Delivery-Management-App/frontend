@@ -29,13 +29,14 @@ public interface ApiInterface {
     @POST("/api/placeorder/")
     Call<BaseResponse<String>> postOrderGetPlans(@Body GetPlansRequest getPlansRequest);
 
+    @POST("/api/orderlist/")
+    Call<BaseResponse<List<OrderResponse>>> getOrderList(@Body OrderDetailRequest orderDetailRequest);
+
     @POST("/api/orderdetail/")
     Call<BaseResponse<OrderDetailResponse>> postOrderDetail(@Body OrderDetailRequest orderDetailRequest);
 
-//    @POST<"/api/map/")
-//    Call<OrderMapResponse> postOrderMap(@Body OrderMapRequest orderMapRequest);
-
     @POST("/api/orderlist/")
     Call<OrderMainResponse> postOrderGetOrders(@Body OrderDetailRequest orderDetailRequest);
+
 
 }

@@ -23,7 +23,6 @@ import com.fullstack.frontend.Retro.BaseResponse;
 import com.fullstack.frontend.Retro.OrderDetailRequest;
 import com.fullstack.frontend.Retro.OrderDetailResponse;
 import com.fullstack.frontend.Retro.Response;
-import com.fullstack.frontend.databinding.OrderDetailFragmentBinding;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -43,7 +42,6 @@ public class OrderDetailFragment<newtext> extends Fragment implements OnMapReady
     private TextView textElement;
 
 
-    private OrderDetailFragmentBinding binding;
 
 
     public OrderDetailFragment(){
@@ -102,8 +100,6 @@ public class OrderDetailFragment<newtext> extends Fragment implements OnMapReady
                     OrderDetailResponse response1 = response.body().response;
                     Log.d("test:", String.valueOf(response1.category));
 
-//                    TextView newtext = (TextView) textElement.findViewById(R.id.this_is_id_name);
-//                    textElement.setText("I love you");
                 }
             }
 

@@ -8,23 +8,7 @@
     tools:context=".ui.tracking.OrderDetailFragment">
 
 
-<!--    <Button-->
-<!--        android:id="@+id/detail_map"-->
-<!--        android:layout_width="335dp"-->
-<!--        android:layout_height="70dp"-->
-<!--        android:layout_marginStart="43dp"-->
-<!--        android:layout_marginTop="50dp"-->
-<!--        android:layout_marginEnd="43dp"-->
-<!--        android:text="View on Map"-->
-<!--        android:color= "@color/light_green"-->
-<!--        />-->
 
-
-    <TextView
-        android:id="@+id/this_is_id_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/my_best_text" />
 
 
 
