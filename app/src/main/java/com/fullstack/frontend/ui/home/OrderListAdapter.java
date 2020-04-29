@@ -1,5 +1,6 @@
 package com.fullstack.frontend.ui.home;
 
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -89,7 +90,8 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             textHolder = new StatusTextHolder(itemView);
             return textHolder;
         }else if(viewType == order_item){
-            itemView = View.inflate(parent.getContext(), R.layout.orderlist_item, null);
+            // itemView = View.inflate(parent.getContext(), R.layout.orderlist_item, null);
+            itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.orderlist_item, parent, false);
             itemHolder = new LinearViewHolder(itemView);
             return itemHolder;
         }

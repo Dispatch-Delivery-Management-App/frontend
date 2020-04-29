@@ -30,6 +30,9 @@ public interface ApiInterface {
     Call<BaseResponse<String>> postOrderGetPlans(@Body GetPlansRequest getPlansRequest);
 
     @POST("/api/orderlist/")
-    Call<BaseResponse<List<OrderResponse>>> getOrderList(@Body OrderDetailRequest orderDetailRequest);
+    Call<BaseResponse<List<OrderResponse>>> getOrderList(@Body OrderListRequest orderListRequest);
+
+    @POST("/api/token/")
+    Call<BaseResponse> postToken(@Body TokenRequest tokenRequest);
 
 }

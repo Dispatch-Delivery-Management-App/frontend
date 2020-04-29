@@ -6,6 +6,8 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
@@ -33,7 +35,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             // If you want to send messages to this application instance or
             // manage this apps subscriptions on the server side, send the
             // Instance ID token to your app server.
+        sendRegistrationToServer(token);
     }
+
 
 
     @Override
@@ -50,7 +54,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
-            sendNotification(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
+            sendNotification(remoteMessage);
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
         }
     }
@@ -66,15 +70,18 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      */
     private void sendRegistrationToServer(String token) {
         // TODO: Implement this method to send token to your app server.
+
     }
 
     /**
      * Create and show a simple notification containing the received FCM message.
      *
-     * @param body FCM message body received.
+     * @param remoteMessage FCM message body received.
      */
 
-    private void sendNotification(String title, String body) {
+    private void sendNotification(RemoteMessage remoteMessage) {
+        String type = remoteMessage.getData().get("type");
+        String description = remoteMessage.getData().get("description");
 
         Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
@@ -98,11 +105,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
-                .setSmallIcon(R.drawable.boy)
-                .setContentTitle(title)
+                .setContentTitle(type)
                 .setAutoCancel(true)
                 .setSound(defaultSound)
-                .setContentText(body)
+                .setContentText(description)
                 .setContentIntent(pendingIntent)
                 .setWhen(System.currentTimeMillis())
                 .setPriority(Notification.PRIORITY_MAX);
