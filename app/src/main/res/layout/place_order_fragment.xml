@@ -36,7 +36,7 @@
                 tools:layout_editor_absoluteY="16dp" />
 
             <include
-                android:id="@+id/to_add_form"
+                android:id="@+id/from_add_form"
                 layout="@layout/address_form" />
 
             <TextView
@@ -48,7 +48,7 @@
                 tools:layout_editor_absoluteY="16dp" />
 
             <include
-                android:id="@+id/from_add_form"
+                android:id="@+id/to_add_form"
                 layout="@layout/address_form" />
 
             <TextView

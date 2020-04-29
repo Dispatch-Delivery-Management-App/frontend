@@ -14,7 +14,7 @@
         android:name="com.fullstack.frontend.ui.home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home">
-        <argument android:name="myarg" android:defaultValue="@null" />
+
 
         <action
             android:id="@+id/action_nav_home_to_nav_placeOrder"
@@ -34,18 +34,44 @@
         android:name="com.fullstack.frontend.ui.newOrder.PlaceOrderFragment"
         android:label="place order label"
         tools:layout="@layout/place_order_fragment">
-        <argument android:name="myarg" android:defaultValue="@null" />
+
         <action
             android:id="@+id/place_to_recommend"
-            app:destination="@+id/nav_recommend"/>
+            app:destination="@+id/nav_recommend">
+            <argument android:name="returnedPlans"
+                android:defaultValue="@null"
+                app:nullable="true"
+                app:argType="com.fullstack.frontend.Retro.Plan[]"/>
+
+<!--            <argument android:name="returnedRequest"-->
+<!--                android:defaultValue="@null"-->
+<!--                app:nullable="true"-->
+<!--                app:argType="com.fullstack.frontend.Retro.GetPlansRequest"/>-->
+
+        </action>
+
+
+
+
+
+
     </fragment>
 
     <fragment
         android:id="@+id/nav_recommend"
-        android:name="com.fullstack.frontend.ui.newOrder.NewOrderRecommend"
+        android:name="com.fullstack.frontend.ui.newOrder.NewOrderRecommendFragment"
         android:label="recommend label"
         tools:layout="@layout/new_order_recommend_fragment">
-        <argument android:name="myarg" android:defaultValue="@null" />
+
+        <argument android:name="returnedPlans"
+            app:nullable="false"
+            app:argType="com.fullstack.frontend.Retro.Plan[]"/>
+
+<!--        <argument android:name="OrderInfo"-->
+<!--            android:defaultValue="@null"-->
+<!--            app:nullable="true"-->
+<!--            app:argType="com.fullstack.frontend.Retro.GetPlansRequest"/>-->
+
         <action
             android:id="@+id/recommend_to_detail"
             app:destination="@+id/nav_detail"/>
@@ -56,7 +82,7 @@
         android:name="com.fullstack.frontend.ui.tracking.OrderDetail"
         android:label="Home"
         tools:layout="@layout/order_detail_fragment">
-        <argument android:name="myarg" android:defaultValue="@null" />
+
         <action
             android:id="@+id/detail_to_home"
             app:destination="@+id/nav_home"

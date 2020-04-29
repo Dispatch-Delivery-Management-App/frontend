@@ -26,10 +26,10 @@ public interface ApiInterface {
             @Field("username") String username,
             @Field("password") String password);
 
-    @POST("/api/placeorder/")
-    Call<BaseResponse<String>> postOrderGetPlans(@Body GetPlansRequest getPlansRequest);
+    @POST("/api/orderplan/")
+    Call<BaseResponse<List<Plan>>> postOrderGetPlans(@Body GetPlansRequest getPlansRequest);
 
-    @POST("/api/orderlist/")
-    Call<OrderMainResponse> postOrderGetOrders(@Body OrderDetailRequest orderDetailRequest);
+    @POST("/api/placeorder/")
+    Call<BaseResponse<String>> confirmOrder(@Body ConfirmOrderRequest confirmOrderRequest);
 
 }
