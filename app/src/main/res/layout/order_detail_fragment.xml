@@ -1,21 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="wrap_content"
+    tools:context=".ui.tracking.OrderDetailFragment"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical"
-    tools:context=".ui.tracking.OrderDetailFragment">
-
-
-
-
+    android:orientation="vertical">
+    <!--    android:layout_width="match_parent"-->
 
 
     <com.google.android.gms.maps.MapView
         android:id="@+id/event_map_view"
         android:layout_width="350dp"
-        android:layout_height="350dp"
+        android:layout_height="300dp"
         android:layout_marginStart="43dp"
         android:layout_marginEnd="43dp" />
 
@@ -29,6 +25,18 @@
         tools:layout_editor_absoluteY="16dp"
         android:textSize="18sp"/>
 
+
+    <TextView
+        android:id="@+id/OrderID_filling"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="null"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="16dp"
+        android:textSize="18sp"/>
+
+
+
     <TextView
         android:id="@+id/create_time"
         android:layout_width="match_parent"
@@ -39,10 +47,28 @@
         android:textSize="15sp"/>
 
     <TextView
+        android:id="@+id/create_time_filling"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="null"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="16dp"
+        android:textSize="18sp"/>
+
+    <TextView
         android:id="@+id/status"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Order Status:"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="16dp"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/status_filling"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="16dp"
         android:textSize="18sp"/>
@@ -57,10 +83,27 @@
         android:textSize="18sp"/>
 
     <TextView
+        android:id="@+id/category_filling"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="16dp"
+        android:textSize="18sp"/>
+
+    <TextView
         android:id="@+id/total_cost"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Payment:"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="16dp"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/payment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="16dp"
         android:textSize="18sp"/>
@@ -75,11 +118,29 @@
         tools:layout_editor_absoluteY="16dp"
         android:textSize="18sp"/>
 
+
+    <TextView
+        android:id="@+id/from_address_filling"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="16dp"
+        android:textSize="18sp"/>
+
     <TextView
         android:id="@+id/to_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="To:"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="16dp"
+        android:textSize="18sp"/>
+
+
+    <TextView
+        android:id="@+id/to_address_filling"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="16dp"
         android:textSize="18sp"/>
