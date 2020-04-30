@@ -27,6 +27,7 @@ import com.fullstack.frontend.Retro.ApiClient;
 import com.fullstack.frontend.Retro.ApiInterface;
 import com.fullstack.frontend.Retro.BaseResponse;
 import com.fullstack.frontend.Retro.OrderDetailRequest;
+import com.fullstack.frontend.Retro.OrderListRequest;
 import com.fullstack.frontend.Retro.OrderResponse;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
@@ -64,7 +65,7 @@ public class HomeFragment extends Fragment {
 
         root = inflater.inflate(R.layout.fragment_home, container, false);
 
-        homeViewModel.setOrderRequest(new OrderDetailRequest(1));
+        homeViewModel.setOrderRequest(new OrderListRequest(1));
 
         initRecyclerView();
 
