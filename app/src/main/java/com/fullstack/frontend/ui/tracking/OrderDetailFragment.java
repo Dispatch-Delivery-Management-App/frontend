@@ -2,6 +2,8 @@ package com.fullstack.frontend.ui.tracking;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
+
+import android.location.Location;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,33 +27,45 @@ import com.fullstack.frontend.Retro.OrderMapRequest;
 import com.fullstack.frontend.Retro.OrderMapResponse;
 import com.fullstack.frontend.Retro.Response;
 import com.fullstack.frontend.databinding.OrderDetailFragmentBinding;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polygon;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.text.BreakIterator;
+import java.util.ArrayList;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.http.Body;
 
 
-public class OrderDetailFragment extends Fragment implements OnMapReadyCallback {
+public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
+        GoogleMap.OnPolylineClickListener,
+        GoogleMap.OnPolygonClickListener  {
 
     private MapView mapView;
     private View v;
     double latitude;
     double longitude;
-    //private OrderDetailFragmentBinding binding;
-    public OrderDetailFragment(){
+    List<OrderMapResponse.LatLong> first;
+    List<OrderMapResponse.LatLong> second;
+    double first_lat1, first_lng1, first_lat2, first_lng2;
+    double second_lat1, second_lng1, second_lat2, second_lng2;
 
-    }
+
 
 
     public static OrderDetailFragment newInstance(Response response){
@@ -60,7 +74,6 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback 
         fragment.setArguments(args);
         return fragment;
     }
-
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -78,7 +91,7 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback 
 
 
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        Call<BaseResponse<OrderMapResponse>> orderMapResponse = apiService.postOrderMap(new OrderMapRequest(2));
+        Call<BaseResponse<OrderMapResponse>> orderMapResponse = apiService.postOrderMap(new OrderMapRequest(1));
         orderMapResponse.enqueue(new Callback<BaseResponse<OrderMapResponse>>() {
 
             @Override
@@ -88,6 +101,19 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback 
 
                     latitude = response2.tracking.lat;
                     longitude = response2.tracking.lng;
+                    first = response2.first_part;
+                    second = response2.second_part;
+                    first_lat1 = first.get(0).lat;
+                    first_lng1 = first.get(0).lng;
+                    first_lat2 = first.get(1).lat;
+                    first_lng2 = first.get(1).lng;
+
+                    second_lat1 = second.get(0).lat;
+                    second_lng1 = second.get(0).lng;
+                    second_lat2 = second.get(1).lat;
+                    second_lng2 = second.get(1).lng;
+
+                    Log.d("test:::::", String.valueOf(second_lng2));
 
                 }
 
@@ -105,8 +131,6 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback 
             public void onResponse(Call<BaseResponse<OrderDetailResponse>> call, retrofit2.Response<BaseResponse<OrderDetailResponse>> response) {
                 if (response.isSuccessful()) {
                     OrderDetailResponse response1 = response.body().response;
-                    Log.d("test:::::", String.valueOf(response1.category));
-
                     orderID.setText(String.valueOf(response1.id));
                     createdTime.setText(String.valueOf(response1.create_time));
                     status.setText(String.valueOf(response1.status));
@@ -114,7 +138,6 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback 
                     payment.setText(String.valueOf(response1.totalCost));
                     from_address.setText(String.valueOf(response1.from_address));
                     to_address.setText(String.valueOf(response1.to_address));
-
                 }
             }
 
@@ -177,7 +200,30 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback 
         // Animate the zoom process
         googleMap.animateCamera(CameraUpdateFactory
                 .newCameraPosition(cameraPosition));
+
+        // Add polylines and polygons to the map. This section shows just
+        // a single polyline. Read the rest of the tutorial to learn more.
+        Polyline polyline1 = googleMap.addPolyline(new PolylineOptions()
+                .clickable(true)
+                .add(
+
+                        new LatLng( first_lat1,  first_lng1),
+                        new LatLng(first_lat2, first_lng2),
+                        new LatLng(second_lat1,second_lng1),
+                        new LatLng(second_lat2, second_lng2)
+        ));
+
+
+        // Position the map's camera near Alice Springs in the center of Australia,
+        // and set the zoom factor so most of Australia shows on the screen.
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 10));
+
+        // Set listeners for click events.
+        googleMap.setOnPolylineClickListener(this);
+        googleMap.setOnPolygonClickListener(this);
     }
+
+
 
 
 
@@ -206,10 +252,13 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback 
     }
 
 
+    @Override
+    public void onPolygonClick(Polygon polygon) {
 
+    }
 
+    @Override
+    public void onPolylineClick(Polyline polyline) {
 
-
-
-
+    }
 }
