@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+import android.provider.Settings;
 import android.util.Log;
 
 import androidx.annotation.RequiresApi;
@@ -22,6 +23,7 @@ import com.fullstack.frontend.Retro.ApiInterface;
 import com.fullstack.frontend.Retro.BaseResponse;
 import com.fullstack.frontend.Retro.OrderResponse;
 import com.fullstack.frontend.Retro.TokenRequest;
+
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -93,17 +95,17 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
-                if (!response.isSuccessful()){
-                    Log.d(TAG, "Send token " + response.code());
-                    return;
+                if (response.isSuccessful()){
+                    Log.d(TAG, "Send token: " + response.code());
                 }
                 if (response.body() != null) {
-                    Log.d(TAG, "Send token " + "Success");
+                    Log.d(TAG, "Send token: " + "Success");
                 }
             }
 
             @Override
             public void onFailure(Call<BaseResponse> call, Throwable t) {
+                Log.d(TAG, "Send token failed");
             }
         });
     }
