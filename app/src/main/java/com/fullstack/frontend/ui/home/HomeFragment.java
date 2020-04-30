@@ -65,7 +65,6 @@ public class HomeFragment extends Fragment {
     private RecyclerView mOrderListRV;
     private OrderListAdapter mOrderListAdapter;
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -148,17 +147,11 @@ public class HomeFragment extends Fragment {
         // set layoutManager
         mOrderListRV.setLayoutManager(new LinearLayoutManager(getContext()));
 
-         mOrderListRV.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+        mOrderListRV.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
 
         // item listener
-        // mOrderListAdapter.setOnItemClickListener(view -> Navigation.findNavController(view).navigate(R.id.nav_detail));
-        mOrderListAdapter.setOnItemClick(new OrderListAdapter.OnItemClickListener() {
-            @Override
-            public void OnItemClick(View v, int position, int id) {
-                Intent intent = new Intent(getActivity(), OrderDetailFragment.class);
-                startActivity(intent);
-            }
-        });
+        mOrderListAdapter.setOnItemClickListener(view -> Navigation.findNavController(view).navigate(R.id.nav_detail));
+
 
         homeViewModel.getOrders().observe(getViewLifecycleOwner(), orderResponses -> {
             mOrderListAdapter.setOrders(orderResponses);
@@ -185,6 +178,13 @@ public class HomeFragment extends Fragment {
             }
         });
 
+//        mOrderListAdapter.setOnItemClick(new OrderListAdapter.OnItemClickListener() {
+//            @Override
+//            public void OnItemClick(View v, int position, int id) {
+//                Intent intent = new Intent(getActivity(), OrderDetailFragment.class);
+//                startActivity(intent);
+//            }
+//        });
     }
 
 

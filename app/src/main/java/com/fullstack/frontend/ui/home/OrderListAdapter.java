@@ -1,5 +1,6 @@
 package com.fullstack.frontend.ui.home;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fullstack.frontend.R;
 import com.fullstack.frontend.Retro.OrderResponse;
+import com.fullstack.frontend.ui.tracking.OrderDetailFragment;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -32,14 +34,14 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         return order_item;
     }
 
-    // click to order detail
-    OnItemClickListener listener;
-    public interface OnItemClickListener {
-        public void OnItemClick(View v, int position, int orderId);
-    }
-    public void setOnItemClick(OnItemClickListener listener) {
-        this.listener = listener;
-    }
+//    // click to order detail
+//    OnItemClickListener listener;
+//    public interface OnItemClickListener {
+//        public void OnItemClick(View v);
+//    }
+//    public void setOnItemClick(OnItemClickListener listener) {
+//        this.listener = listener;
+//    }
 
 
     public OrderListAdapter() {
@@ -133,15 +135,15 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             itemHolder.category.setText("Category: " + orderResponse.category);
             itemHolder.receiver.setText("Receiver: " + orderResponse.lastname);
 
-            //click to oeder detail
-            itemHolder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (listener != null) {
-                        listener.OnItemClick(v, position, orderResponse.id);
-                    }
-                }
-            });
+            //click to order detail
+//            itemHolder.itemView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    if (listener != null) {
+//                        listener.OnItemClick(v, position, orderResponse.id);
+//                    }
+//                }
+//            });
         }
 
     }
@@ -165,14 +167,15 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             category = itemView.findViewById(R.id.category);
             receiver = itemView.findViewById(R.id.receiver);
 
-//            itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    if (onItemClickListener != null) {
-//                        onItemClickListener.OnItemClick(v);
-//                    }
-//                }
-//            });
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (onItemClickListener != null) {
+                        onItemClickListener.OnItemClick(v);
+                    }
+                }
+
+            });
         }
     }
 
@@ -186,9 +189,9 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
     }
 
-//    public interface OnItemClickListener {
-//        public void OnItemClick(View view);
-//    }
+    public interface OnItemClickListener {
+        public void OnItemClick(View view);
+    }
 
     private OnItemClickListener onItemClickListener;
 
@@ -196,6 +199,15 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         this.onItemClickListener = onItemClickListener;
     }
 
+//// test
+//    Onclick aclick;
+//
+//    public void setOnclick(Onclick aclick) {
+//        this.aclick = aclick;
+//    }
+//    public interface Onclick {
+//        public void click(int position);
+//    }
 
 }
 
