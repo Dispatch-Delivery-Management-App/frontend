@@ -30,6 +30,7 @@ import com.fullstack.frontend.Retro.ApiClient;
 import com.fullstack.frontend.Retro.ApiInterface;
 import com.fullstack.frontend.Retro.BaseResponse;
 import com.fullstack.frontend.Retro.OrderDetailRequest;
+import com.fullstack.frontend.Retro.OrderListRequest;
 import com.fullstack.frontend.Retro.OrderResponse;
 import com.fullstack.frontend.ui.search.SearchAdapter;
 import com.fullstack.frontend.ui.search.SearchRepository;
@@ -85,7 +86,7 @@ public class HomeFragment extends Fragment {
 
         root = inflater.inflate(R.layout.fragment_home, container, false);
 
-        homeViewModel.setOrderRequest(new OrderDetailRequest(1));
+        homeViewModel.setOrderRequest(new OrderListRequest(1));
 
         // Autocomplete for Search
         autoCompleteTextView = root.findViewById(R.id.search);

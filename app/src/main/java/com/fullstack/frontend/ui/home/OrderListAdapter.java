@@ -1,12 +1,8 @@
 package com.fullstack.frontend.ui.home;
 
-import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,60 +10,147 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fullstack.frontend.R;
-import com.fullstack.frontend.Retro.ApiClient;
-import com.fullstack.frontend.Retro.ApiInterface;
-import com.fullstack.frontend.Retro.BaseResponse;
-import com.fullstack.frontend.Retro.OrderDetailRequest;
 import com.fullstack.frontend.Retro.OrderResponse;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-
-public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.LinearViewHolder> {
+public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    public static final int text_item = 1;
+    public static final int order_item = 2;
+    public static int index = 0;
     private List<OrderResponse> orderResponses = new LinkedList<>();
+    //private List<Integer> itemViewType = new LinkedList<>();
+    private HashMap<Integer, Object> itemHashmap= new HashMap<>();
+
+    @Override
+    public int getItemViewType(int position) {
+        if(itemHashmap.get(position) instanceof String){
+            return text_item;
+        }
+        return order_item;
+    }
 
     public OrderListAdapter() {
     }
 
     public void setOrders(List<OrderResponse> orders) {
-        this.orderResponses.clear();;
+        this.orderResponses.clear();
         this.orderResponses.addAll(orders);
+
+        int i = 1;
+        int j = 0;
+        itemHashmap.put(0, "draft");
+        while(j < orderResponses.size() && orderResponses.get((j)).status < 2){
+            itemHashmap.put(i, orderResponses.get(j));
+            i++;
+            j++;
+        }
+        itemHashmap.put(i, "notstart");
+        i++;
+        while(j < orderResponses.size() && orderResponses.get((j)).status < 3){
+            itemHashmap.put(i, orderResponses.get(j));
+            i++;
+            j++;
+        }
+        itemHashmap.put(i, "shipped");
+        i++;
+        while(j < orderResponses.size() && orderResponses.get((j)).status < 4){
+            itemHashmap.put(i, orderResponses.get(j));
+            i++;
+            j++;
+        }
+        itemHashmap.put(i, "complete");
+        i++;
+        while(j < orderResponses.size() && orderResponses.get((j)).status < 5){
+            itemHashmap.put(i, orderResponses.get(j));
+            i++;
+            j++;
+        }
+
         notifyDataSetChanged();
     }
 
+
+
+
+
+
+
     @NonNull
     @Override
-    public LinearViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //return new LinearViewHolder(LayoutInflater.from(mContext).inflate(R.layout.orderlist_item,parent,false));
-        View itemView = View.inflate(parent.getContext(), R.layout.orderlist_item, null);
-        return new LinearViewHolder(itemView);
+        View itemView;
+        StatusTextHolder textHolder;
+        LinearViewHolder itemHolder;
+        if(viewType == text_item){
+            itemView = View.inflate(parent.getContext(), R.layout.status_text, null);
+            textHolder = new StatusTextHolder(itemView);
+            return textHolder;
+        }else if(viewType == order_item){
+            // itemView = View.inflate(parent.getContext(), R.layout.orderlist_item, null);
+            itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.orderlist_item, parent, false);
+            itemHolder = new LinearViewHolder(itemView);
+            return itemHolder;
+        }
+        //return null;
+//        return holder;
+//        View itemView = View.inflate(parent.getContext(), R.layout.orderlist_item, null);
+//        return new LinearViewHolder(itemView);
+        return null;
     }
+
 
     @Override
-    public void onBindViewHolder(@NonNull LinearViewHolder holder, int position) {
-        OrderResponse orderResponse = orderResponses.get(position);
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        //  int type =  getItemViewType(position);
+        OrderResponse orderResponse;
+        if(holder instanceof StatusTextHolder) {
+            String statusText = (String) itemHashmap.get(position);
+            StatusTextHolder textHolder = (StatusTextHolder) holder;
+            textHolder.status_text.setText(statusText);
+        }
 
-        holder.status.setText(String.valueOf(orderResponse.status));
-        // Bug
-        holder.order_id.setText(String.valueOf(orderResponse.id));
-        holder.category.setText(orderResponse.category);
-        holder.receiver.setText(orderResponse.lastname);
+        if(holder instanceof LinearViewHolder) {
+            LinearViewHolder itemHolder = (LinearViewHolder) holder;
+            String statusString = "undecided";
+            orderResponse = (OrderResponse) itemHashmap.get(position);
+            if (orderResponse.status == 1) {
+                statusString = "draft";
+            }
+            if (orderResponse.status == 2) {
+                statusString = "notstart";
+            }
+            if (orderResponse.status == 3) {
+                statusString = "shipped";
+            }
+            if (orderResponse.status == 4) {
+                statusString = "complete";
+            }
+            itemHolder.status.setText(statusString);
+            // Bug
+            itemHolder.order_id.setText(String.valueOf(orderResponse.id));
+            itemHolder.category.setText(orderResponse.category);
+            itemHolder.receiver.setText(orderResponse.lastname);
+        }
+
     }
+
+
+
 
     @Override
     public int getItemCount() {
-
-        return orderResponses.size();
+        return itemHashmap.size();
     }
 
     public class LinearViewHolder extends RecyclerView.ViewHolder {
 
         private TextView status, order_id, category, receiver;
 
-        public LinearViewHolder(View itemView) {
+        LinearViewHolder(View itemView) {
             super(itemView);
             status = itemView.findViewById(R.id.status);
             order_id = itemView.findViewById(R.id.order_id);
@@ -85,6 +168,16 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Line
         }
     }
 
+    public static class StatusTextHolder extends RecyclerView.ViewHolder {
+
+        public TextView status_text;
+
+        StatusTextHolder(View itemView) {
+            super(itemView);
+            status_text = itemView.findViewById(R.id.status_view);
+        }
+    }
+
     public interface OnItemClickListener {
         public void OnItemClick(View view);
     }
@@ -94,5 +187,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Line
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
+
+
 }
 

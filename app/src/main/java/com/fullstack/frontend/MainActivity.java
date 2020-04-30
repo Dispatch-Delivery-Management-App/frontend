@@ -11,9 +11,22 @@ import com.ashokvarma.gander.imdb.GanderIMDB;
 import com.ashokvarma.gander.persistence.GanderPersistence;
 import com.fullstack.frontend.Retro.ApiClient;
 import com.fullstack.frontend.Retro.ApiInterface;
-import com.fullstack.frontend.Retro.MyApp;
-import com.google.android.material.navigation.NavigationView;
 
+
+import com.google.android.gms.tasks.OnCompleteListener;
+
+import com.fullstack.frontend.Retro.MyApp;
+
+import com.google.android.gms.tasks.OnSuccessListener;
+
+
+
+
+import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -40,6 +53,16 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         setupNavigation();
+
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
+            @Override
+            public void onSuccess(InstanceIdResult instanceIdResult) {
+                Log.d("test", instanceIdResult.getToken());
+            }
+        });
+
+
+
 
     }
 
@@ -111,3 +134,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
+
+
+
+
+
+
+
+

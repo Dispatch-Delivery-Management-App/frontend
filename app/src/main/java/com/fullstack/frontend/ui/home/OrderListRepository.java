@@ -10,6 +10,7 @@ import com.fullstack.frontend.Retro.ApiClient;
 import com.fullstack.frontend.Retro.ApiInterface;
 import com.fullstack.frontend.Retro.BaseResponse;
 import com.fullstack.frontend.Retro.OrderDetailRequest;
+import com.fullstack.frontend.Retro.OrderListRequest;
 import com.fullstack.frontend.Retro.OrderResponse;
 
 import java.io.Serializable;
@@ -24,7 +25,7 @@ import retrofit2.Response;
 
 public class OrderListRepository {
 
-    public LiveData<List<OrderResponse>> getOrders(OrderDetailRequest request) {
+    public LiveData<List<OrderResponse>> getOrders(OrderListRequest request) {
         MutableLiveData<List<OrderResponse>> liveData = new MutableLiveData<>();
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
         Call<BaseResponse<List<OrderResponse>>> getOrders = apiService.getOrderList(request);

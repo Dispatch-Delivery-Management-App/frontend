@@ -6,6 +6,7 @@ import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
 import com.fullstack.frontend.Retro.OrderDetailRequest;
+import com.fullstack.frontend.Retro.OrderListRequest;
 import com.fullstack.frontend.Retro.OrderResponse;
 
 import java.util.List;
@@ -14,13 +15,13 @@ public class HomeViewModel extends ViewModel {
 
     private final OrderListRepository orderListRepository;
 
-    private MutableLiveData<OrderDetailRequest> userIdInput = new MutableLiveData<>();
+    private MutableLiveData<OrderListRequest> userIdInput = new MutableLiveData<>();
 
     public HomeViewModel(OrderListRepository orderListRepository) {
         this.orderListRepository = orderListRepository;
     }
 
-    public void setOrderRequest(OrderDetailRequest request) {
+    public void setOrderRequest(OrderListRequest request) {
         userIdInput.setValue(request);
     }
 
