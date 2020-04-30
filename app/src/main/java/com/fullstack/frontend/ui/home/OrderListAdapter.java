@@ -32,6 +32,16 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         return order_item;
     }
 
+    // click to order detail
+    OnItemClickListener listener;
+    public interface OnItemClickListener {
+        public void OnItemClick(View v, int position, int orderId);
+    }
+    public void setOnItemClick(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
+
     public OrderListAdapter() {
     }
 
@@ -54,21 +64,6 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             i++;
             j++;
         }
-
-//        itemHashmap.put(i, "notstart");
-//        i++;
-//        while(j < orderResponses.size() && orderResponses.get((j)).status < 3){
-//            itemHashmap.put(i, orderResponses.get(j));
-//            i++;
-//            j++;
-//        }
-//        itemHashmap.put(i, "shipped");
-//        i++;
-//        while(j < orderResponses.size() && orderResponses.get((j)).status < 4){
-//            itemHashmap.put(i, orderResponses.get(j));
-//            i++;
-//            j++;
-//        }
         itemHashmap.put(i, "Delivered");
         i++;
         while(j < orderResponses.size() && orderResponses.get((j)).status < 5){
@@ -137,6 +132,16 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             itemHolder.order_id.setText(String.valueOf("Order ID: " + orderResponse.id));
             itemHolder.category.setText("Category: " + orderResponse.category);
             itemHolder.receiver.setText("Receiver: " + orderResponse.lastname);
+
+            //click to oeder detail
+            itemHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        listener.OnItemClick(v, position, orderResponse.id);
+                    }
+                }
+            });
         }
 
     }
@@ -160,14 +165,14 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             category = itemView.findViewById(R.id.category);
             receiver = itemView.findViewById(R.id.receiver);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (onItemClickListener != null) {
-                        onItemClickListener.OnItemClick(v);
-                    }
-                }
-            });
+//            itemView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    if (onItemClickListener != null) {
+//                        onItemClickListener.OnItemClick(v);
+//                    }
+//                }
+//            });
         }
     }
 
@@ -181,9 +186,9 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
     }
 
-    public interface OnItemClickListener {
-        public void OnItemClick(View view);
-    }
+//    public interface OnItemClickListener {
+//        public void OnItemClick(View view);
+//    }
 
     private OnItemClickListener onItemClickListener;
 
