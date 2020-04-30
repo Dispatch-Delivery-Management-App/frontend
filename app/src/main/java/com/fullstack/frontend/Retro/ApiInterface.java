@@ -13,18 +13,11 @@ import retrofit2.http.Query;
 
 public interface ApiInterface {
 
-    @POST("/api/user-signup/")
-    @FormUrlEncoded
-    Call<BaseResponse> register(
-            @Field("username") String username,
-            @Field("email") String email,
-            @Field("password") String password);
-
     @POST("/api/user-login/")
-    @FormUrlEncoded
-    Call<BaseResponse> login(
-            @Field("username") String username,
-            @Field("password") String password);
+    Call<BaseResponse<OnBoardingResponse>> login(@Body OnBoardingResponse credential);
+
+    @POST("/api/user-signup/")
+    Call<BaseResponse<OnBoardingResponse>> register(@Body OnBoardingResponse credential);
 
     @POST("/api/orderplan/")
     Call<BaseResponse<List<Plan>>> postOrderGetPlans(@Body GetPlansRequest getPlansRequest);
@@ -41,5 +34,7 @@ public interface ApiInterface {
     Call<BaseResponse<String>> confirmOrder(@Body GetPlansRequest confirmOrderRequest);
 
 
+    @POST("/api/search/")
+    Call<BaseResponse<List<SearchResponse>>> search(@Body SearchRequest searchRequest);
 
 }

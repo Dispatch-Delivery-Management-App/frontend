@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationManager;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
@@ -87,6 +88,10 @@ public class Util {
         } else {
             return days + " Days ago";
         }
+    }
+
+    public static Toast showToast(Context context, String msg) {
+        return Toast.makeText(context, msg, Toast.LENGTH_SHORT);
     }
 
 }

@@ -4,6 +4,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import com.fullstack.frontend.onboard.login.LoginFragment;
+import com.fullstack.frontend.onboard.register.RegisterFragment;
+
 public class OnBoardingPageAdapter extends FragmentPagerAdapter {
     private static final int NUM_ITEMS = 2;
 
@@ -16,9 +19,9 @@ public class OnBoardingPageAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return LoginFragment.newInstance();
+                //return LoginFragment.newInstance();
             case 1:
-                return RegisterFragment.newInstance();
+                //return RegisterFragment.newInstance();
             default:
                 return null;
         }

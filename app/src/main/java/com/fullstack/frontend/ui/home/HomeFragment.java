@@ -1,10 +1,13 @@
 package com.fullstack.frontend.ui.home;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -29,6 +32,9 @@ import com.fullstack.frontend.Retro.BaseResponse;
 import com.fullstack.frontend.Retro.OrderDetailRequest;
 import com.fullstack.frontend.Retro.OrderListRequest;
 import com.fullstack.frontend.Retro.OrderResponse;
+import com.fullstack.frontend.ui.search.SearchAdapter;
+import com.fullstack.frontend.ui.search.SearchRepository;
+import com.fullstack.frontend.ui.search.SearchViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -42,6 +48,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
+
+    AutoCompleteTextView autoCompleteTextView;
+    private RecyclerView searchRV;
+    private SearchAdapter searchListAdapter;
+    private SearchViewModel searchViewModel;
+
 
     private HomeViewModel homeViewModel;
 
@@ -63,15 +75,64 @@ public class HomeFragment extends Fragment {
                     }
                 }).get(HomeViewModel.class);
 
+        // search view model
+        searchViewModel = ViewModelProviders.of(this, new ViewModelProvider.Factory() {
+            @NonNull
+            @Override
+            public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
+                return (T) new SearchViewModel(new SearchRepository());
+            }
+        }).get(SearchViewModel.class);
+
         root = inflater.inflate(R.layout.fragment_home, container, false);
 
         homeViewModel.setOrderRequest(new OrderListRequest(1));
+
+        // Autocomplete for Search
+        autoCompleteTextView = root.findViewById(R.id.search);
+
+        autoCompleteTextView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+            @Override
+            public void afterTextChanged(Editable s) { }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() >= autoCompleteTextView.getThreshold()) {
+                    String searchTerm = autoCompleteTextView.getText().toString();
+                    searchViewModel.setUserId(1);
+                    searchViewModel.setKey(searchTerm);
+                    initSearch();
+
+                } else if(s.length() < autoCompleteTextView.getThreshold()) {
+                    searchViewModel.setUserId(0);
+                    initSearch();
+                }
+            }
+        });
 
         initRecyclerView();
 
         return root;
     }
 
+    private void initSearch() {
+        searchRV = root.findViewById(R.id.rv_search_list);
+
+        searchListAdapter = new SearchAdapter();
+
+        searchRV.setAdapter(searchListAdapter);
+
+        searchRV.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        searchListAdapter.setOnSearchItemListener(view -> Navigation.findNavController(view).navigate(R.id.nav_detail));
+
+        searchViewModel.getSearchResult().observe(getViewLifecycleOwner(), searchResponses -> {
+            searchListAdapter.setSearch(searchResponses);
+        });
+    }
 
     private void initRecyclerView() {
         // get RecyclerView
