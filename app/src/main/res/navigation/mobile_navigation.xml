@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/loginFragment">
+    app:startDestination="@+id/onBoardingFragment">
 
     <action
         android:id="@+id/any_to_detail"
@@ -75,7 +75,7 @@
 
     <fragment
         android:id="@+id/nav_detail"
-        android:name="com.fullstack.frontend.ui.tracking.OrderDetail"
+        android:name="com.fullstack.frontend.ui.tracking.OrderDetailFragment"
         android:label="Home"
         tools:layout="@layout/order_detail_fragment">
 

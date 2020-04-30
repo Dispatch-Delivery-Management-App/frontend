@@ -26,6 +26,12 @@ public interface ApiInterface {
     @POST("/api/orderlist/")
     Call<BaseResponse<List<OrderResponse>>> getOrderList(@Body OrderListRequest orderListRequest);
 
+    @POST("/api/orderdetail/")
+    Call<BaseResponse<OrderDetailResponse>> postOrderDetail(@Body OrderDetailRequest orderDetailRequest);
+
+    @POST("/api/map/")
+    Call<BaseResponse<OrderMapResponse>> postOrderMap(@Body OrderMapRequest orderMapRequest);
+
     @POST("/api/token/")
     Call<BaseResponse> postToken(@Body TokenRequest tokenRequest);
 
