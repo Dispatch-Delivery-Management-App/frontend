@@ -82,9 +82,7 @@ dependencies {
     implementation 'com.ashokvarma.android:gander-imdb:3.1.0'
 
 
-//recycleview
-
-
+//recyclerview
 
     implementation 'androidx.recyclerview:recyclerview:1.2.0-alpha02'
 
