@@ -103,10 +103,6 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             itemHolder = new LinearViewHolder(itemView);
             return itemHolder;
         }
-        //return null;
-//        return holder;
-//        View itemView = View.inflate(parent.getContext(), R.layout.orderlist_item, null);
-//        return new LinearViewHolder(itemView);
         return null;
     }
 

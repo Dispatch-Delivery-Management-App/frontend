@@ -1,4 +1,4 @@
-package com.fullstack.frontend;
+package com.fullstack.frontend.ui.notification;
 
 import android.app.Application;
 

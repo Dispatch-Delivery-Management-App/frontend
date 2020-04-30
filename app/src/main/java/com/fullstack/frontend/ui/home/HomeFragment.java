@@ -174,16 +174,6 @@ public class HomeFragment extends Fragment {
             }
         });
 
-//        // Button for order details
-//        Button detail = getActivity().findViewById(R.id.btn_detail);
-//
-//        detail.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Navigation.findNavController(v).navigate(R.id.nav_detail);
-//            }
-//        });
-//
     }
 
 
