@@ -31,18 +31,17 @@
         </activity>
         <activity android:name=".OnBoardingActivity"></activity>
 
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDJbJ_YioN6K3qHCR6wEs86OZS9KH8zcAc" />
+
         <service
-            android:name=".MyFirebaseMessagingService"
+            android:name=".ui.notification.MyFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDJbJ_YioN6K3qHCR6wEs86OZS9KH8zcAc" />
-
 
 
     </application>

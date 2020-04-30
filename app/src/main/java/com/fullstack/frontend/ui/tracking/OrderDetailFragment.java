@@ -27,8 +27,13 @@ import com.fullstack.frontend.Retro.OrderMapRequest;
 import com.fullstack.frontend.Retro.OrderMapResponse;
 import com.fullstack.frontend.Retro.Response;
 import com.fullstack.frontend.databinding.OrderDetailFragmentBinding;
+
+
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
+import com.fullstack.frontend.ui.home.HomeFragment;
+
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -55,6 +60,8 @@ import retrofit2.http.Body;
 public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
         GoogleMap.OnPolylineClickListener,
         GoogleMap.OnPolygonClickListener  {
+
+
 
     private MapView mapView;
     private View v;
@@ -125,6 +132,7 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
             }
         });
 
+
         Call<BaseResponse<OrderDetailResponse>> orderDetailResponse = apiService.postOrderDetail(new OrderDetailRequest(1));
         orderDetailResponse.enqueue(new Callback<BaseResponse<OrderDetailResponse>>() {
             @Override
@@ -155,6 +163,7 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         mapView = (MapView) view.findViewById(R.id.event_map_view);
         if (mapView != null) {
             mapView.onCreate(null);
