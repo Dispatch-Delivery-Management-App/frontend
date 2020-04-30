@@ -1,7 +1,6 @@
 package com.fullstack.frontend.ui.search;
 
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
 import com.fullstack.frontend.Retro.SearchRequest;
@@ -35,7 +34,4 @@ public class SearchViewModel extends ViewModel {
         final String key = searchRepository.getKey();
         return searchRepository.searchResult();
     }
-
-
-
 }

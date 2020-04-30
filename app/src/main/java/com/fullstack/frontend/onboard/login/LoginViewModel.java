@@ -30,11 +30,12 @@ public class LoginViewModel extends BaseViewModel<LoginModel> {
         if (userName == null) {
             remoteRequestListener.onFailure("please enter user name");
             return;
-        } else if (password == null) {
+        }
+        if (password == null) {
             remoteRequestListener.onFailure("Please enter password");
             return;
-        } else {
-            remoteRequestListener.onSuccess(repository.userLogin());
         }
+        remoteRequestListener.onSuccess(repository.userLogin());
+
     }
 }

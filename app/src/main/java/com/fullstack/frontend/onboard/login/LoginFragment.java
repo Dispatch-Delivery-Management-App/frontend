@@ -67,6 +67,7 @@ public class LoginFragment extends BaseFragment<LoginViewModel, LoginModel> impl
 
         binding.btnLogin.setOnClickListener( v -> {
             binding.etPassword.clearFocus();
+//            binding.btnLogin.clearFocus();
             viewModel.Login();
         });
     }

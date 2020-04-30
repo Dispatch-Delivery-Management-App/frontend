@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 
 import com.fullstack.frontend.Retro.BaseResponse;
+import com.fullstack.frontend.Retro.OrderResponse;
 import com.fullstack.frontend.Retro.SearchRequest;
 import com.fullstack.frontend.Retro.SearchResponse;
 import com.fullstack.frontend.base.BaseRepository;
@@ -48,11 +49,12 @@ public class SearchRepository extends BaseRepository {
         call.enqueue(new Callback<BaseResponse<List<SearchResponse>>>() {
             @Override
             public void onResponse(Call<BaseResponse<List<SearchResponse>>> call, Response<BaseResponse<List<SearchResponse>>> response) {
-                if (response.isSuccessful()) {
+                if (response.code() == 200) {
                     searchResult.setValue(response.body().response);
                     Log.d("TTT", "DATA" + response.body());
                 } else {
-                    Log.d("TTT", "Invalid");
+                    Log.d("TTT", "Invalid" + response.body());
+
                 }
             }
 

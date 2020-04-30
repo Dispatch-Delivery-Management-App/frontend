@@ -16,13 +16,6 @@
         android:textSize="16dp"
         android:textStyle="bold"/>
 
-    <TextView
-        android:id="@+id/status"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Status"
-        android:textSize="14dp"
-        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/category"
@@ -33,36 +26,44 @@
         android:textStyle="bold"/>
 
     <TextView
-        android:id="@+id/item_info"
+        android:id="@+id/status"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Item Info"
-        android:textSize="14dp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/shipping_method"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Shipping method"
+        android:text="Status"
         android:textSize="14dp"
         android:textStyle="bold"/>
 
     <TextView
-        android:id="@+id/total_cost"
+        android:id="@+id/lastname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Total cost"
+        android:text="Receiver"
         android:textSize="14dp"
         android:textStyle="bold"/>
 
-    <TextView
-        android:id="@+id/tracking_id"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Tracking Id"
-        android:textSize="14dp"
-        android:textStyle="bold"/>
+<!--    <TextView-->
+<!--        android:id="@+id/shipping_method"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Shipping method"-->
+<!--        android:textSize="14dp"-->
+<!--        android:textStyle="bold"/>-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/total_cost"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Total cost"-->
+<!--        android:textSize="14dp"-->
+<!--        android:textStyle="bold"/>-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/tracking_id"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Tracking Id"-->
+<!--        android:textSize="14dp"-->
+<!--        android:textStyle="bold"/>-->
 
 
 

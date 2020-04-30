@@ -3,7 +3,6 @@ package com.fullstack.frontend.ui.search;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fullstack.frontend.R;
 import com.fullstack.frontend.Retro.SearchResponse;
-import com.fullstack.frontend.ui.home.OrderListAdapter;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -43,10 +41,11 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.LinearView
         holder.id.setText(String.valueOf("ID: " + searchResponse.id));
         holder.status.setText(String.valueOf("Status: " + searchResponse.status));
         holder.category.setText(String.valueOf("Category: " + searchResponse.category));
-        holder.item_info.setText(String.valueOf("Item Info: " + searchResponse.item_info));
-        holder.shipping_method.setText(String.valueOf("Shipping Method: "+ searchResponse.shipping_method));
-        holder.total_cost.setText(String.valueOf("Total Cost: " + searchResponse.total_cost));
-        holder.tracking_id.setText(String.valueOf("Tracking Id: " + searchResponse.tracking_id));
+        holder.lastname.setText(String.valueOf("Receiver: " + searchResponse.lastname));
+//        holder.item_info.setText(String.valueOf("Item Info: " + searchResponse.item_info));
+//        holder.shipping_method.setText(String.valueOf("Shipping Method: "+ searchResponse.shipping_method));
+//        holder.total_cost.setText(String.valueOf("Total Cost: " + searchResponse.total_cost));
+//        holder.tracking_id.setText(String.valueOf("Tracking Id: " + searchResponse.tracking_id));
 
     }
 
@@ -58,7 +57,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.LinearView
 
     public class LinearViewHolder extends RecyclerView.ViewHolder{
 
-        private TextView  id,status, category, item_info, shipping_method, total_cost, tracking_id;
+        private TextView  id,status, category, lastname;
         OnSearchItemListener onSearchItemClickListener;
 
 
@@ -67,10 +66,11 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.LinearView
             id = itemView.findViewById(R.id.id);
             status = itemView.findViewById(R.id.status);
             category = itemView.findViewById(R.id.category);
-            item_info = itemView.findViewById(R.id.item_info);
-            shipping_method = itemView.findViewById(R.id.shipping_method);
-            total_cost = itemView.findViewById(R.id.total_cost);
-            tracking_id = itemView.findViewById(R.id.tracking_id);
+            lastname = itemView.findViewById(R.id.lastname);
+//            item_info = itemView.findViewById(R.id.item_info);
+//            shipping_method = itemView.findViewById(R.id.shipping_method);
+//            total_cost = itemView.findViewById(R.id.total_cost);
+//            tracking_id = itemView.findViewById(R.id.tracking_id);
 
 //            itemView.setOnClickListener( v -> {
 //                onSearchItemListener.onItemClick(getAdapterPosition(), SearchAdapter.this, itemView);
