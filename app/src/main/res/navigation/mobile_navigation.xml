@@ -19,6 +19,17 @@
         <action
             android:id="@+id/action_nav_home_to_nav_placeOrder"
             app:destination="@id/nav_placeOrder" />
+
+        <action
+            android:id="@+id/orderDetailAction"
+            app:destination="@id/nav_detail" >
+            <argument
+                android:name="orderId"
+                app:argType="integer"
+                android:defaultValue="0" />
+        </action>
+
+
     </fragment>
 
 
@@ -84,6 +95,10 @@
             app:destination="@+id/nav_home"
             app:popUpTo="@+id/nav_home"
             app:popUpToInclusive="true"/>
+        <argument
+            android:name="orderId"
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"

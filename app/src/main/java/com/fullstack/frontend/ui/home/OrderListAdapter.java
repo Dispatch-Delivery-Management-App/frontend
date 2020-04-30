@@ -1,6 +1,7 @@
 package com.fullstack.frontend.ui.home;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fullstack.frontend.R;
@@ -134,16 +136,28 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             itemHolder.order_id.setText(String.valueOf("Order ID: " + orderResponse.id));
             itemHolder.category.setText("Category: " + orderResponse.category);
             itemHolder.receiver.setText("Receiver: " + orderResponse.lastname);
-
-            //click to order detail
+            itemHolder.itemView.setTag(position);
+//
+//            // click to order detail
 //            itemHolder.itemView.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View v) {
-//                    if (listener != null) {
-//                        listener.OnItemClick(v, position, orderResponse.id);
-//                    }
+////                    if (listener != null) {
+////                        listener.OnItemClick(v, position);
+////                    }
 //                }
 //            });
+
+
+//            if (onItemClickListener != null) {
+//                itemHolder.itemView.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        onItemClickListener.OnItemClick(view, position);
+//                    }
+//                });
+//            }
+
         }
 
     }
@@ -172,6 +186,11 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 public void onClick(View v) {
                     if (onItemClickListener != null) {
                         onItemClickListener.OnItemClick(v);
+
+                        int orderId = Integer.parseInt(order_id.getText().toString());
+                        HomeFragmentDirections.OrderDetailAction action = HomeFragmentDirections.orderDetailAction();
+                        action.setId(orderId);
+                        Navigation.findNavController(v).navigate(action);
                     }
                 }
 
