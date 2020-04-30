@@ -7,25 +7,61 @@
     android:id="@+id/recommend"
     android:background="@color/white">
 
-    <TextView
-        android:id="@+id/plan"
-        android:layout_width="wrap_content"
+    <com.fullstack.frontend.ui.newOrder.EnhancedRadioGroup
+        android:id="@+id/cardGroup"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@id/button_orderConfirm"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="Recommendations"/>
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <include
+            android:id="@+id/recommendedPlan"
+            layout="@layout/new_order_recommend_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"/>
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" />
+
+        <include
+            android:id="@+id/cheapPlan"
+            layout="@layout/new_order_recommend_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"/>
+
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" />
+
+        <include
+            android:id="@+id/fastPlan"
+            layout="@layout/new_order_recommend_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"/>
+
+
+    </com.fullstack.frontend.ui.newOrder.EnhancedRadioGroup>
+
 
     <Button
         android:id="@+id/button_orderConfirm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Confirm"
+        android:layout_marginBottom="48dp"
+        android:text="@string/confirmButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/plan" />
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

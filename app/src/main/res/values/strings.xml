@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Dispatch</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -25,9 +25,6 @@
 
     <string name="re_type_password">Re-type Password</string>
 
-    <!--    place order-->
-
-
     <string name="register">Register</string>
     <string name="login">Login</string>
 
@@ -49,6 +46,17 @@
     <string name="zip">ZIP Code</string>
 
     <string name="showPrice_button">"Show Price"</string>
+
+    <!--    recommend plans-->
+    <string name="drone">Drone</string>
+    <string name="robot">Robot </string>
+    <string name="shippingMethod">Shipping Method</string>
+    <string name="times"> x </string>
+    <string name="confirmButton">Place Order </string>
+    <string name="best">Recommended</string>
+    <string name="cheap">Lowest Cost</string>
+    <string name="fast">Fastest Shipping</string>
+    <string name="station">Station:</string>
 
 
 </resources>
