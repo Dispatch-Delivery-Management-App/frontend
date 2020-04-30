@@ -41,27 +41,35 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         int i = 1;
         int j = 0;
-        itemHashmap.put(0, "draft");
+        itemHashmap.put(0, "Draft");
         while(j < orderResponses.size() && orderResponses.get((j)).status < 2){
             itemHashmap.put(i, orderResponses.get(j));
             i++;
             j++;
         }
-        itemHashmap.put(i, "notstart");
-        i++;
-        while(j < orderResponses.size() && orderResponses.get((j)).status < 3){
-            itemHashmap.put(i, orderResponses.get(j));
-            i++;
-            j++;
-        }
-        itemHashmap.put(i, "shipped");
+        itemHashmap.put(i, "Shipping");
         i++;
         while(j < orderResponses.size() && orderResponses.get((j)).status < 4){
             itemHashmap.put(i, orderResponses.get(j));
             i++;
             j++;
         }
-        itemHashmap.put(i, "complete");
+
+//        itemHashmap.put(i, "notstart");
+//        i++;
+//        while(j < orderResponses.size() && orderResponses.get((j)).status < 3){
+//            itemHashmap.put(i, orderResponses.get(j));
+//            i++;
+//            j++;
+//        }
+//        itemHashmap.put(i, "shipped");
+//        i++;
+//        while(j < orderResponses.size() && orderResponses.get((j)).status < 4){
+//            itemHashmap.put(i, orderResponses.get(j));
+//            i++;
+//            j++;
+//        }
+        itemHashmap.put(i, "Delivered");
         i++;
         while(j < orderResponses.size() && orderResponses.get((j)).status < 5){
             itemHashmap.put(i, orderResponses.get(j));
@@ -129,11 +137,10 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             if (orderResponse.status == 4) {
                 statusString = "complete";
             }
-            itemHolder.status.setText(statusString);
-            // Bug
-            itemHolder.order_id.setText(String.valueOf(orderResponse.id));
-            itemHolder.category.setText(orderResponse.category);
-            itemHolder.receiver.setText(orderResponse.lastname);
+            itemHolder.status.setText("Status: " + statusString);
+            itemHolder.order_id.setText(String.valueOf("Order ID: " + orderResponse.id));
+            itemHolder.category.setText("Category: " + orderResponse.category);
+            itemHolder.receiver.setText("Receiver: " + orderResponse.lastname);
         }
 
     }
