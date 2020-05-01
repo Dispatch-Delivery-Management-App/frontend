@@ -4,8 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@color/white"
+    android:background="@drawable/order_card_custom"
     android:padding="10dp"
+    android:layout_margin="10dp"
     >
 
     <TextView

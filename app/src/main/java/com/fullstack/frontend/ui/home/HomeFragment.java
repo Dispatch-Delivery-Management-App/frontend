@@ -148,7 +148,7 @@ public class HomeFragment extends Fragment {
         // set layoutManager
         mOrderListRV.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        mOrderListRV.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+//        mOrderListRV.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
 
         // item listener
         mOrderListAdapter.setOnItemClickListener(orderId -> {
