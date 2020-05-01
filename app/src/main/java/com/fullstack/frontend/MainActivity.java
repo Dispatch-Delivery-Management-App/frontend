@@ -23,6 +23,7 @@ import com.fullstack.frontend.Retro.ApiClient;
 import com.fullstack.frontend.Retro.ApiInterface;
 import com.fullstack.frontend.Retro.BaseResponse;
 import com.fullstack.frontend.Retro.TokenRequest;
+import com.fullstack.frontend.config.UserInfo;
 import com.fullstack.frontend.ui.address.ManageAddressFragment;
 import com.fullstack.frontend.ui.home.HomeFragment;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -56,41 +57,43 @@ public class MainActivity extends AppCompatActivity {
 
         setupNavigation();
 
-        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
-            @Override
-            public void onSuccess(InstanceIdResult instanceIdResult) {
-
-
-                Log.d("token", instanceIdResult.getToken());
-
-                ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-                TokenRequest request = new TokenRequest(1, instanceIdResult.getToken());
-                Call<BaseResponse> postToken = apiService.postToken(request);
-                postToken.enqueue(new Callback<BaseResponse>() {
-                    @RequiresApi(api = Build.VERSION_CODES.N)
-                    @Override
-                    public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
-                        if (response.isSuccessful()){
-
-                            Log.d("FirebaseService", "Send token: " + response.code());
-                        }
-                        if (response.body() != null) {
-                            Log.d("FirebaseService", "Send token: " + "Success");
-
-
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<BaseResponse> call, Throwable t) {
-
-                        Log.d("FirebaseService", "Send token failed");
-
-
-                    }
-                });
-            }
-        });
+//        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
+//            @Override
+//            public void onSuccess(InstanceIdResult instanceIdResult) {
+//
+//
+//                Log.d("token", instanceIdResult.getToken());
+//
+//                ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+//                //Log.d(TAG, "user id:" + UserInfo.getUser_id());
+//                TokenRequest request = new TokenRequest(UserInfo.getUser_id(), instanceIdResult.getToken());
+//                Log.d("11", "user id: " + UserInfo.getUser_id() + "token: " + instanceIdResult.getToken());
+//                Call<BaseResponse> postToken = apiService.postToken(request);
+//                postToken.enqueue(new Callback<BaseResponse>() {
+//                    @RequiresApi(api = Build.VERSION_CODES.N)
+//                    @Override
+//                    public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+//                        if (response.isSuccessful()){
+//
+//                            Log.d("FirebaseService", "Send token: " + response.code());
+//                        }
+//                        if (response.body() != null) {
+//                            Log.d("FirebaseService", "Send token: " + "Success");
+//
+//
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<BaseResponse> call, Throwable t) {
+//
+//                        Log.d("FirebaseService", "Send token failed");
+//
+//
+//                    }
+//                });
+//            }
+//        });
 
 
     }

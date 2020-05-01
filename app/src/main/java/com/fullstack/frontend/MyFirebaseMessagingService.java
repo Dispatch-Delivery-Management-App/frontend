@@ -24,6 +24,7 @@ package com.fullstack.frontend;
         import com.fullstack.frontend.Retro.OrderResponse;
         import com.fullstack.frontend.Retro.TokenRequest;
 
+        import com.fullstack.frontend.config.UserInfo;
         import com.google.firebase.messaging.FirebaseMessagingService;
         import com.google.firebase.messaging.RemoteMessage;
 
@@ -68,10 +69,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         if (remoteMessage.getData().size() > 0) {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
         }
-
         // Check if message contains a notification payload.
+        //Log.d(TAG, "1" + remoteMessage.getMessageType() );
+        Log.d(TAG, "Message data payload: " + remoteMessage.getMessageType());
         if (remoteMessage.getNotification() != null) {
-            sendNotification(remoteMessage);
+            Log.d(TAG, "11");
+            sendNotification(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
         }
     }
@@ -89,7 +92,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // TODO: Implement this method to send token to your app server.
 
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        TokenRequest request = new TokenRequest(1, token);
+
+        Log.d(TAG, "user id: " + UserInfo.getUser_id() + "token: " + token);
+        TokenRequest request = new TokenRequest(UserInfo.getUser_id(), token);
         Call<BaseResponse> postToken = apiService.postToken(request);
         postToken.enqueue(new Callback<BaseResponse>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -113,12 +118,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     /**
      * Create and show a simple notification containing the received FCM message.
      *
-     * @param remoteMessage FCM message body received.
+     * @param body FCM message body received.
      */
 
-    private void sendNotification(RemoteMessage remoteMessage) {
-        String type = remoteMessage.getData().get("type");
-        String description = remoteMessage.getData().get("description");
+    private void sendNotification(String title, String body) {
+//        String type = remoteMessage.getData().get("type");
+//        String description = remoteMessage.getData().get("description");
 
         Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
@@ -143,10 +148,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
                 .setSmallIcon(R.drawable.notification_icon)
-                .setContentTitle(type)
+                .setContentTitle(title)
                 .setAutoCancel(true)
                 .setSound(defaultSound)
-                .setContentText(description)
+                .setContentText(body)
                 .setContentIntent(pendingIntent)
                 .setWhen(System.currentTimeMillis())
                 .setPriority(Notification.PRIORITY_MAX);
