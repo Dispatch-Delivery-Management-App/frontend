@@ -68,7 +68,8 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
     List<OrderMapResponse.LatLong> first;
     List<OrderMapResponse.LatLong> second;
 
-
+    double first_lat1, first_lng1, first_lat2, first_lng2;
+    double second_lat1, second_lng1, second_lat2, second_lng2;
     public static OrderDetailFragment newInstance(Response response){
         Bundle args = new Bundle();
         OrderDetailFragment fragment = new OrderDetailFragment();
@@ -77,20 +78,11 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
     }
 
 
-
-    double first_lat1, first_lng1, first_lat2, first_lng2;
-    double second_lat1, second_lng1, second_lat2, second_lng2;
-
-
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View v =  inflater.inflate(R.layout.order_detail_fragment, container,
                 false);
-        int order_ID = OrderDetailFragmentArgs.fromBundle(getArguments()).getOrderId();
-
-
-
+        int ID = OrderDetailFragmentArgs.fromBundle(getArguments()).getOrderId();
         TextView orderID = (TextView) v.findViewById(R.id.OrderID_filling);
         TextView createdTime = (TextView) v.findViewById(R.id.create_time_filling);
         TextView status = (TextView) v.findViewById(R.id.status_filling);
@@ -101,84 +93,76 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
 
 
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        Call<BaseResponse<OrderMapResponse>> orderMapResponse = apiService.postOrderMap(new OrderMapRequest(order_ID));
-        orderMapResponse.enqueue(new Callback<BaseResponse<OrderMapResponse>>() {
-
-            @Override
-            public void onResponse(Call<BaseResponse<OrderMapResponse>> call, retrofit2.Response<BaseResponse<OrderMapResponse>> response) {
-                if (response.isSuccessful()) {
-                    OrderMapResponse response2 = response.body().response;
-                    latitude = response2.tracking.lat;
-                    longitude = response2.tracking.lng;
-
-                    first = response2.first_part;
-                    second = response2.second_part;
-                    int a = first.size();
-
-                    Iterator iterator = first.iterator();
-//                    while(iterator.hasNext()) {
-//                        double l = iterator.next().;
-//                        Log.d("test:::::", String.valueOf(l));
-//                    }
-
-
-                }
-
-            }
-
-            public void onFailure(Call<BaseResponse<com.fullstack.frontend.Retro.OrderMapResponse>> call, Throwable t) {
-
-
-            }
-        });
-
-
-        Call<BaseResponse<OrderDetailResponse>> orderDetailResponse = apiService.postOrderDetail(new OrderDetailRequest(order_ID));
+        Call<BaseResponse<OrderDetailResponse>> orderDetailResponse = apiService.postOrderDetail(new OrderDetailRequest(ID));
         orderDetailResponse.enqueue(new Callback<BaseResponse<OrderDetailResponse>>() {
             @Override
             public void onResponse(Call<BaseResponse<OrderDetailResponse>> call, retrofit2.Response<BaseResponse<OrderDetailResponse>> response) {
                 if (response.isSuccessful()) {
                     OrderDetailResponse response1 = response.body().response;
                     orderID.setText(String.valueOf(response1.id));
-                    createdTime.setText(String.valueOf(response1.create_time));
-                    status.setText(String.valueOf(response1.status));
+                    String times = String.valueOf(response1.create_time);
+                    String date = times.substring(0, 10);
+                    String time = times.substring(11,19);
+                    createdTime.setText(String.valueOf(date+" " + time));
+                    if(response1.status == 1){
+                        status.setText("Draft");
+                    } else  if(response1.status == 2){
+                        status.setText("NOT STARTED");
+                    } if(response1.status == 2){
+                        status.setText("SHIPPED");
+                    } if(response1.status == 3){
+                        status.setText("Completed");
+                    }
                     category.setText(String.valueOf(response1.category));
                     payment.setText(String.valueOf(response1.totalCost));
+
+                    //Log.d("test::::::::", String.valueOf(response1));
                     from_address.setText(String.valueOf(response1.from_address));
                     to_address.setText(String.valueOf(response1.to_address));
+
                 }
             }
-
             @Override
             public void onFailure(Call<BaseResponse<com.fullstack.frontend.Retro.OrderDetailResponse>> call, Throwable t) {
                 Log.d("test:::", "failed to load from server");
             }
         });
-
-
         return v;
     }
 
-
-
+    //calling map api
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
+        int ID = OrderDetailFragmentArgs.fromBundle(getArguments()).getOrderId();
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        Call<BaseResponse<OrderMapResponse>> orderMapResponse = apiService.postOrderMap(new OrderMapRequest(ID));
+        orderMapResponse.enqueue(new Callback<BaseResponse<OrderMapResponse>>() {
+            @Override
+            public void onResponse(Call<BaseResponse<OrderMapResponse>> call, retrofit2.Response<BaseResponse<OrderMapResponse>> response) {
+                if (response.isSuccessful()) {
+                    OrderMapResponse response2 = response.body().response;
+                    latitude = response2.tracking.lat;
+                    longitude = response2.tracking.lng;
+                    first = response2.get_first_part();
+                    second = response2.get_second_part();
+                    Log.d("test1:::", String.valueOf(latitude));
+                }
+            }
+            public void onFailure(Call<BaseResponse<com.fullstack.frontend.Retro.OrderMapResponse>> call, Throwable t) {
+            }
+        });
 
         mapView = (MapView) view.findViewById(R.id.event_map_view);
         if (mapView != null) {
             mapView.onCreate(null);
-            mapView.onResume();// needed to get the map to display immediately
+            mapView.onResume();
             mapView.getMapAsync(this);
         }
-
 
         NavController navController = Navigation.findNavController(view);
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
             public void handleOnBackPressed() {
-                // Handle the back button event
                 Log.d("Test","BACKK");
                 navController.navigate(R.id.detail_to_home);
             }
@@ -187,55 +171,50 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
     }
 
 
+
     public void onMapReady(GoogleMap googleMap) {
         MapsInitializer.initialize(getContext());
 
+        Log.d("test2:::", String.valueOf(latitude));
 
-// Create marker on google map
         MarkerOptions marker = new MarkerOptions().position(
-                new LatLng(latitude, longitude)).title("arrived");
+                new LatLng(latitude, longitude)
+        ).title("arrived");
 
+//        MarkerOptions marker2 = new MarkerOptions().position(
+//                new LatLng(first.get(1).lat, first.get(1).lng)
+//        ).title("first");
 
-        // Change marker Icon on google map
+        Log.d("map", String.valueOf(latitude));
+        Log.d("map2", String.valueOf(longitude));
+
         marker.icon(BitmapDescriptorFactory
                 .defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
+//
+//        marker2.icon(BitmapDescriptorFactory
+//                .defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
 
-        // Add marker to google map
         googleMap.addMarker(marker);
+//        googleMap.addMarker(marker2);
 
-
-        // Set up camera configuration, set camera to lat and lng, and set Zoom to 12
         CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(new LatLng(latitude, longitude)).zoom(12).build();
+                .target(new LatLng(latitude, longitude)).zoom(2).build();
 
-        // Animate the zoom process
         googleMap.animateCamera(CameraUpdateFactory
                 .newCameraPosition(cameraPosition));
 
-        // Add polylines and polygons to the map. This section shows just
-        // a single polyline. Read the rest of the tutorial to learn more.
-        Polyline polyline1 = googleMap.addPolyline(new PolylineOptions()
-                .clickable(true)
-                .add(
 
-                        new LatLng( first_lat1,  first_lng1),
-                        new LatLng(first_lat2, first_lng2),
-                        new LatLng(second_lat1,second_lng1),
-                        new LatLng(second_lat2, second_lng2)
-        ));
+//        //add map route
+//        Polyline polyline1 = googleMap.addPolyline(new PolylineOptions()
+//                .clickable(true)
+//                .add(
+//                        new LatLng( first_lat1, first_lng1),
+//                        new LatLng( first_lat2, first_lng2)
+//        ));
+//        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 10));
+//        googleMap.setOnPolylineClickListener(this);
 
-
-        // Position the map's camera near Alice Springs in the center of Australia,
-        // and set the zoom factor so most of Australia shows on the screen.
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 10));
-
-        // Set listeners for click events.
-        googleMap.setOnPolylineClickListener(this);
-        googleMap.setOnPolygonClickListener(this);
     }
-
-
-
 
 
     @Override
