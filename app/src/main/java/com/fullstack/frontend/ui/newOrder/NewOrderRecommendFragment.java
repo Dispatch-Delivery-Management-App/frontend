@@ -82,26 +82,32 @@ public class NewOrderRecommendFragment extends BaseFragment<NewOrderRecommendVie
         buttonConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setRequest(request);
-                viewModel.confirmOrder(request);
-                Navigation.findNavController(v).navigate(R.id.any_to_detail);
+                boolean chosen = setRequest(request);
+                if (chosen){
+                    viewModel.confirmOrder(request);
+                    Navigation.findNavController(v).navigate(R.id.any_to_detail);
+                }
             }
         });
     }
 
-    private void setRequest(GetPlansRequest request) {
-        Plan plan;
+    private boolean setRequest(GetPlansRequest request) {
+        Plan plan = null;
         int selectedID =  binding.cardGroup.getCheckedRadioButtonId();
         if (selectedID == binding.recommendedPlan.radioButton5.getId()){
             plan = viewModel.getBest();
         }else if (selectedID == binding.cheapPlan.radioButton5.getId()){
             plan = viewModel.getCheap();
-        }else {
+        }else if (selectedID == binding.fastPlan.radioButton5.getId()){
             plan = viewModel.getFast();
         }
+//        if (plan == null){
+//            return false;
+//        }
         request.amount = plan.amount;
         request.station = plan.station;
         request.shipping_method = plan.shipping_method;
+        return true;
     }
 
     private void inflatePlan(Plan plan) {

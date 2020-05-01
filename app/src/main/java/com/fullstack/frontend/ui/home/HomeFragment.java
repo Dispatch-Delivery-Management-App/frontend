@@ -117,7 +117,8 @@ public class HomeFragment extends Fragment {
         });
 
         initRecyclerView();
-
+        ((MainActivity) getActivity()).triggerDrawer(true);
+        ((MainActivity) getActivity()).triggerTitleBar(true);
         return root;
     }
 

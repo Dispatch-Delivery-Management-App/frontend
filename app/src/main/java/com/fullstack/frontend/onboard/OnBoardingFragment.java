@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.fullstack.frontend.MainActivity;
 import com.fullstack.frontend.R;
 import com.fullstack.frontend.databinding.FragmentOnBoardingBinding;
 import com.fullstack.frontend.onboard.login.LoginFragment;
@@ -60,6 +61,8 @@ public class OnBoardingFragment extends Fragment {
         pageAdapter.addOnBoardingFragment(new LoginFragment());
         pageAdapter.addOnBoardingFragment(new RegisterFragment());
         viewPager.setAdapter(pageAdapter);
+        ((MainActivity) getActivity()).triggerDrawer(false);
+        ((MainActivity) getActivity()).triggerTitleBar(false);
         return view;
     }
 }
