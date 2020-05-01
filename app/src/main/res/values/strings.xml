@@ -60,5 +60,8 @@
     <string name="fee">Fee:</string>
     <string name="duration">Duration:</string>
 
+    <!--    Address Related-->
+    <string name="myAddressesButton">Choose from recent addresses</string>
+    <string name="confirmAddressButton">Confirm</string>
 
 </resources>

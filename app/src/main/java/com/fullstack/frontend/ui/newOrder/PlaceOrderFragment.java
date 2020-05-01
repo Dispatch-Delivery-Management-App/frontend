@@ -31,6 +31,7 @@ import com.fullstack.frontend.Retro.newOrder.Plan;
 import com.fullstack.frontend.base.BaseFragment;
 import com.fullstack.frontend.config.UserInfo;
 import com.fullstack.frontend.databinding.PlaceOrderFragmentBinding;
+import com.fullstack.frontend.ui.address.ModalAddressesListDialogFragment;
 
 import java.util.List;
 
@@ -86,10 +87,19 @@ public class PlaceOrderFragment extends BaseFragment<PlaceOrderViewModel, PlaceO
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        Button fromAddressBookButton = binding.fromAddForm.chooseAddressButton;
+        Button toAddressBookButton = binding.toAddForm.chooseAddressButton;
+
+        fromAddressBookButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ModalAddressesListDialogFragment.newInstance(30).show((requireActivity()).getSupportFragmentManager(), "dialog");
+            }
+        });
+
 
         //Next Step Button
-        Button confirmButton = getActivity().findViewById(R.id.button_showRecommend);
-
+        Button confirmButton = binding.buttonShowRecommend;
         //Click Button Next Step
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
