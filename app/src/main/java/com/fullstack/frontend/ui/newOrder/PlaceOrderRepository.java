@@ -2,13 +2,11 @@ package com.fullstack.frontend.ui.newOrder;
 
 import android.util.Log;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.fullstack.frontend.Retro.BaseResponse;
-import com.fullstack.frontend.Retro.ConfirmOrderRequest;
-import com.fullstack.frontend.Retro.GetPlansRequest;
-import com.fullstack.frontend.Retro.Plan;
+import com.fullstack.frontend.Retro.newOrder.GetPlansRequest;
+import com.fullstack.frontend.Retro.newOrder.Plan;
 import com.fullstack.frontend.base.BaseRepository;
 
 import java.util.List;

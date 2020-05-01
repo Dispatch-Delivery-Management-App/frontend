@@ -1,15 +1,15 @@
 package com.fullstack.frontend.Retro;
 
+import com.fullstack.frontend.Retro.newOrder.AddressListRequest;
+import com.fullstack.frontend.Retro.newOrder.AddressResponse;
+import com.fullstack.frontend.Retro.newOrder.GetPlansRequest;
+import com.fullstack.frontend.Retro.newOrder.Plan;
+
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
-import retrofit2.http.Query;
 
 public interface ApiInterface {
 
@@ -37,10 +37,13 @@ public interface ApiInterface {
 
 
     @POST("/api/placeorder/")
-    Call<BaseResponse<String>> confirmOrder(@Body GetPlansRequest confirmOrderRequest);
+    Call<BaseResponse<Integer>> confirmOrder(@Body GetPlansRequest confirmOrderRequest);
 
 
     @POST("/api/search/")
     Call<BaseResponse<List<SearchResponse>>> search(@Body SearchRequest searchRequest);
+
+    @POST("/api/address-list/")
+    Call<BaseResponse<List<AddressResponse>>> getAddressList(@Body AddressListRequest addressListRequest);
 
 }

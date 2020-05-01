@@ -1,4 +1,4 @@
-package com.fullstack.frontend.Retro;
+package com.fullstack.frontend.Retro.newOrder;
 
 import java.io.Serializable;
 
@@ -17,4 +17,5 @@ public class GetPlansRequest implements Serializable {
     public String shipping_method;
     public int amount;
     public int station;
+    public double fee;
 }
