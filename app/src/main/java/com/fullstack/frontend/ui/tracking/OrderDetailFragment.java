@@ -30,7 +30,7 @@ import com.fullstack.frontend.databinding.OrderDetailFragmentBinding;
 
 
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationRequest;
+// import com.google.android.gms.location.LocationRequest;
 import com.fullstack.frontend.ui.home.HomeFragment;
 
 

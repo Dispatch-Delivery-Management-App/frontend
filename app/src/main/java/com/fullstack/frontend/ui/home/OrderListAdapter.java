@@ -189,7 +189,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
                         int orderId = Integer.parseInt(order_id.getText().toString());
                         HomeFragmentDirections.OrderDetailAction action = HomeFragmentDirections.orderDetailAction();
-                        action.setId(orderId);
+                        action.setOrderId(orderId);
                         Navigation.findNavController(v).navigate(action);
                     }
                 }
