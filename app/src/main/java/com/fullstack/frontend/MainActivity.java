@@ -59,7 +59,9 @@ public class MainActivity extends AppCompatActivity {
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
             @Override
             public void onSuccess(InstanceIdResult instanceIdResult) {
-                Log.d("test", instanceIdResult.getToken());
+
+                Log.d("token", instanceIdResult.getToken());
+
                 ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
                 TokenRequest request = new TokenRequest(1, instanceIdResult.getToken());
                 Call<BaseResponse> postToken = apiService.postToken(request);

@@ -193,6 +193,21 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             category = itemView.findViewById(R.id.category);
             receiver = itemView.findViewById(R.id.receiver);
 
+            // itemView.setOnClickListener(new View.OnClickListener() {
+            //     @Override
+            //     public void onClick(View v) {
+            //         if (onItemClickListener != null) {
+            //             onItemClickListener.OnItemClick(v);
+
+            //             int orderId = Integer.parseInt(order_id.getText().toString());
+            //             HomeFragmentDirections.OrderDetailAction action = HomeFragmentDirections.orderDetailAction();
+            //             action.setOrderId(orderId);
+            //             Navigation.findNavController(v).navigate(action);
+            //         }
+            //     }
+
+            // });
+
         }
     }
 
