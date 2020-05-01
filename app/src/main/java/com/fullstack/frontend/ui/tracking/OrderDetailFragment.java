@@ -125,7 +125,7 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
                         status.setText("Completed");
                     }
                     category.setText(String.valueOf(response1.category));
-                    payment.setText(String.valueOf(response1.totalCost));
+                    payment.setText(String.valueOf(response1.total_cost));
                     String fromAddress = response1.from_street + '\n' + response1.from_city +   '\n' + response1.from_state + " " +String.valueOf(response1.from_zipcode);
                     from_address.setText(fromAddress);
                     String toAddress = response1.to_street + '\n' + response1.to_city +   '\n' + response1.to_state + " " + String.valueOf(response1.to_zipcode);

@@ -8,7 +8,7 @@ public class OrderDetailResponse {
     }
 
     public long id;
-    public long User_id;
+    public long user_id;
 
     public String from_street;
     public String from_city;
@@ -33,7 +33,7 @@ public class OrderDetailResponse {
     public long station_id;
     public String shipping_method;
     public int shipping_member;
-    public double totalCost;
+    public double total_cost;
     public int feedback;
 
 //    public long get_id(){

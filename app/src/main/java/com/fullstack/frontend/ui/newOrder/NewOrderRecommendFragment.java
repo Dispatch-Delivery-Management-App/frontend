@@ -1,9 +1,8 @@
 package com.fullstack.frontend.ui.newOrder;
 
-import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
 
@@ -11,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.navigation.Navigation;
 
-import android.os.Debug;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,14 +18,11 @@ import android.widget.Button;
 import android.widget.RadioButton;
 
 import com.fullstack.frontend.R;
-import com.fullstack.frontend.Retro.ConfirmOrderRequest;
-import com.fullstack.frontend.Retro.GetPlansRequest;
-import com.fullstack.frontend.Retro.Plan;
+import com.fullstack.frontend.Retro.newOrder.GetPlansRequest;
+import com.fullstack.frontend.Retro.newOrder.Plan;
 import com.fullstack.frontend.base.BaseFragment;
 import com.fullstack.frontend.databinding.NewOrderRecommendCardBinding;
 import com.fullstack.frontend.databinding.NewOrderRecommendFragmentBinding;
-
-import java.util.List;
 
 public class NewOrderRecommendFragment extends BaseFragment<NewOrderRecommendViewModel,ConfirmOrderRepository> {
     private NewOrderRecommendFragmentBinding binding;
@@ -87,8 +82,14 @@ public class NewOrderRecommendFragment extends BaseFragment<NewOrderRecommendVie
             public void onClick(View v) {
                     setRequest(request);
                     viewModel.confirmOrder(request);
-                    Log.d("TTT","wt");
-                    Navigation.findNavController(v).navigate(R.id.any_to_detail);
+                NewOrderRecommendFragmentDirections.RecommendToDetail action = NewOrderRecommendFragmentDirections.recommendToDetail();
+                viewModel.getOrder_id().observe(requireActivity(), new Observer<Integer>() {
+                    @Override
+                    public void onChanged(Integer integer) {
+                        action.setOrderId(integer);
+                        Navigation.findNavController(v).navigate(action);
+                    }
+                });
 
             }
         });
@@ -117,6 +118,7 @@ public class NewOrderRecommendFragment extends BaseFragment<NewOrderRecommendVie
         request.amount = plan.amount;
         request.station = plan.station;
         request.shipping_method = plan.shipping_method;
+        request.fee = plan.fee;
     }
 
     private void inflatePlan(Plan plan) {
