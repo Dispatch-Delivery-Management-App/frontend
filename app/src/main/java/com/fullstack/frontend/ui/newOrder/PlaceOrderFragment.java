@@ -25,13 +25,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.ashokvarma.gander.Gander;
-import com.ashokvarma.gander.imdb.GanderIMDB;
-import com.ashokvarma.gander.persistence.GanderPersistence;
 import com.fullstack.frontend.R;
-import com.fullstack.frontend.Retro.GetPlansRequest;
-import com.fullstack.frontend.Retro.MyApp;
-import com.fullstack.frontend.Retro.Plan;
+import com.fullstack.frontend.Retro.newOrder.GetPlansRequest;
+import com.fullstack.frontend.Retro.newOrder.Plan;
 import com.fullstack.frontend.base.BaseFragment;
 import com.fullstack.frontend.config.UserInfo;
 import com.fullstack.frontend.databinding.PlaceOrderFragmentBinding;

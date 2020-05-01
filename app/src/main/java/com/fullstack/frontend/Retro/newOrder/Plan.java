@@ -1,4 +1,4 @@
-package com.fullstack.frontend.Retro;
+package com.fullstack.frontend.Retro.newOrder;
 
 import android.os.Parcel;
 import android.os.Parcelable;

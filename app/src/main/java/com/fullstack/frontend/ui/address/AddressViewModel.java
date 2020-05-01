@@ -4,16 +4,24 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class AddressViewModel extends ViewModel {
+import com.fullstack.frontend.Retro.newOrder.AddressListRequest;
+import com.fullstack.frontend.Retro.newOrder.AddressResponse;
+import com.fullstack.frontend.base.BaseViewModel;
 
-    private MutableLiveData<String> mText;
+import java.util.List;
 
-    public AddressViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is gallery fragment");
+public class AddressViewModel extends BaseViewModel<AddressListRepository> {
+
+    private MutableLiveData<List<AddressResponse>> addresses;
+
+    protected AddressViewModel(AddressListRepository baseRepository) {
+        super(baseRepository);
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public void getOrders(AddressListRequest request) {
+        repository.getAddresses(request,addresses);
+    }
+    public MutableLiveData<List<AddressResponse>> getAddresses(){
+        return addresses;
     }
 }

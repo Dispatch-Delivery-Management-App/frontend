@@ -3,8 +3,7 @@ package com.fullstack.frontend.ui.newOrder;
 import android.util.Log;
 
 import com.fullstack.frontend.Retro.BaseResponse;
-import com.fullstack.frontend.Retro.ConfirmOrderRequest;
-import com.fullstack.frontend.Retro.GetPlansRequest;
+import com.fullstack.frontend.Retro.newOrder.GetPlansRequest;
 import com.fullstack.frontend.base.BaseRepository;
 
 import retrofit2.Call;
