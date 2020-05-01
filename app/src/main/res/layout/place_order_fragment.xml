@@ -38,10 +38,10 @@
             <TextView
                 android:id="@+id/shipFrom"
                 android:layout_width="match_parent"
-                android:layout_height="32dp"
+                android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_regular"
                 android:text="@string/from"
-                android:textStyle="bold"
+                android:textSize="@dimen/place_order_header"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="16dp" />
 
@@ -52,10 +52,10 @@
             <TextView
                 android:id="@+id/shipTo"
                 android:layout_width="match_parent"
-                android:layout_height="32dp"
+                android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_regular"
                 android:text="@string/to"
-                android:textStyle="bold"
+                android:textSize="@dimen/place_order_header"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="16dp" />
 
@@ -68,6 +68,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_regular"
                 android:text="@string/pack"
+                android:textSize="@dimen/place_order_header"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="16dp" />
 
@@ -100,6 +101,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_regular"
                 android:text="@string/window"
+                android:textSize="@dimen/place_order_header"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="16dp" />
 
