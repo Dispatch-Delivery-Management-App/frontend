@@ -6,6 +6,7 @@ import android.content.Context;
 import com.ashokvarma.gander.Gander;
 import com.ashokvarma.gander.imdb.GanderIMDB;
 import com.ashokvarma.gander.persistence.GanderPersistence;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class MyApp extends Application {
     private static MyApp instance;
@@ -26,5 +27,8 @@ public class MyApp extends Application {
         Gander.setGanderStorage(GanderPersistence.getInstance(MyApp.getContext()));
 // For In Memory DB (Data retained in memory lost on app close)
         Gander.setGanderStorage(GanderIMDB.getInstance());
+
+        FirebaseMessaging.getInstance().subscribeToTopic("android");
+
     }
 }
