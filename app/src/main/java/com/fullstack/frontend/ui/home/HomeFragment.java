@@ -23,6 +23,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -150,7 +151,11 @@ public class HomeFragment extends Fragment {
         mOrderListRV.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
 
         // item listener
-        mOrderListAdapter.setOnItemClickListener(view -> Navigation.findNavController(view).navigate(R.id.nav_detail));
+        mOrderListAdapter.setOnItemClickListener(orderId -> {
+            HomeFragmentDirections.OrderDetailAction action = HomeFragmentDirections.orderDetailAction();
+            action.setOrderId(orderId);
+            NavHostFragment.findNavController(HomeFragment.this).navigate(action);
+        });
 
 
         homeViewModel.getOrders().observe(getViewLifecycleOwner(), orderResponses -> {
