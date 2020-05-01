@@ -59,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
             @Override
             public void onSuccess(InstanceIdResult instanceIdResult) {
+
+
                 Log.d("token", instanceIdResult.getToken());
 
                 ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
@@ -69,17 +71,21 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
                         if (response.isSuccessful()){
+
                             Log.d("FirebaseService", "Send token: " + response.code());
                         }
                         if (response.body() != null) {
                             Log.d("FirebaseService", "Send token: " + "Success");
+
 
                         }
                     }
 
                     @Override
                     public void onFailure(Call<BaseResponse> call, Throwable t) {
+
                         Log.d("FirebaseService", "Send token failed");
+
 
                     }
                 });
