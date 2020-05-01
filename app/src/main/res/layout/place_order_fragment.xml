@@ -19,11 +19,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                app:boxBackgroundMode="outline">
 
                 <EditText
                     android:id="@+id/item_info"
@@ -32,8 +34,8 @@
                     android:ems="10"
                     android:hint="@string/item_info"
                     android:inputType="textPersonName" />
-
             </com.google.android.material.textfield.TextInputLayout>
+
 
             <TextView
                 android:id="@+id/shipFrom"
@@ -42,6 +44,7 @@
                 android:fontFamily="@font/roboto_regular"
                 android:text="@string/from"
                 android:textSize="@dimen/place_order_header"
+                android:textStyle="bold"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="16dp" />
 
@@ -56,6 +59,7 @@
                 android:fontFamily="@font/roboto_regular"
                 android:text="@string/to"
                 android:textSize="@dimen/place_order_header"
+                android:textStyle="bold"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="16dp" />
 
@@ -69,13 +73,15 @@
                 android:fontFamily="@font/roboto_regular"
                 android:text="@string/pack"
                 android:textSize="@dimen/place_order_header"
+                android:textStyle="bold"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="16dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="10dp">
 
                 <EditText
                     android:id="@+id/pack_weight"
@@ -102,13 +108,15 @@
                 android:fontFamily="@font/roboto_regular"
                 android:text="@string/window"
                 android:textSize="@dimen/place_order_header"
+                android:textStyle="bold"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="16dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="10dp">
 
                 <Spinner
                     android:id="@+id/pickup_day"
@@ -131,12 +139,18 @@
                 <Button
                     android:id="@+id/button_showRecommend"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="55dp"
                     android:text="@string/showPrice_button"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
+
+
     </ScrollView>
 
 
