@@ -37,7 +37,7 @@ public interface ApiInterface {
 
 
     @POST("/api/placeorder/")
-    Call<BaseResponse<String>> confirmOrder(@Body GetPlansRequest confirmOrderRequest);
+    Call<BaseResponse<Integer>> confirmOrder(@Body GetPlansRequest confirmOrderRequest);
 
 
     @POST("/api/search/")
