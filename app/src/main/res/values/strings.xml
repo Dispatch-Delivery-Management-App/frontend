@@ -57,6 +57,8 @@
     <string name="cheap">Lowest Cost</string>
     <string name="fast">Fastest Shipping</string>
     <string name="station">Station:</string>
+    <string name="fee">Fee:</string>
+    <string name="duration">Duration:</string>
 
 
 </resources>

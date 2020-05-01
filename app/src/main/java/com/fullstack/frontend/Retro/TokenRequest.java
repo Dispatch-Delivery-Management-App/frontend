@@ -1,6 +1,6 @@
 package com.fullstack.frontend.Retro;
 
-class TokenRequest {
+public class TokenRequest {
     public int user_id;
     public String token;
 
