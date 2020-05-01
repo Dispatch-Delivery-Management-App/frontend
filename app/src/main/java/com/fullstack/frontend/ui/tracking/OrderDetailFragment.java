@@ -71,16 +71,12 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
     MutableLiveData<Double> liveLONG = new MutableLiveData<>();
     List<OrderMapResponse.LatLong> first;
     List<OrderMapResponse.LatLong> second;
-    double a;
-
-    //double[] target = new double[doubles.size()]
+    
     double[] lat_list;
     double[] lng_list;
 
-    double b;
 
-//    double first_lat1, first_lng1, first_lat2, first_lng2;
-//    double second_lat1, second_lng1, second_lat2, second_lng2;
+
     public static OrderDetailFragment newInstance(Response response){
         Bundle args = new Bundle();
         OrderDetailFragment fragment = new OrderDetailFragment();
@@ -161,22 +157,24 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
                     first = response2.first_part;
                     second = response2.second_part;
 
-                    Log.d("test1:::", String.valueOf(latitude));
                     liveLAT.postValue(response2.tracking.lat);
                     liveLONG.postValue(response2.tracking.lng);
 
-//                   lat_list = new double[first.size() + second.size()];
-//                    lng_list = new double[first.size() + second.size()];
-//
-//                    a = first.get(0).lat;
-//                    lat_list[0] = (a);
-//                    a = first.get(1).lat;
-//                    lat_list[1] = (a);
-//
-//                    b =  first.get(0).lng;
-//                    lng_list[0] = b;
-//                    b =  first.get(1).lng;
-//                    lng_list[1] = b;
+                    lat_list = new double[first.size() + second.size()];
+                    lng_list = new double[first.size() + second.size()];
+
+
+                    int j = 0;
+                    for(int i = 0; i < first.size() + second.size(); i++){
+                        if(i < first.size()){
+                                lat_list[i] = first.get(i).lat;
+                                lng_list[i] = first.get(i).lng;
+                        } else{
+                                lat_list[i] = second.get(j).lat;
+                                lng_list[i] = second.get(j).lng;
+                                j++;
+                        }
+                    }
 
 
 
@@ -206,9 +204,6 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
 
 
     }
-
-
-
 
 
 
@@ -245,71 +240,57 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
                     Log.d("test5:::", liveLAT.getValue().toString());
                     MarkerOptions marker = new MarkerOptions().position(
                             new LatLng(liveLAT.getValue(), liveLONG.getValue())
-                    ).title("arrived");
+                    ).title("TRACKING");
 
-                    marker.icon(BitmapDescriptorFactory
-                            .defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
+//                    MarkerOptions fromMarker = new MarkerOptions().position(
+//                        new LatLng(a,b)
+//                    ).title("FROM");
 
-                    googleMap.addMarker(marker);
+                     marker.icon(BitmapDescriptorFactory
+                             .defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
+
+//                 //   fromMarker.icon(BitmapDescriptorFactory
+//                    .defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
+
+                     googleMap.addMarker(marker);
+//                     googleMap.addMarker(fromMarker);
+
+
                     CameraPosition cameraPosition = new CameraPosition.Builder()
-                            .target(new LatLng(latitude, longitude)).zoom(2).build();
+                            .target(new LatLng(latitude, longitude)).zoom(10).build();
 
                     googleMap.animateCamera(CameraUpdateFactory
                             .newCameraPosition(cameraPosition));
-                    Log.d("test5:::", marker.getPosition().toString());
+
+
+                    PolylineOptions line = new PolylineOptions();
+                    line.add(new LatLng( latitude , longitude ));
+                    for(int i = 0; i < first.size() + second.size(); i++){
+                        line.add(new LatLng( lat_list[i] , lng_list[i]));
+                    }
+
+
+                    Polyline polyline = googleMap.addPolyline(line);
+                    polyline.setClickable(true);
                 }
 
 
             }
         });
 
+//        Log.d("map", String.valueOf(latitude));
+//        Log.d("map2", String.valueOf(longitude));
 
-
-        Log.d("map", String.valueOf(latitude));
-        Log.d("map2", String.valueOf(longitude));
-//
-//        //Display Marker
-//        MarkerOptions marker = new MarkerOptions().position(
-//                new LatLng(latitude, longitude)
-//        ).title("TRACKING");
-//
-//        MarkerOptions fromMarker = new MarkerOptions().position(
-//                new LatLng(a,b)
-//        ).title("FROM");
-//
-//        marker.icon(BitmapDescriptorFactory
-//                .defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
-//
-//        fromMarker.icon(BitmapDescriptorFactory
-//                .defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
-//        googleMap.addMarker(marker);
-//
-//        googleMap.addMarker(fromMarker);
 
         CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(new LatLng(latitude,longitude)).zoom(2).build();
+                .target(new LatLng(latitude,longitude)).zoom(10).build();
 
         googleMap.animateCamera(CameraUpdateFactory
                 .newCameraPosition(cameraPosition));
 
 
-
-
-
-//        PolylineOptions line = new PolylineOptions();
-//        line.add(new LatLng( latitude , longitude ));
-//        for(int i = 0; i < 2; i++){
-//            line.add(new LatLng( lat_list[i] , lng_list[i]));
-//
-//        }
-//
-//
-//        Polyline polyline = googleMap.addPolyline(line);
-//        polyline.setClickable(true);
-//
-//
-//        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude), 6));
-//        googleMap.setOnPolylineClickListener(this);
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude), 10));
+        googleMap.setOnPolylineClickListener(this);
 
     }
 
