@@ -1,6 +1,5 @@
 package com.fullstack.frontend.ui.home;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -23,6 +22,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,7 +38,6 @@ import com.fullstack.frontend.Retro.OrderResponse;
 import com.fullstack.frontend.ui.search.SearchAdapter;
 import com.fullstack.frontend.ui.search.SearchRepository;
 import com.fullstack.frontend.ui.search.SearchViewModel;
-import com.fullstack.frontend.ui.tracking.OrderDetailFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -64,6 +63,7 @@ public class HomeFragment extends Fragment {
     private View root;
     private RecyclerView mOrderListRV;
     private OrderListAdapter mOrderListAdapter;
+
 
     @Nullable
     @Override
@@ -150,7 +150,11 @@ public class HomeFragment extends Fragment {
         mOrderListRV.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
 
         // item listener
-        mOrderListAdapter.setOnItemClickListener(view -> Navigation.findNavController(view).navigate(R.id.nav_detail));
+        mOrderListAdapter.setOnItemClickListener(orderId -> {
+            HomeFragmentDirections.OrderDetailAction action = HomeFragmentDirections.orderDetailAction();
+            action.setOrderId(orderId);
+            NavHostFragment.findNavController(HomeFragment.this).navigate(action);
+        });
 
 
         homeViewModel.getOrders().observe(getViewLifecycleOwner(), orderResponses -> {

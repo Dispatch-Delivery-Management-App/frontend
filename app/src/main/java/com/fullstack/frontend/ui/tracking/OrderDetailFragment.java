@@ -2,7 +2,6 @@ package com.fullstack.frontend.ui.tracking;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
-
 import android.location.Location;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -51,6 +50,7 @@ import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.text.BreakIterator;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -61,18 +61,12 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
         GoogleMap.OnPolylineClickListener,
         GoogleMap.OnPolygonClickListener  {
 
-
-
     private MapView mapView;
     private View v;
     double latitude;
     double longitude;
     List<OrderMapResponse.LatLong> first;
     List<OrderMapResponse.LatLong> second;
-    double first_lat1, first_lng1, first_lat2, first_lng2;
-    double second_lat1, second_lng1, second_lat2, second_lng2;
-
-
 
 
     public static OrderDetailFragment newInstance(Response response){
@@ -83,11 +77,20 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
     }
 
 
+
+    double first_lat1, first_lng1, first_lat2, first_lng2;
+    double second_lat1, second_lng1, second_lat2, second_lng2;
+
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View v =  inflater.inflate(R.layout.order_detail_fragment, container,
                 false);
+        int order_ID = OrderDetailFragmentArgs.fromBundle(getArguments()).getOrderId();
+
+
+
         TextView orderID = (TextView) v.findViewById(R.id.OrderID_filling);
         TextView createdTime = (TextView) v.findViewById(R.id.create_time_filling);
         TextView status = (TextView) v.findViewById(R.id.status_filling);
@@ -98,29 +101,26 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
 
 
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        Call<BaseResponse<OrderMapResponse>> orderMapResponse = apiService.postOrderMap(new OrderMapRequest(1));
+        Call<BaseResponse<OrderMapResponse>> orderMapResponse = apiService.postOrderMap(new OrderMapRequest(order_ID));
         orderMapResponse.enqueue(new Callback<BaseResponse<OrderMapResponse>>() {
 
             @Override
             public void onResponse(Call<BaseResponse<OrderMapResponse>> call, retrofit2.Response<BaseResponse<OrderMapResponse>> response) {
                 if (response.isSuccessful()) {
                     OrderMapResponse response2 = response.body().response;
-
                     latitude = response2.tracking.lat;
                     longitude = response2.tracking.lng;
+
                     first = response2.first_part;
                     second = response2.second_part;
-                    first_lat1 = first.get(0).lat;
-                    first_lng1 = first.get(0).lng;
-                    first_lat2 = first.get(1).lat;
-                    first_lng2 = first.get(1).lng;
+                    int a = first.size();
 
-                    second_lat1 = second.get(0).lat;
-                    second_lng1 = second.get(0).lng;
-                    second_lat2 = second.get(1).lat;
-                    second_lng2 = second.get(1).lng;
+                    Iterator iterator = first.iterator();
+//                    while(iterator.hasNext()) {
+//                        double l = iterator.next().;
+//                        Log.d("test:::::", String.valueOf(l));
+//                    }
 
-                    Log.d("test:::::", String.valueOf(second_lng2));
 
                 }
 
@@ -133,7 +133,7 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
         });
 
 
-        Call<BaseResponse<OrderDetailResponse>> orderDetailResponse = apiService.postOrderDetail(new OrderDetailRequest(1));
+        Call<BaseResponse<OrderDetailResponse>> orderDetailResponse = apiService.postOrderDetail(new OrderDetailRequest(order_ID));
         orderDetailResponse.enqueue(new Callback<BaseResponse<OrderDetailResponse>>() {
             @Override
             public void onResponse(Call<BaseResponse<OrderDetailResponse>> call, retrofit2.Response<BaseResponse<OrderDetailResponse>> response) {
@@ -163,6 +163,8 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
 
         mapView = (MapView) view.findViewById(R.id.event_map_view);
         if (mapView != null) {

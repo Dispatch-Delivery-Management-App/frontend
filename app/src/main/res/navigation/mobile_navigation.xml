@@ -87,7 +87,7 @@
     <fragment
         android:id="@+id/nav_detail"
         android:name="com.fullstack.frontend.ui.tracking.OrderDetailFragment"
-        android:label="Home"
+        android:label="Order Detail"
         tools:layout="@layout/order_detail_fragment">
 
         <action

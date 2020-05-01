@@ -1,7 +1,5 @@
 package com.fullstack.frontend.ui.home;
 
-import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,12 +7,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fullstack.frontend.R;
 import com.fullstack.frontend.Retro.OrderResponse;
-import com.fullstack.frontend.ui.tracking.OrderDetailFragment;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -102,6 +98,10 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             itemHolder = new LinearViewHolder(itemView);
             return itemHolder;
         }
+        //return null;
+//        return holder;
+//        View itemView = View.inflate(parent.getContext(), R.layout.orderlist_item, null);
+//        return new LinearViewHolder(itemView);
         return null;
     }
 
@@ -114,6 +114,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             String statusText = (String) itemHashmap.get(position);
             StatusTextHolder textHolder = (StatusTextHolder) holder;
             textHolder.status_text.setText(statusText);
+            textHolder.itemView.setOnClickListener(null);
         }
 
         if(holder instanceof LinearViewHolder) {
@@ -158,6 +159,16 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 //                });
 //            }
 
+            itemHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (onItemClickListener != null) {
+                        onItemClickListener.OnItemClick(orderResponse.id);
+                    }
+                }
+
+            });
+
         }
 
     }
@@ -181,20 +192,6 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             category = itemView.findViewById(R.id.category);
             receiver = itemView.findViewById(R.id.receiver);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (onItemClickListener != null) {
-                        onItemClickListener.OnItemClick(v);
-
-                        int orderId = Integer.parseInt(order_id.getText().toString());
-                        HomeFragmentDirections.OrderDetailAction action = HomeFragmentDirections.orderDetailAction();
-                        action.setId(orderId);
-                        Navigation.findNavController(v).navigate(action);
-                    }
-                }
-
-            });
         }
     }
 
@@ -209,7 +206,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     public interface OnItemClickListener {
-        public void OnItemClick(View view);
+        public void OnItemClick(int id);
     }
 
     private OnItemClickListener onItemClickListener;
