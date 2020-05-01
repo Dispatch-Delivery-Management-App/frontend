@@ -1,6 +1,5 @@
 package com.fullstack.frontend.ui.home;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -36,10 +35,10 @@ import com.fullstack.frontend.Retro.BaseResponse;
 import com.fullstack.frontend.Retro.OrderDetailRequest;
 import com.fullstack.frontend.Retro.OrderListRequest;
 import com.fullstack.frontend.Retro.OrderResponse;
+import com.fullstack.frontend.config.UserInfo;
 import com.fullstack.frontend.ui.search.SearchAdapter;
 import com.fullstack.frontend.ui.search.SearchRepository;
 import com.fullstack.frontend.ui.search.SearchViewModel;
-import com.fullstack.frontend.ui.tracking.OrderDetailFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -66,6 +65,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView mOrderListRV;
     private OrderListAdapter mOrderListAdapter;
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -90,7 +90,8 @@ public class HomeFragment extends Fragment {
 
         root = inflater.inflate(R.layout.fragment_home, container, false);
 
-        homeViewModel.setOrderRequest(new OrderListRequest(1));
+
+        homeViewModel.setOrderRequest(new OrderListRequest(UserInfo.getUser_id()));
 
         // Autocomplete for Search
         autoCompleteTextView = root.findViewById(R.id.search);
@@ -118,7 +119,8 @@ public class HomeFragment extends Fragment {
         });
 
         initRecyclerView();
-
+        ((MainActivity) getActivity()).triggerDrawer(true);
+        ((MainActivity) getActivity()).triggerTitleBar(true);
         return root;
     }
 

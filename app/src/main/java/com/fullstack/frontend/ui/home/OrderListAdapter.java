@@ -1,7 +1,5 @@
 package com.fullstack.frontend.ui.home;
 
-import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fullstack.frontend.R;
 import com.fullstack.frontend.Retro.OrderResponse;
-import com.fullstack.frontend.ui.tracking.OrderDetailFragment;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -102,6 +99,10 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             itemHolder = new LinearViewHolder(itemView);
             return itemHolder;
         }
+        //return null;
+//        return holder;
+//        View itemView = View.inflate(parent.getContext(), R.layout.orderlist_item, null);
+//        return new LinearViewHolder(itemView);
         return null;
     }
 
@@ -191,7 +192,6 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             order_id = itemView.findViewById(R.id.order_id);
             category = itemView.findViewById(R.id.category);
             receiver = itemView.findViewById(R.id.receiver);
-
         }
     }
 
@@ -215,15 +215,5 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         this.onItemClickListener = onItemClickListener;
     }
 
-//// test
-//    Onclick aclick;
-//
-//    public void setOnclick(Onclick aclick) {
-//        this.aclick = aclick;
-//    }
-//    public interface Onclick {
-//        public void click(int position);
-//    }
 
 }
-
