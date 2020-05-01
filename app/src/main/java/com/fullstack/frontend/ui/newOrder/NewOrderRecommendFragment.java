@@ -11,11 +11,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.navigation.Navigation;
 
+import android.os.Debug;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RadioButton;
 
 import com.fullstack.frontend.R;
 import com.fullstack.frontend.Retro.ConfirmOrderRequest;
@@ -79,19 +81,29 @@ public class NewOrderRecommendFragment extends BaseFragment<NewOrderRecommendVie
         }
 
         Button buttonConfirm = binding.buttonOrderConfirm;
+        buttonConfirm.setEnabled(false);
         buttonConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean chosen = setRequest(request);
-                if (chosen){
+                    setRequest(request);
                     viewModel.confirmOrder(request);
+                    Log.d("TTT","wt");
                     Navigation.findNavController(v).navigate(R.id.any_to_detail);
-                }
+
+            }
+        });
+
+        EnhancedRadioGroup radioGroup = binding.cardGroup;
+        radioGroup.setOnSelectionChanged(new EnhancedRadioGroup.OnSelectionChangedListener() {
+            @Override
+            public void onSelectionChanged(RadioButton radioButton, int index) {
+                binding.buttonOrderConfirm.setEnabled(true);
             }
         });
     }
 
-    private boolean setRequest(GetPlansRequest request) {
+
+    private void setRequest(GetPlansRequest request) {
         Plan plan = null;
         int selectedID =  binding.cardGroup.getCheckedRadioButtonId();
         if (selectedID == binding.recommendedPlan.radioButton5.getId()){
@@ -101,13 +113,9 @@ public class NewOrderRecommendFragment extends BaseFragment<NewOrderRecommendVie
         }else if (selectedID == binding.fastPlan.radioButton5.getId()){
             plan = viewModel.getFast();
         }
-//        if (plan == null){
-//            return false;
-//        }
         request.amount = plan.amount;
         request.station = plan.station;
         request.shipping_method = plan.shipping_method;
-        return true;
     }
 
     private void inflatePlan(Plan plan) {

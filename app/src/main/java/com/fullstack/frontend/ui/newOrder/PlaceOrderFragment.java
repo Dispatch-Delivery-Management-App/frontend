@@ -100,7 +100,7 @@ public class PlaceOrderFragment extends BaseFragment<PlaceOrderViewModel, PlaceO
 
                 // NewOrder order
                 GetPlansRequest request = new GetPlansRequest();
-                setPlaceOrderInfo(request);
+                boolean dataValid = setPlaceOrderInfo(request);
     request.user_id= 2;
     request.order_status=2;
     request.fromAddress.street="1000 W Maude Ave";
@@ -111,11 +111,13 @@ public class PlaceOrderFragment extends BaseFragment<PlaceOrderViewModel, PlaceO
     request.toAddress.state="CA";
     request.item_info="Ling's order";
     request.packageWeight=4.0;
+                if (!dataValid){
+                    return;
+                }
 
                 viewModel.postOrder(request);
 
                 MutableLiveData<List<Plan>> planLiveData = viewModel.getReturnedPlans();
-               // Observer<List<Plan>> bookObserver = planLiveData::postValue;
                 planLiveData.observe(requireActivity(), new Observer<List<Plan>>() {
                     @Override
                     public void onChanged(List<Plan> plans) {
@@ -154,6 +156,8 @@ public class PlaceOrderFragment extends BaseFragment<PlaceOrderViewModel, PlaceO
 //        if(!validateUserData(binding.fromAddForm.fromLast,"please enter last name"))
 //            return false;
         request.fromAddress.street = binding.fromAddForm.fromAdd1.getText().toString()+ binding.fromAddForm.fromAdd2.getText().toString();
+        if(!validateUserData(binding.fromAddForm.fromLast,"please enter your address"))
+            return false;
         request.fromAddress.city = binding.fromAddForm.fromCity.getText().toString();
         request.fromAddress.state = binding.fromAddForm.fromState.getText().toString();
         request.fromAddress.zipcode = isInteger(binding.fromAddForm.fromZIP.getText().toString())? Integer.parseInt(binding.fromAddForm.fromZIP.getText().toString()):0;
