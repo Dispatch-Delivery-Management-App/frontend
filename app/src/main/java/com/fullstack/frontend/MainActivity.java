@@ -2,53 +2,27 @@ package com.fullstack.frontend;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
 import android.view.Menu;
+import android.view.MenuItem;
 
-import com.ashokvarma.gander.Gander;
-import com.ashokvarma.gander.imdb.GanderIMDB;
-import com.ashokvarma.gander.persistence.GanderPersistence;
-import com.fullstack.frontend.Retro.ApiClient;
-import com.fullstack.frontend.Retro.ApiInterface;
-
-import com.fullstack.frontend.Retro.BaseResponse;
-import com.fullstack.frontend.Retro.TokenRequest;
-import com.fullstack.frontend.ui.address.ManageAddressFragment;
-import com.fullstack.frontend.ui.home.HomeFragment;
-import com.fullstack.frontend.ui.notification.MyFirebaseMessagingService;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-
-import com.fullstack.frontend.Retro.MyApp;
-
-import com.google.android.gms.tasks.OnSuccessListener;
-
-
-import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
-
-import androidx.annotation.NonNull;
-
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
-
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import com.fullstack.frontend.ui.address.ManageAddressFragment;
+import com.fullstack.frontend.ui.home.HomeFragment;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import static androidx.drawerlayout.widget.DrawerLayout.LOCK_MODE_LOCKED_CLOSED;
 import static androidx.drawerlayout.widget.DrawerLayout.LOCK_MODE_UNLOCKED;
@@ -82,25 +56,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-//    /**
-//     ** Retrofit Login
-//     */
-//    public void getTodos(View view) {
-//
-//        Call<List<ResModel>> call = apiInterface.getTodos();
-//        ((Call) call).enqueue(new Callback<List<ResModel>>() {
-//            @Override
-//            public void onResponse(Call<List<ResModel>> call, Response<List<ResModel>> response) {
-//                Log.e(TAG, "onResponse: " +  response.body());
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<ResModel>> call, Throwable t) {
-//                Log.e(TAG, "onFailure: " + t.getLocalizedMessage() );
-//            }
-//        });
-//
-//    }
 
     /**
      * setupNavigation

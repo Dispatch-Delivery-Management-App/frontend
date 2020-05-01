@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fullstack.frontend.R;
@@ -191,22 +192,6 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             order_id = itemView.findViewById(R.id.order_id);
             category = itemView.findViewById(R.id.category);
             receiver = itemView.findViewById(R.id.receiver);
-
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (onItemClickListener != null) {
-                        onItemClickListener.OnItemClick(v);
-
-                        int orderId = Integer.parseInt(order_id.getText().toString());
-                        HomeFragmentDirections.OrderDetailAction action = HomeFragmentDirections.orderDetailAction();
-                        action.setOrderId(orderId);
-                        Navigation.findNavController(v).navigate(action);
-                    }
-                }
-
-            });
 
         }
     }
