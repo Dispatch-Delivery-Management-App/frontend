@@ -17,7 +17,44 @@
     app:maxImageSize="40dp"
     app:srcCompat="@android:drawable/ic_menu_send" />
 
-
+    <!--<TextView
+    android:id="@+id/shipping"
+    android:layout_width="wrap_content"
+    android:layout_height="19dp"
+    android:layout_marginStart="32dp"
+    android:layout_marginTop="32dp"
+    android:layout_marginEnd="324dp"
+    android:text="Shipping"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.0"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/imageButton" />
+    
+  <TextView
+    android:id="@+id/history"
+    android:layout_width="wrap_content"
+    android:layout_height="19dp"
+    android:layout_marginStart="32dp"
+    android:layout_marginTop="16dp"
+    android:layout_marginEnd="324dp"
+    android:text="History"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="1.0"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/order1" />-->
+    
+    <!--<TextView
+    android:id="@+id/draft"
+    android:layout_width="wrap_content"
+    android:layout_height="19dp"
+    android:layout_marginStart="32dp"
+    android:layout_marginTop="16dp"
+    android:layout_marginEnd="324dp"
+    android:text="Draft"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.434"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/order2" />-->
 
 
     <ImageButton
@@ -29,7 +66,7 @@
         android:layout_marginEnd="349dp"
         android:layout_marginBottom="31dp"
         android:src="@android:drawable/sym_def_app_icon"
-        app:layout_constraintBottom_toTopOf="@+id/rv_order_list"
+        app:layout_constraintBottom_toTopOf="@+id/shipping"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

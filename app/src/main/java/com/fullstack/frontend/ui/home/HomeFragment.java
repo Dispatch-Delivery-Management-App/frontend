@@ -1,6 +1,5 @@
 package com.fullstack.frontend.ui.home;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -23,11 +22,9 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.fullstack.frontend.MainActivity;
 import com.fullstack.frontend.R;
 import com.fullstack.frontend.Retro.ApiClient;
 import com.fullstack.frontend.Retro.ApiInterface;
@@ -38,7 +35,6 @@ import com.fullstack.frontend.Retro.OrderResponse;
 import com.fullstack.frontend.ui.search.SearchAdapter;
 import com.fullstack.frontend.ui.search.SearchRepository;
 import com.fullstack.frontend.ui.search.SearchViewModel;
-import com.fullstack.frontend.ui.tracking.OrderDetailFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -64,6 +60,7 @@ public class HomeFragment extends Fragment {
     private View root;
     private RecyclerView mOrderListRV;
     private OrderListAdapter mOrderListAdapter;
+
 
     @Nullable
     @Override
@@ -146,13 +143,8 @@ public class HomeFragment extends Fragment {
         mOrderListRV.setAdapter(mOrderListAdapter);
         // set layoutManager
         mOrderListRV.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        mOrderListRV.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
-
         // item listener
         mOrderListAdapter.setOnItemClickListener(view -> Navigation.findNavController(view).navigate(R.id.nav_detail));
-
-
         homeViewModel.getOrders().observe(getViewLifecycleOwner(), orderResponses -> {
             mOrderListAdapter.setOrders(orderResponses);
         });
@@ -178,13 +170,16 @@ public class HomeFragment extends Fragment {
             }
         });
 
-//        mOrderListAdapter.setOnItemClick(new OrderListAdapter.OnItemClickListener() {
+//        // Button for order details
+//        Button detail = getActivity().findViewById(R.id.btn_detail);
+//
+//        detail.setOnClickListener(new View.OnClickListener() {
 //            @Override
-//            public void OnItemClick(View v, int position, int id) {
-//                Intent intent = new Intent(getActivity(), OrderDetailFragment.class);
-//                startActivity(intent);
+//            public void onClick(View v) {
+//                Navigation.findNavController(v).navigate(R.id.nav_detail);
 //            }
 //        });
+//
     }
 
 
