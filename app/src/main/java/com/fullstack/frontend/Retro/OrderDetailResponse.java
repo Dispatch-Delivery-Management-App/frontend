@@ -1,14 +1,17 @@
 package com.fullstack.frontend.Retro;
 
 public class OrderDetailResponse {
-    public OrderDetailResponse(){
+    public OrderDetailResponse(int id, int status, String category){
         this.id = id;
+        this.status = status;
+        this.category = category;
     }
 
     public long id;
     public long User_id;
     public long from_address;
     public long to_address;
+
     public int status;
     public long tracking_id;
     public String category;

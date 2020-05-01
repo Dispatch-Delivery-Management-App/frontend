@@ -6,7 +6,10 @@ import java.util.List;
 public class OrderMapResponse {
 
     public class LatLong{
-        public LatLong(){
+        public LatLong(double lat, double lng, List<LatLong> first_part, List<LatLong> second_part){
+            this.lat = lat;
+            this.lng = lng;
+
         }
         public double lat;
         public double lng;
@@ -21,7 +24,6 @@ public class OrderMapResponse {
     public List<LatLong> first_part;
     public List<LatLong> second_part;
     public LatLong tracking;
-
 
     public List<LatLong> get_first_part(){
         return first_part;

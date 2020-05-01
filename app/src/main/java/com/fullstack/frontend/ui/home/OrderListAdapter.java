@@ -214,7 +214,6 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
-    
+
 
 }
-
