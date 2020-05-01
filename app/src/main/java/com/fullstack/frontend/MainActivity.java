@@ -1,10 +1,12 @@
 package com.fullstack.frontend;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -17,12 +19,21 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.fullstack.frontend.Retro.ApiClient;
+import com.fullstack.frontend.Retro.ApiInterface;
+import com.fullstack.frontend.Retro.BaseResponse;
+import com.fullstack.frontend.Retro.TokenRequest;
+import com.fullstack.frontend.config.UserInfo;
 import com.fullstack.frontend.ui.address.ManageAddressFragment;
 import com.fullstack.frontend.ui.home.HomeFragment;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static androidx.drawerlayout.widget.DrawerLayout.LOCK_MODE_LOCKED_CLOSED;
 import static androidx.drawerlayout.widget.DrawerLayout.LOCK_MODE_UNLOCKED;
@@ -46,12 +57,43 @@ public class MainActivity extends AppCompatActivity {
 
         setupNavigation();
 
-        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
-            @Override
-            public void onSuccess(InstanceIdResult instanceIdResult) {
-                Log.d("test", instanceIdResult.getToken());
-            }
-        });
+//        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
+//            @Override
+//            public void onSuccess(InstanceIdResult instanceIdResult) {
+//
+//
+//                Log.d("token", instanceIdResult.getToken());
+//
+//                ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+//                //Log.d(TAG, "user id:" + UserInfo.getUser_id());
+//                TokenRequest request = new TokenRequest(UserInfo.getUser_id(), instanceIdResult.getToken());
+//                Log.d("11", "user id: " + UserInfo.getUser_id() + "token: " + instanceIdResult.getToken());
+//                Call<BaseResponse> postToken = apiService.postToken(request);
+//                postToken.enqueue(new Callback<BaseResponse>() {
+//                    @RequiresApi(api = Build.VERSION_CODES.N)
+//                    @Override
+//                    public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+//                        if (response.isSuccessful()){
+//
+//                            Log.d("FirebaseService", "Send token: " + response.code());
+//                        }
+//                        if (response.body() != null) {
+//                            Log.d("FirebaseService", "Send token: " + "Success");
+//
+//
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<BaseResponse> call, Throwable t) {
+//
+//                        Log.d("FirebaseService", "Send token failed");
+//
+//
+//                    }
+//                });
+//            }
+//        });
 
 
     }

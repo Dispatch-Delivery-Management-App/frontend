@@ -192,7 +192,6 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             order_id = itemView.findViewById(R.id.order_id);
             category = itemView.findViewById(R.id.category);
             receiver = itemView.findViewById(R.id.receiver);
-
         }
     }
 
@@ -215,16 +214,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
-
-//// test
-//    Onclick aclick;
-//
-//    public void setOnclick(Onclick aclick) {
-//        this.aclick = aclick;
-//    }
-//    public interface Onclick {
-//        public void click(int position);
-//    }
+    
 
 }
 
