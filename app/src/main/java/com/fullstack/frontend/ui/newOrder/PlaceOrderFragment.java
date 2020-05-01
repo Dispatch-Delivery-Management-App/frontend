@@ -33,6 +33,7 @@ import com.fullstack.frontend.Retro.GetPlansRequest;
 import com.fullstack.frontend.Retro.MyApp;
 import com.fullstack.frontend.Retro.Plan;
 import com.fullstack.frontend.base.BaseFragment;
+import com.fullstack.frontend.config.UserInfo;
 import com.fullstack.frontend.databinding.PlaceOrderFragmentBinding;
 
 import java.util.List;
@@ -101,7 +102,7 @@ public class PlaceOrderFragment extends BaseFragment<PlaceOrderViewModel, PlaceO
                 // NewOrder order
                 GetPlansRequest request = new GetPlansRequest();
                 boolean dataValid = setPlaceOrderInfo(request);
-    request.user_id= 2;
+                request.user_id= UserInfo.getUser_id();
     request.order_status=2;
     request.fromAddress.street="1000 W Maude Ave";
     request.fromAddress.city="Sunnyvale";
@@ -109,8 +110,8 @@ public class PlaceOrderFragment extends BaseFragment<PlaceOrderViewModel, PlaceO
     request.toAddress.street="1200 Getty Center Dr";
     request.toAddress.city="Los Angeles";
     request.toAddress.state="CA";
-    request.item_info="Ling's order";
-    request.packageWeight=4.0;
+    request.item_info="Linggg's order";
+    request.packageWeight=8.0;
                 if (!dataValid){
                     return;
                 }

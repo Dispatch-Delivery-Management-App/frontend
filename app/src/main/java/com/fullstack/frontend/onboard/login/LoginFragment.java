@@ -18,6 +18,7 @@ import com.fullstack.frontend.R;
 import com.fullstack.frontend.Retro.OnBoardingResponse;
 import com.fullstack.frontend.base.BaseFragment;
 import com.fullstack.frontend.base.RemoteRequestListener;
+import com.fullstack.frontend.config.UserInfo;
 import com.fullstack.frontend.databinding.FragmentLoginBinding;
 import com.fullstack.frontend.databinding.FragmentRegisterBinding;
 import com.fullstack.frontend.util.Util;
@@ -67,7 +68,6 @@ public class LoginFragment extends BaseFragment<LoginViewModel, LoginModel> impl
 
         binding.btnLogin.setOnClickListener( v -> {
             binding.etPassword.clearFocus();
-//            binding.btnLogin.clearFocus();
             viewModel.Login();
         });
     }
@@ -96,6 +96,7 @@ public class LoginFragment extends BaseFragment<LoginViewModel, LoginModel> impl
     @Override
     public void onSuccess(LiveData<OnBoardingResponse> loginResponse) {
         loginResponse.observe(this, it -> {
+            UserInfo.setUser_id(it.getId());
             Toast.makeText(getActivity(), "Login Successfully!", Toast.LENGTH_SHORT).show();
             Navigation.findNavController(getView()).navigate(R.id.nav_home);
         });
