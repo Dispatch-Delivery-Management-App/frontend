@@ -1,5 +1,6 @@
 package com.fullstack.frontend.ui.newOrder;
 
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -81,8 +82,14 @@ public class NewOrderRecommendFragment extends BaseFragment<NewOrderRecommendVie
             public void onClick(View v) {
                     setRequest(request);
                     viewModel.confirmOrder(request);
-                    Log.d("TTT","wt");
-                    Navigation.findNavController(v).navigate(R.id.any_to_detail);
+                NewOrderRecommendFragmentDirections.RecommendToDetail action = NewOrderRecommendFragmentDirections.recommendToDetail();
+                viewModel.getOrder_id().observe(requireActivity(), new Observer<Integer>() {
+                    @Override
+                    public void onChanged(Integer integer) {
+                        action.setOrderId(integer);
+                        Navigation.findNavController(v).navigate(action);
+                    }
+                });
 
             }
         });
@@ -111,6 +118,7 @@ public class NewOrderRecommendFragment extends BaseFragment<NewOrderRecommendVie
         request.amount = plan.amount;
         request.station = plan.station;
         request.shipping_method = plan.shipping_method;
+        request.fee = plan.fee;
     }
 
     private void inflatePlan(Plan plan) {

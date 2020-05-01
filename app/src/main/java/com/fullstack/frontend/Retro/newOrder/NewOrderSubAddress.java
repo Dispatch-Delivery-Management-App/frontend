@@ -9,4 +9,5 @@ public class NewOrderSubAddress implements Serializable {
     public String city;
     public String state;
     public int zipcode;
+    public int addr_id=0;
 }

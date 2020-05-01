@@ -80,7 +80,12 @@
 
         <action
             android:id="@+id/recommend_to_detail"
-            app:destination="@+id/nav_detail"/>
+            app:destination="@+id/nav_detail">
+            <argument
+                android:name="orderId"
+                app:argType="integer"
+                android:defaultValue="0" />
+        </action>
     </fragment>
 
     <fragment

@@ -2,6 +2,8 @@ package com.fullstack.frontend.ui.newOrder;
 
 import android.util.Log;
 
+import androidx.lifecycle.MutableLiveData;
+
 import com.fullstack.frontend.Retro.BaseResponse;
 import com.fullstack.frontend.Retro.newOrder.GetPlansRequest;
 import com.fullstack.frontend.base.BaseRepository;
@@ -12,7 +14,7 @@ import retrofit2.Response;
 
 public class ConfirmOrderRepository extends BaseRepository {
 
-    public int confirmOrder(GetPlansRequest request){
+    public int confirmOrder(GetPlansRequest request, MutableLiveData<Integer> order_id){
         plansRequestApi.confirmOrder(request)
                 .enqueue(new Callback<BaseResponse<String>>() {
                     @Override
@@ -23,6 +25,7 @@ public class ConfirmOrderRepository extends BaseRepository {
                         }
                         if (response.body() != null){
                             Log.d("TTT","Success");
+                            order_id.setValue(1);
                         }
                     }
 
