@@ -22,9 +22,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.fullstack.frontend.MainActivity;
 import com.fullstack.frontend.R;
 import com.fullstack.frontend.Retro.ApiClient;
 import com.fullstack.frontend.Retro.ApiInterface;
@@ -143,8 +146,17 @@ public class HomeFragment extends Fragment {
         mOrderListRV.setAdapter(mOrderListAdapter);
         // set layoutManager
         mOrderListRV.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        mOrderListRV.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+
         // item listener
-        mOrderListAdapter.setOnItemClickListener(view -> Navigation.findNavController(view).navigate(R.id.nav_detail));
+        mOrderListAdapter.setOnItemClickListener(orderId -> {
+            HomeFragmentDirections.OrderDetailAction action = HomeFragmentDirections.orderDetailAction();
+            action.setOrderId(orderId);
+            NavHostFragment.findNavController(HomeFragment.this).navigate(action);
+        });
+
+
         homeViewModel.getOrders().observe(getViewLifecycleOwner(), orderResponses -> {
             mOrderListAdapter.setOrders(orderResponses);
         });
@@ -170,16 +182,13 @@ public class HomeFragment extends Fragment {
             }
         });
 
-//        // Button for order details
-//        Button detail = getActivity().findViewById(R.id.btn_detail);
-//
-//        detail.setOnClickListener(new View.OnClickListener() {
+//        mOrderListAdapter.setOnItemClick(new OrderListAdapter.OnItemClickListener() {
 //            @Override
-//            public void onClick(View v) {
-//                Navigation.findNavController(v).navigate(R.id.nav_detail);
+//            public void OnItemClick(View v, int position, int id) {
+//                Intent intent = new Intent(getActivity(), OrderDetailFragment.class);
+//                startActivity(intent);
 //            }
 //        });
-//
     }
 
 
