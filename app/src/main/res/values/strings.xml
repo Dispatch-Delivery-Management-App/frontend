@@ -29,7 +29,7 @@
     <string name="login">Login</string>
 
     <!--    place order-->
-    <string name="item_info">description of this order e.g.my beer </string>
+    <string name="item_info">Description of this order e.g.my beer </string>
     <string name="from">SHIPPING FROM</string>
     <string name="to">SHIPPING TO</string>
     <string name="weight">Weight in Kg</string>
