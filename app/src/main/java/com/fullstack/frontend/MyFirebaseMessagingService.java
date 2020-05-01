@@ -1,22 +1,39 @@
 package com.fullstack.frontend;
 
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.RingtoneManager;
-import android.net.Uri;
-import android.os.Build;
-import android.util.Log;
+        import android.app.Notification;
+        import android.app.NotificationChannel;
+        import android.app.NotificationManager;
+        import android.app.PendingIntent;
+        import android.content.Context;
+        import android.content.Intent;
+        import android.media.RingtoneManager;
+        import android.net.Uri;
+        import android.os.Build;
+        import android.provider.Settings;
+        import android.util.Log;
 
-import androidx.core.app.NotificationCompat;
+        import androidx.annotation.RequiresApi;
+        import androidx.core.app.NotificationCompat;
+        import androidx.recyclerview.widget.MergeAdapter;
 
-import com.google.firebase.messaging.FirebaseMessagingService;
-import com.google.firebase.messaging.RemoteMessage;
+        import com.fullstack.frontend.MainActivity;
+        import com.fullstack.frontend.R;
+        import com.fullstack.frontend.Retro.ApiClient;
+        import com.fullstack.frontend.Retro.ApiInterface;
+        import com.fullstack.frontend.Retro.BaseResponse;
+        import com.fullstack.frontend.Retro.OrderResponse;
+        import com.fullstack.frontend.Retro.TokenRequest;
+
+        import com.google.firebase.messaging.FirebaseMessagingService;
+        import com.google.firebase.messaging.RemoteMessage;
+
+        import java.util.Collections;
+        import java.util.Comparator;
+        import java.util.List;
+
+        import retrofit2.Call;
+        import retrofit2.Callback;
+        import retrofit2.Response;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
@@ -32,9 +49,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public void onNewToken(String token) {
         Log.d(TAG, "Refresh token: " + token);
 
-            // If you want to send messages to this application instance or
-            // manage this apps subscriptions on the server side, send the
-            // Instance ID token to your app server.
+        // If you want to send messages to this application instance or
+        // manage this apps subscriptions on the server side, send the
+        // Instance ID token to your app server.
         sendRegistrationToServer(token);
     }
 
@@ -71,6 +88,26 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private void sendRegistrationToServer(String token) {
         // TODO: Implement this method to send token to your app server.
 
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        TokenRequest request = new TokenRequest(1, token);
+        Call<BaseResponse> postToken = apiService.postToken(request);
+        postToken.enqueue(new Callback<BaseResponse>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                if (response.isSuccessful()){
+                    Log.d(TAG, "Send token: " + response.code());
+                }
+                if (response.body() != null) {
+                    Log.d(TAG, "Send token: " + "Success");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse> call, Throwable t) {
+                Log.d(TAG, "Send token failed");
+            }
+        });
     }
 
     /**
@@ -105,6 +142,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
+                .setSmallIcon(R.drawable.notification_icon)
                 .setContentTitle(type)
                 .setAutoCancel(true)
                 .setSound(defaultSound)
