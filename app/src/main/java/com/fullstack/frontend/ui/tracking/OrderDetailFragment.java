@@ -6,6 +6,8 @@ import android.location.Location;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -65,11 +67,20 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
     private View v;
     double latitude;
     double longitude;
+    MutableLiveData<Double> liveLAT = new MutableLiveData<>();
+    MutableLiveData<Double> liveLONG = new MutableLiveData<>();
     List<OrderMapResponse.LatLong> first;
     List<OrderMapResponse.LatLong> second;
+    double a;
 
-    double first_lat1, first_lng1, first_lat2, first_lng2;
-    double second_lat1, second_lng1, second_lat2, second_lng2;
+    //double[] target = new double[doubles.size()]
+    double[] lat_list;
+    double[] lng_list;
+
+    double b;
+
+//    double first_lat1, first_lng1, first_lat2, first_lng2;
+//    double second_lat1, second_lng1, second_lat2, second_lng2;
     public static OrderDetailFragment newInstance(Response response){
         Bundle args = new Bundle();
         OrderDetailFragment fragment = new OrderDetailFragment();
@@ -80,8 +91,12 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View v =  inflater.inflate(R.layout.order_detail_fragment, container,
                 false);
+
+
+
         int ID = OrderDetailFragmentArgs.fromBundle(getArguments()).getOrderId();
         TextView orderID = (TextView) v.findViewById(R.id.OrderID_filling);
         TextView createdTime = (TextView) v.findViewById(R.id.create_time_filling);
@@ -115,10 +130,7 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
                     }
                     category.setText(String.valueOf(response1.category));
                     payment.setText(String.valueOf(response1.totalCost));
-
-
                     String fromAddress = response1.from_street + '\n' + response1.from_city +   '\n' + response1.from_state + " " +String.valueOf(response1.from_zipcode);
-                    Log.d("test::::::::", fromAddress);
                     from_address.setText(fromAddress);
                     String toAddress = response1.to_street + '\n' + response1.to_city +   '\n' + response1.to_state + " " + String.valueOf(response1.to_zipcode);
                     to_address.setText(toAddress);
@@ -146,14 +158,34 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
                     OrderMapResponse response2 = response.body().response;
                     latitude = response2.tracking.lat;
                     longitude = response2.tracking.lng;
-                    first = response2.get_first_part();
-                    second = response2.get_second_part();
+                    first = response2.first_part;
+                    second = response2.second_part;
+
                     Log.d("test1:::", String.valueOf(latitude));
+                    liveLAT.postValue(response2.tracking.lat);
+                    liveLONG.postValue(response2.tracking.lng);
+
+//                   lat_list = new double[first.size() + second.size()];
+//                    lng_list = new double[first.size() + second.size()];
+//
+//                    a = first.get(0).lat;
+//                    lat_list[0] = (a);
+//                    a = first.get(1).lat;
+//                    lat_list[1] = (a);
+//
+//                    b =  first.get(0).lng;
+//                    lng_list[0] = b;
+//                    b =  first.get(1).lng;
+//                    lng_list[1] = b;
+
+
+
                 }
             }
             public void onFailure(Call<BaseResponse<com.fullstack.frontend.Retro.OrderMapResponse>> call, Throwable t) {
             }
         });
+
 
         mapView = (MapView) view.findViewById(R.id.event_map_view);
         if (mapView != null) {
@@ -171,50 +203,112 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(),callback);
+
+
     }
 
 
 
+
+
+
     public void onMapReady(GoogleMap googleMap) {
+
         MapsInitializer.initialize(getContext());
 
+        MutableLiveData<Integer> both = new MutableLiveData<>();
+        both.setValue(0);
         Log.d("test2:::", String.valueOf(latitude));
+        Log.d("test3:::", liveLAT.toString());
+        liveLAT.observe(this, new Observer<Double>() {
+            @Override
+            public void onChanged(Double aDouble) {
+                Log.d("test3:::", liveLAT.getValue().toString());
+                int cur = both.getValue();
+                both.setValue(cur+1);
+            }
+        });
 
-        MarkerOptions marker = new MarkerOptions().position(
-                new LatLng(latitude, longitude)
-        ).title("arrived");
+        liveLONG.observe(this, new Observer<Double>() {
+            @Override
+            public void onChanged(Double aDouble) {
+                Log.d("test4:::", liveLAT.getValue().toString());
+                int cur = both.getValue();
+                both.setValue(cur+1);
+            }
+        });
 
-//        MarkerOptions marker2 = new MarkerOptions().position(
-//                new LatLng(first.get(1).lat, first.get(1).lng)
-//        ).title("first");
+        both.observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                if (both.getValue()==2){
+                    Log.d("test5:::", liveLAT.getValue().toString());
+                    MarkerOptions marker = new MarkerOptions().position(
+                            new LatLng(liveLAT.getValue(), liveLONG.getValue())
+                    ).title("arrived");
+
+                    marker.icon(BitmapDescriptorFactory
+                            .defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
+
+                    googleMap.addMarker(marker);
+                    CameraPosition cameraPosition = new CameraPosition.Builder()
+                            .target(new LatLng(latitude, longitude)).zoom(2).build();
+
+                    googleMap.animateCamera(CameraUpdateFactory
+                            .newCameraPosition(cameraPosition));
+                    Log.d("test5:::", marker.getPosition().toString());
+                }
+
+
+            }
+        });
+
+
 
         Log.d("map", String.valueOf(latitude));
         Log.d("map2", String.valueOf(longitude));
-
-        marker.icon(BitmapDescriptorFactory
-                .defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
 //
-//        marker2.icon(BitmapDescriptorFactory
+//        //Display Marker
+//        MarkerOptions marker = new MarkerOptions().position(
+//                new LatLng(latitude, longitude)
+//        ).title("TRACKING");
+//
+//        MarkerOptions fromMarker = new MarkerOptions().position(
+//                new LatLng(a,b)
+//        ).title("FROM");
+//
+//        marker.icon(BitmapDescriptorFactory
 //                .defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
-
-        googleMap.addMarker(marker);
-//        googleMap.addMarker(marker2);
+//
+//        fromMarker.icon(BitmapDescriptorFactory
+//                .defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
+//        googleMap.addMarker(marker);
+//
+//        googleMap.addMarker(fromMarker);
 
         CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(new LatLng(latitude, longitude)).zoom(2).build();
+                .target(new LatLng(latitude,longitude)).zoom(2).build();
 
         googleMap.animateCamera(CameraUpdateFactory
                 .newCameraPosition(cameraPosition));
 
 
-//        //add map route
-//        Polyline polyline1 = googleMap.addPolyline(new PolylineOptions()
-//                .clickable(true)
-//                .add(
-//                        new LatLng( first_lat1, first_lng1),
-//                        new LatLng( first_lat2, first_lng2)
-//        ));
-//        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 10));
+
+
+
+//        PolylineOptions line = new PolylineOptions();
+//        line.add(new LatLng( latitude , longitude ));
+//        for(int i = 0; i < 2; i++){
+//            line.add(new LatLng( lat_list[i] , lng_list[i]));
+//
+//        }
+//
+//
+//        Polyline polyline = googleMap.addPolyline(line);
+//        polyline.setClickable(true);
+//
+//
+//        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude), 6));
 //        googleMap.setOnPolylineClickListener(this);
 
     }
@@ -254,4 +348,6 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
     public void onPolylineClick(Polyline polyline) {
 
     }
+
+
 }
