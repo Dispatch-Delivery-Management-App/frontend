@@ -42,7 +42,7 @@ public class RegisterViewModel extends BaseViewModel<RegisterModel> {
         } else if (email == null || !Util.isValidEmail(email)) {
             remoteRequestListener.onFailure("please enter a valid email");
             return;
-        } else if (password == null) {
+        } else if (password.isEmpty()) {
             remoteRequestListener.onFailure("please enter password");
             return;
 //        } else if (cpassword != password) {

@@ -50,12 +50,14 @@ public class RegisterModel extends BaseRepository {
                 if (response.isSuccessful()) {
                     registerResponse.setValue(response.body().response);
                 } else {
+                    onBoardingResponse.setError("User Already Exist!");
                     registerResponse.setValue(onBoardingResponse);
                 }
             }
 
             @Override
             public void onFailure(Call<BaseResponse<OnBoardingResponse>> call, Throwable t) {
+                onBoardingResponse.setError(t.getMessage());
                 registerResponse.setValue(onBoardingResponse);
             }
         });

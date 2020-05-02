@@ -1,5 +1,7 @@
 package com.fullstack.frontend.onboard.login;
 
+import androidx.lifecycle.MutableLiveData;
+
 import com.fullstack.frontend.base.BaseViewModel;
 import com.fullstack.frontend.base.RemoteRequestListener;
 import com.fullstack.frontend.util.Util;
@@ -31,7 +33,7 @@ public class LoginViewModel extends BaseViewModel<LoginModel> {
             remoteRequestListener.onFailure("please enter user name");
             return;
         }
-        if (password == null) {
+        if (password.isEmpty()) {
             remoteRequestListener.onFailure("Please enter password");
             return;
         }
