@@ -116,8 +116,17 @@ public class MainActivity extends AppCompatActivity {
 
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        navigationView.getMenu().findItem(R.id.logout).setOnMenuItemClickListener(menuItem -> {
+            logout();
+            return true;
+        });
+
     }
 
+    public void logout() {
+        finish();
+    }
 
     public void triggerDrawer(boolean enable) {
         int mode = enable ? LOCK_MODE_UNLOCKED : LOCK_MODE_LOCKED_CLOSED;
@@ -151,6 +160,8 @@ public class MainActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
