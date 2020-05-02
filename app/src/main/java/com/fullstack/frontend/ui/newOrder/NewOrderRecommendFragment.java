@@ -80,13 +80,15 @@ public class NewOrderRecommendFragment extends BaseFragment<NewOrderRecommendVie
         buttonConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    setRequest(request);
-                    viewModel.confirmOrder(request);
+                buttonConfirm.setEnabled(false);
+                setRequest(request);
+                viewModel.confirmOrder(request);
                 NewOrderRecommendFragmentDirections.RecommendToDetail action = NewOrderRecommendFragmentDirections.recommendToDetail();
                 viewModel.getOrder_id().observe(requireActivity(), new Observer<Integer>() {
                     @Override
                     public void onChanged(Integer integer) {
                         action.setOrderId(integer);
+                        buttonConfirm.setEnabled(true);
                         Navigation.findNavController(v).navigate(action);
                     }
                 });
@@ -107,7 +109,6 @@ public class NewOrderRecommendFragment extends BaseFragment<NewOrderRecommendVie
     private void setRequest(GetPlansRequest request) {
         Plan plan = null;
         int selectedID =  binding.cardGroup.getSelectedItem().getId();
-        Log.d("TTT",binding.cardGroup.getSelectedItem().toString());
         if (selectedID == binding.recommendedPlan.radioButton5.getId()){
             plan = viewModel.getBest();
         }else if (selectedID == binding.cheapPlan.radioButton5.getId()){

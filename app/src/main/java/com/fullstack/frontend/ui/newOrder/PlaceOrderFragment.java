@@ -107,7 +107,7 @@ public class PlaceOrderFragment extends Fragment implements AdapterView.OnItemSe
                 if (fromAddressBookButton.getText().equals(getResources().getString(R.string.myAddressesButton))) {
                     viewModel.setFormBinding(binding.fromAddForm);
                     viewModel.setCurForm(0);
-                    modalAddressesListDialogFragment = ModalAddressesListDialogFragment.newInstance(UserInfo.getInstance().getUserId());
+                    modalAddressesListDialogFragment = ModalAddressesListDialogFragment.newInstance();
                     modalAddressesListDialogFragment.setDialogCallBack((ModalAddressesListDialogFragment.SheetCallBack) getParentFragmentManager().getFragments().get(0));
                     modalAddressesListDialogFragment.show((requireActivity()).getSupportFragmentManager(), "dialog");
                 }else{
@@ -125,7 +125,7 @@ public class PlaceOrderFragment extends Fragment implements AdapterView.OnItemSe
                 if (toAddressBookButton.getText().equals(getResources().getString(R.string.myAddressesButton))) {
                     viewModel.setFormBinding(binding.toAddForm);
                     viewModel.setCurForm(1);
-                    modalAddressesListDialogFragment = ModalAddressesListDialogFragment.newInstance(UserInfo.getInstance().getUserId());
+                    modalAddressesListDialogFragment = ModalAddressesListDialogFragment.newInstance();
                     modalAddressesListDialogFragment.setDialogCallBack((ModalAddressesListDialogFragment.SheetCallBack) getParentFragmentManager().getFragments().get(0));
                     modalAddressesListDialogFragment.show((requireActivity()).getSupportFragmentManager(), "dialog");
                 }else{
@@ -142,20 +142,12 @@ public class PlaceOrderFragment extends Fragment implements AdapterView.OnItemSe
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                confirmButton.setEnabled(false);
                 // NewOrder order
                 GetPlansRequest request = viewModel.getRequest();
                 boolean dataValid = setPlaceOrderInfo(request);
                 request.user_id= UserInfo.getInstance().getUserId();
-    request.order_status=2;
-//    request.fromAddress.street="1000 W Maude Ave";
-//    request.fromAddress.city="Sunnyvale";
-//    request.fromAddress.state="CA";
-//    request.toAddress.street="1200 Getty Center Dr";
-//    request.toAddress.city="Los Angeles";
-//    request.toAddress.state="CA";
-//    request.item_info="Linggg's order";
-//    request.packageWeight=8.0;
+
                 if (!dataValid){
                     return;
                 }
@@ -171,13 +163,12 @@ public class PlaceOrderFragment extends Fragment implements AdapterView.OnItemSe
                         PlaceOrderFragmentDirections.PlaceToRecommend action = PlaceOrderFragmentDirections.placeToRecommend();
                         action.setReturnedPlans(plans1);
                         action.setReturnedRequest(request);
+                        confirmButton.setEnabled(true);
 
-                        Navigation.findNavController(v).navigate(action);
+                        Navigation.findNavController(requireActivity(),R.id.nav_host_fragment).navigate(action);
+
                     }
                 });
-
-
-
             }
         });
 
@@ -195,27 +186,43 @@ public class PlaceOrderFragment extends Fragment implements AdapterView.OnItemSe
         request.item_info = binding.itemInfo.getText().toString();
 
         request.fromAddress.firstname = binding.fromAddForm.fromFirst.getText().toString();
-//        if(!validateUserData(binding.fromAddForm.fromFirst,"please enter first name"))
-//            return false;
+        if(!validateUserData(binding.fromAddForm.fromFirst,"please enter first name"))
+            return false;
         request.fromAddress.lastname = binding.fromAddForm.fromLast.getText().toString();
-//        if(!validateUserData(binding.fromAddForm.fromLast,"please enter last name"))
-//            return false;
+        if(!validateUserData(binding.fromAddForm.fromLast,"please enter last name"))
+            return false;
         request.fromAddress.street = binding.fromAddForm.fromAdd1.getText().toString()+ binding.fromAddForm.fromAdd2.getText().toString();
-        if(!validateUserData(binding.fromAddForm.fromLast,"please enter your address"))
+        if(!validateUserData(binding.fromAddForm.fromAdd1,"please enter your address"))
             return false;
         request.fromAddress.city = binding.fromAddForm.fromCity.getText().toString();
+        if(!validateUserData(binding.fromAddForm.fromCity,"please enter your city"))
+            return false;
         request.fromAddress.state = binding.fromAddForm.fromState.getText().toString();
+        if(!validateUserData(binding.fromAddForm.fromState,"please enter your state"))
+            return false;
         request.fromAddress.zipcode = isInteger(binding.fromAddForm.fromZIP.getText().toString())? Integer.parseInt(binding.fromAddForm.fromZIP.getText().toString()):0;
 
         request.toAddress.firstname = binding.toAddForm.fromFirst.getText().toString();
+        if(!validateUserData(binding.toAddForm.fromFirst,"please enter first name"))
+            return false;
         request.toAddress.lastname = binding.toAddForm.fromLast.getText().toString();
+        if(!validateUserData(binding.toAddForm.fromLast,"please enter last name"))
+            return false;
         request.toAddress.street = binding.toAddForm.fromAdd1.getText().toString()+ binding.fromAddForm.fromAdd2.getText().toString();
+        if(!validateUserData(binding.toAddForm.fromAdd1,"please enter your address"))
+            return false;
         request.toAddress.city = binding.toAddForm.fromCity.getText().toString();
+        if(!validateUserData(binding.toAddForm.fromCity,"please enter your city"))
+            return false;
         request.toAddress.state = binding.toAddForm.fromState.getText().toString();
+        if(!validateUserData(binding.toAddForm.fromState,"please enter your state"))
+            return false;
         request.toAddress.zipcode = isInteger(binding.toAddForm.fromZIP.getText().toString())? Integer.parseInt(binding.toAddForm.fromZIP.getText().toString()):0;
 
         request.packageCategory = binding.packType.getSelectedItem().toString();
         request.packageWeight = isDouble(binding.packWeight.getText().toString());
+        if(!validateUserData(binding.packWeight,"please enter an estimated weight"))
+            return false;
         request.MMDD = binding.pickupDay.getSelectedItem().toString();
         request.startSlot = binding.pickupSlot.getSelectedItem().toString();
 
@@ -313,7 +320,6 @@ public class PlaceOrderFragment extends Fragment implements AdapterView.OnItemSe
     private void inflateForm() {
         AddressFormBinding formBinding = this.viewModel.getFormBinding();
         AddressResponse response = this.viewModel.getAddressResponse();
-        Log.d("mnmn","chose "+response);
         formBinding.fromFirst.setText(response.firstname);
         formBinding.fromLast.setText(response.lastname);
         formBinding.fromAdd1.setText(response.street);
