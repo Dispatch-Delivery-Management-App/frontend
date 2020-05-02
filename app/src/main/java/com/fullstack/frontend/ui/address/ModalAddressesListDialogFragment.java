@@ -5,6 +5,9 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 
+import com.fullstack.frontend.Retro.newOrder.AddressResponse;
+import com.fullstack.frontend.ui.newOrder.EnhancedRadioGroup;
+import com.fullstack.frontend.ui.newOrder.PlaceOrderFragment;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,9 +16,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.fullstack.frontend.R;
+import com.fullstack.frontend.databinding.FragmentModalAddressesListDialogListDialogBinding;
+
+import java.util.List;
 
 /**
  * <p>A fragment that shows a list of items as a modal bottom sheet.</p>
@@ -28,6 +36,8 @@ public class ModalAddressesListDialogFragment extends BottomSheetDialogFragment 
 
     // TODO: Customize parameter argument names
     private static final String ARG_ITEM_COUNT = "item_count";
+    private  FragmentModalAddressesListDialogListDialogBinding binding;
+    private SheetCallBack sheetCallBack;
 
     // TODO: Customize parameters
     public static ModalAddressesListDialogFragment newInstance(int itemCount) {
@@ -38,16 +48,41 @@ public class ModalAddressesListDialogFragment extends BottomSheetDialogFragment 
         return fragment;
     }
 
+    public interface SheetCallBack{
+        void dismissSheet();//return the chosen address's view/id
+    }
+
+    public void setDialogCallBack(SheetCallBack sheetCallBack) {
+        this.sheetCallBack = sheetCallBack;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_modal_addresses_list_dialog_list_dialog, container, false);
+        binding = FragmentModalAddressesListDialogListDialogBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        final RecyclerView recyclerView = (RecyclerView) view;
+        Button button = binding.saveAddress;
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sheetCallBack.dismissSheet();
+            }
+        });
+
+        EnhancedRadioGroup radioGroup = binding.addressGroup;
+        radioGroup.setOnSelectionChanged(new EnhancedRadioGroup.OnSelectionChangedListener() {
+            @Override
+            public void onSelectionChanged(RadioButton radioButton, int index) {
+                binding.saveAddress.setEnabled(true);
+            }
+        });
+
+        final RecyclerView recyclerView = (RecyclerView) binding.list ;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(new ModalAddressesAdapter(getArguments().getInt(ARG_ITEM_COUNT)));
     }
@@ -74,6 +109,7 @@ public class ModalAddressesListDialogFragment extends BottomSheetDialogFragment 
     private class ModalAddressesAdapter extends RecyclerView.Adapter<ViewHolder> {
 
         private final int mItemCount;
+        private final List<AddressResponse> addressResponseList;
 
         ModalAddressesAdapter(int itemCount) {
             mItemCount = itemCount;

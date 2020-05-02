@@ -15,7 +15,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.navigation.Navigation;
 
+import android.os.Debug;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,8 +37,9 @@ import com.fullstack.frontend.ui.address.ModalAddressesListDialogFragment;
 
 import java.util.List;
 
-public class PlaceOrderFragment extends BaseFragment<PlaceOrderViewModel, PlaceOrderRepository> implements AdapterView.OnItemSelectedListener {
+public class PlaceOrderFragment extends BaseFragment<PlaceOrderViewModel, PlaceOrderRepository> implements AdapterView.OnItemSelectedListener, ModalAddressesListDialogFragment.SheetCallBack {
     private PlaceOrderFragmentBinding binding;
+    private ModalAddressesListDialogFragment modalAddressesListDialogFragment;
 
     public PlaceOrderFragment() {
     }
@@ -93,7 +96,9 @@ public class PlaceOrderFragment extends BaseFragment<PlaceOrderViewModel, PlaceO
         fromAddressBookButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ModalAddressesListDialogFragment.newInstance(30).show((requireActivity()).getSupportFragmentManager(), "dialog");
+                modalAddressesListDialogFragment = ModalAddressesListDialogFragment.newInstance(10);
+                modalAddressesListDialogFragment.setDialogCallBack((ModalAddressesListDialogFragment.SheetCallBack)getParentFragmentManager().getFragments().get(0));
+                modalAddressesListDialogFragment.show((requireActivity()).getSupportFragmentManager(), "dialog");
             }
         });
 
@@ -254,5 +259,10 @@ public class PlaceOrderFragment extends BaseFragment<PlaceOrderViewModel, PlaceO
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    @Override
+    public void dismissSheet() {
+        modalAddressesListDialogFragment.dismiss();
     }
 }
