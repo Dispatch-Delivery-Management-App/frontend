@@ -108,7 +108,7 @@ public class PlaceOrderFragment extends BaseFragment<PlaceOrderViewModel, PlaceO
                 // NewOrder order
                 GetPlansRequest request = new GetPlansRequest();
                 boolean dataValid = setPlaceOrderInfo(request);
-                request.user_id= UserInfo.getUser_id();
+                request.user_id= UserInfo.getInstance().getUserId();
     request.order_status=2;
 //    request.fromAddress.street="1000 W Maude Ave";
 //    request.fromAddress.city="Sunnyvale";

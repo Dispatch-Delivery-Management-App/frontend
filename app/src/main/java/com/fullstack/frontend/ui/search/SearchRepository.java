@@ -9,6 +9,7 @@ import com.fullstack.frontend.Retro.OrderResponse;
 import com.fullstack.frontend.Retro.SearchRequest;
 import com.fullstack.frontend.Retro.SearchResponse;
 import com.fullstack.frontend.base.BaseRepository;
+import com.fullstack.frontend.config.UserInfo;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -19,22 +20,9 @@ import retrofit2.Response;
 
 public class SearchRepository extends BaseRepository {
     @SerializedName("user_id")
-    private int userId;
     private String key;
 
     public SearchRepository() {}
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public String getKey() {
-        return key;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
 
     public void setKey(String key) {
         this.key = key;
@@ -43,7 +31,7 @@ public class SearchRepository extends BaseRepository {
     public MutableLiveData<List<SearchResponse>> searchResult() {
         final MutableLiveData<List<SearchResponse>> searchResult = new MutableLiveData<>();
         SearchRequest searchRequest = new SearchRequest();
-        searchRequest.setUserId(userId);
+        searchRequest.setUserId(UserInfo.getInstance().getUserId());
         searchRequest.setKey(key);
         Call<BaseResponse<List<SearchResponse>>> call = plansRequestApi.search(searchRequest);
         call.enqueue(new Callback<BaseResponse<List<SearchResponse>>>() {

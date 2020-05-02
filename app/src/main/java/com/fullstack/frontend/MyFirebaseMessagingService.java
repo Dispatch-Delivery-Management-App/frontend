@@ -93,8 +93,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 
-        Log.d(TAG, "user id: " + UserInfo.getUser_id() + "token: " + token);
-        TokenRequest request = new TokenRequest(UserInfo.getUser_id(), token);
+        Log.d(TAG, "user id: " + UserInfo.getInstance().getUserId() + "token: " + token);
+        TokenRequest request = new TokenRequest(UserInfo.getInstance().getUserId(), token);
         Call<BaseResponse> postToken = apiService.postToken(request);
         postToken.enqueue(new Callback<BaseResponse>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
