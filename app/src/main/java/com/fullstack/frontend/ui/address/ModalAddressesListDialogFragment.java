@@ -52,11 +52,8 @@ public class ModalAddressesListDialogFragment extends BottomSheetDialogFragment{
     private List<AddressResponse> addressResponseList;
 
     // TODO: Customize parameters
-    public static ModalAddressesListDialogFragment newInstance(int userID) {
+    public static ModalAddressesListDialogFragment newInstance() {
         final ModalAddressesListDialogFragment fragment = new ModalAddressesListDialogFragment();
-        final Bundle args = new Bundle();
-        args.putInt(USER_ID, userID);
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -116,7 +113,7 @@ public class ModalAddressesListDialogFragment extends BottomSheetDialogFragment{
         });
 
         binding.list.setLayoutManager(new LinearLayoutManager(getContext()));
-UserInfo.getInstance().setUserId(5);
+//UserInfo.getInstance().setUserId(5);
         MutableLiveData<List<AddressResponse>> mutableLiveData = addressViewModel.postRequest(UserInfo.getInstance().getUserId());
         mutableLiveData.observe(requireActivity(), new Observer<List<AddressResponse>>() {
             @Override

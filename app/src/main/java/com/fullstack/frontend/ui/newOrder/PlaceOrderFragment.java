@@ -107,7 +107,7 @@ public class PlaceOrderFragment extends Fragment implements AdapterView.OnItemSe
                 if (fromAddressBookButton.getText().equals(getResources().getString(R.string.myAddressesButton))) {
                     viewModel.setFormBinding(binding.fromAddForm);
                     viewModel.setCurForm(0);
-                    modalAddressesListDialogFragment = ModalAddressesListDialogFragment.newInstance(UserInfo.getInstance().getUserId());
+                    modalAddressesListDialogFragment = ModalAddressesListDialogFragment.newInstance();
                     modalAddressesListDialogFragment.setDialogCallBack((ModalAddressesListDialogFragment.SheetCallBack) getParentFragmentManager().getFragments().get(0));
                     modalAddressesListDialogFragment.show((requireActivity()).getSupportFragmentManager(), "dialog");
                 }else{
@@ -125,7 +125,7 @@ public class PlaceOrderFragment extends Fragment implements AdapterView.OnItemSe
                 if (toAddressBookButton.getText().equals(getResources().getString(R.string.myAddressesButton))) {
                     viewModel.setFormBinding(binding.toAddForm);
                     viewModel.setCurForm(1);
-                    modalAddressesListDialogFragment = ModalAddressesListDialogFragment.newInstance(UserInfo.getInstance().getUserId());
+                    modalAddressesListDialogFragment = ModalAddressesListDialogFragment.newInstance();
                     modalAddressesListDialogFragment.setDialogCallBack((ModalAddressesListDialogFragment.SheetCallBack) getParentFragmentManager().getFragments().get(0));
                     modalAddressesListDialogFragment.show((requireActivity()).getSupportFragmentManager(), "dialog");
                 }else{
