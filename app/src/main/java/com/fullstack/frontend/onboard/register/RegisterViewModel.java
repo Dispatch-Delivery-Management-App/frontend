@@ -35,7 +35,6 @@ public class RegisterViewModel extends BaseViewModel<RegisterModel> {
         final String username = repository.getUsername();
         final String email = repository.getEmail();
         final String password = repository.getPassword();
-//        final String cpassword = repository.getcPassword();
         if (username == null) {
             remoteRequestListener.onFailure("please enter user name");
             return;
@@ -47,9 +46,6 @@ public class RegisterViewModel extends BaseViewModel<RegisterModel> {
         if (password.isEmpty()) {
             remoteRequestListener.onFailure("please enter password");
             return;
-//        } else if (cpassword != password) {
-//            remoteRequestListener.onFailure("password doesn't match");
-//            return;
         }
         remoteRequestListener.onSuccess(repository.userRegister());
 
