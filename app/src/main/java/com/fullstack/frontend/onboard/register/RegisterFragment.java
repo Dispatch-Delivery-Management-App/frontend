@@ -116,8 +116,8 @@ public class RegisterFragment extends BaseFragment<RegisterViewModel, RegisterMo
     @Override
     public void onSuccess(LiveData<OnBoardingResponse> loginResponse) {
         loginResponse.observe(this, it -> {
-//            Toast.makeText(getActivity(), "Register Successfully!", Toast.LENGTH_SHORT).show();
-            Util.showToast(getContext(), it.getError()).show();
+            Toast.makeText(getActivity(), "Register Successfully!", Toast.LENGTH_SHORT).show();
+//            Util.showToast(getContext(), it.getError()).show();
 
             if (it.getError().equals("OK")) {
                 Navigation.findNavController(getView()).navigate(R.id.loginFragment);
