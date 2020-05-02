@@ -107,7 +107,6 @@ public class NewOrderRecommendFragment extends BaseFragment<NewOrderRecommendVie
     private void setRequest(GetPlansRequest request) {
         Plan plan = null;
         int selectedID =  binding.cardGroup.getSelectedItem().getId();
-        Log.d("TTT",binding.cardGroup.getSelectedItem().toString());
         if (selectedID == binding.recommendedPlan.radioButton5.getId()){
             plan = viewModel.getBest();
         }else if (selectedID == binding.cheapPlan.radioButton5.getId()){
