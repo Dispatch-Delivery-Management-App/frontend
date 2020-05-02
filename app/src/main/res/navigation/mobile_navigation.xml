@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/onBoardingFragment">
+<!--    app:startDestination="@+id/onBoardingFragment">-->
+
+
+    <action
+        android:id="@+id/any_to_detail"
+        app:destination="@id/nav_detail"/>
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.fullstack.frontend.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home">
+
+
+        <action
+            android:id="@+id/action_nav_home_to_nav_placeOrder"
+            app:destination="@id/nav_placeOrder" />
+
+        <action
+            android:id="@+id/orderDetailAction"
+            app:destination="@id/nav_detail" >
+            <argument
+                android:name="orderId"
+                app:argType="integer"
+                android:defaultValue="0" />
+        </action>
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/nav_addresses"
+        android:name="com.fullstack.frontend.ui.address.ManageAddressFragment"
+        android:label="@string/menu_manage_address"
+        tools:layout="@layout/fragment_address" />
+
+
+    <fragment
+        android:id="@+id/nav_placeOrder"
+        android:name="com.fullstack.frontend.ui.newOrder.PlaceOrderFragment"
+        android:label="place order label"
+        tools:layout="@layout/place_order_fragment">
+
+        <action
+            android:id="@+id/place_to_recommend"
+            app:destination="@+id/nav_recommend">
+            <argument android:name="returnedPlans"
+                android:defaultValue="@null"
+                app:nullable="true"
+                app:argType="com.fullstack.frontend.Retro.newOrder.Plan[]"/>
+
+            <argument android:name="returnedRequest"
+                android:defaultValue="@null"
+                app:nullable="true"
+                app:argType="com.fullstack.frontend.Retro.newOrder.GetPlansRequest"/>
+
+        </action>
+
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_recommend"
+        android:name="com.fullstack.frontend.ui.newOrder.NewOrderRecommendFragment"
+        android:label="recommend label"
+        tools:layout="@layout/new_order_recommend_fragment">
+
+        <argument android:name="returnedPlans"
+            app:nullable="false"
+            app:argType="com.fullstack.frontend.Retro.newOrder.Plan[]"/>
+
+        <argument android:name="returnedRequest"
+            android:defaultValue="@null"
+            app:nullable="true"
+            app:argType="com.fullstack.frontend.Retro.newOrder.GetPlansRequest"/>
+
+        <action
+            android:id="@+id/recommend_to_detail"
+            app:destination="@+id/nav_detail">
+            <argument
+                android:name="orderId"
+                app:argType="integer"
+                android:defaultValue="0" />
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_detail"
+        android:name="com.fullstack.frontend.ui.tracking.OrderDetailFragment"
+        android:label="Order Detail"
+        tools:layout="@layout/order_detail_fragment">
+
+        <action
+            android:id="@+id/detail_to_home"
+            app:destination="@+id/nav_home"
+            app:popUpTo="@+id/nav_home"
+            app:popUpToInclusive="true"/>
+        <argument
+            android:name="orderId"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.fullstack.frontend.onboard.login.LoginFragment"
+        android:label="LoginFragment" />
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.fullstack.frontend.onboard.register.RegisterFragment"
+        android:label="RegisterFragment" />
+    <fragment
+        android:id="@+id/onBoardingFragment"
+        android:name="com.fullstack.frontend.onboard.OnBoardingFragment"
+        android:label="OnBoardingFragment" />
+
+
+
+</navigation>

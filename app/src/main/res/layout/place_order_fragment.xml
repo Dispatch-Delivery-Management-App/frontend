@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:padding="10dp"
+    android:orientation="vertical"
+    tools:context=".ui.newOrder.PlaceOrderFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <EditText
+                android:id="@+id/item_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/item_info"
+                android:inputType="textPersonName"
+                android:padding="10dp"/>
+
+            <TextView
+                android:id="@+id/shipFrom"
+                android:layout_width="match_parent"
+                android:textColor="@color/colorPrimary"
+                android:layout_height="32dp"
+                android:text="@string/from"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="16dp" />
+
+            <include
+                android:id="@+id/from_add_form"
+                layout="@layout/address_form" />
+
+            <TextView
+                android:id="@+id/shipTo"
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:text="@string/to"
+                android:textColor="@color/colorPrimary"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="16dp" />
+
+            <include
+                android:id="@+id/to_add_form"
+                layout="@layout/address_form" />
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/pack"-->
+<!--                tools:layout_editor_absoluteX="16dp"-->
+<!--                tools:layout_editor_absoluteY="16dp" />-->
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/pack"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="16dp"
+                android:textSize="@dimen/btn_size"
+                style="@style/Widget.MaterialComponents.Button.TextButton"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <EditText
+                    android:id="@+id/pack_weight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="@string/weight"
+                    android:inputType="numberDecimal" />
+
+                <Spinner
+                    android:id="@+id/pack_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:autofillHints="@string/type" />
+
+            </LinearLayout>
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/window"-->
+<!--                tools:layout_editor_absoluteX="16dp"-->
+<!--                tools:layout_editor_absoluteY="16dp" />-->
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/window"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="16dp"
+                android:textSize="@dimen/btn_size"
+                style="@style/Widget.MaterialComponents.Button.TextButton"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <Spinner
+                    android:id="@+id/pickup_day"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <Spinner
+                    android:id="@+id/pickup_slot"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="74dp">
+
+                <Button
+                    android:id="@+id/button_showRecommend"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="@string/showPrice_button"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/btn_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>
