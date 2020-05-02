@@ -38,7 +38,7 @@ public class PlaceOrderViewModel extends BaseViewModel<PlaceOrderRepository> {
         LocalDateTime today =  LocalDateTime.now();
         LocalDateTime tomorrow = today.plusDays(1);
         LocalDateTime dayAfterTomorrow = today.plusDays(2);
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
         return new String[]{dateTimeFormatter.format(tomorrow),dateTimeFormatter.format(dayAfterTomorrow)};
     }
 

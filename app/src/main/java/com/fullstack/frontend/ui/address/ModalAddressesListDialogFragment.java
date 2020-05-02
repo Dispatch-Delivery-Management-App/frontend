@@ -54,12 +54,20 @@ public class ModalAddressesListDialogFragment extends BottomSheetDialogFragment 
 
     private class ViewHolder extends RecyclerView.ViewHolder {
 
-        final TextView text;
+        final TextView first;
+        final TextView last;
+        final TextView address;
+        final TextView cityState;
+        final TextView zip;
 
         ViewHolder(LayoutInflater inflater, ViewGroup parent) {
             // TODO: Customize the item layout
             super(inflater.inflate(R.layout.fragment_modal_addresses_list_dialog_list_dialog_item, parent, false));
-            text = itemView.findViewById(R.id.text);
+            first = itemView.findViewById(R.id.first);
+            last = itemView.findViewById(R.id.last);
+            address = itemView.findViewById(R.id.add);
+            cityState = itemView.findViewById(R.id.cityState);
+            zip = itemView.findViewById(R.id.zip);
         }
     }
 
@@ -79,7 +87,7 @@ public class ModalAddressesListDialogFragment extends BottomSheetDialogFragment 
 
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
-            holder.text.setText(String.valueOf(position));
+            holder.first.setText(String.valueOf(position));
         }
 
         @Override
