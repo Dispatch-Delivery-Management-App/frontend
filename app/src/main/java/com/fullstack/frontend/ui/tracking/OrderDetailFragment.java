@@ -132,9 +132,9 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
                         status.setText("Draft");
                     } else  if(response1.status == 2){
                         status.setText("NOT STARTED");
-                    } if(response1.status == 2){
-                        status.setText("SHIPPED");
                     } if(response1.status == 3){
+                        status.setText("START TO PICK UP");
+                    } if(response1.status == 4){
                         status.setText("Completed");
                     }
                     category.setText(String.valueOf(response1.category));
@@ -343,11 +343,11 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
 
                     MarkerOptions fromMarker = new MarkerOptions().position(
                         new LatLng(first.get(0).lat,first.get(0).lng)
-                    ).title("FROM");
+                    ).title("STATION");
 
                     MarkerOptions stationMarker = new MarkerOptions().position(
                             new LatLng(second.get(0).lat,second.get(0).lng)
-                    ).title("STATION");
+                    ).title("FROM");
 
                     int size = second.size();
                     Log.d("size",String.valueOf(size));
