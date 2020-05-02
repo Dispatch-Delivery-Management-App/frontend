@@ -108,14 +108,14 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
         TextView to_address = (TextView) v.findViewById(R.id.to_address_filling);
 
 
-        TextView submit = v.findViewById(R.id.submit);
-        RatingBar ratingBar = v.findViewById(R.id.rating);
-        ratingBar.setMax(5);
-
-        submit.setOnClickListener(v1 -> {
-            RatingRequest request = new RatingRequest(ID, (int) ratingBar.getRating());
-            goRating(request, ratingBar, submit);
-        });
+//        TextView submit = v.findViewById(R.id.submit);
+//        RatingBar ratingBar = v.findViewById(R.id.rating);
+//        ratingBar.setMax(5);
+//
+//        submit.setOnClickListener(v1 -> {
+//            RatingRequest request = new RatingRequest(ID, (int) ratingBar.getRating());
+//            goRating(request, ratingBar, submit);
+//        });
 
         Call<BaseResponse<OrderDetailResponse>> orderDetailResponse = apiService.postOrderDetail(new OrderDetailRequest(ID));
         orderDetailResponse.enqueue(new Callback<BaseResponse<OrderDetailResponse>>() {
@@ -143,7 +143,7 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
                     from_address.setText(fromAddress);
                     String toAddress = response1.to_street + '\n' + response1.to_city +   '\n' + response1.to_state + " " + String.valueOf(response1.to_zipcode);
                     to_address.setText(toAddress);
-                    ratingBar.setRating(response1.feedback);
+                   // ratingBar.setRating(response1.feedback);
                 }
             }
             @Override
@@ -153,6 +153,7 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
         });
 
 
+        //bottom sheet dialog
         Button showButon = v.findViewById(R.id.showModal);
         showButon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -187,7 +188,7 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
                     String toAddress = response1.to_street + '\n' + response1.to_city +   '\n' + response1.to_state + " " + String.valueOf(response1.to_zipcode);
                     to_address.setText(toAddress);
 
-                    ratingBar.setRating(response1.feedback);
+                   // ratingBar.setRating(response1.feedback);
 
                 }
             }
