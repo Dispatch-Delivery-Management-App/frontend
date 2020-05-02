@@ -2,6 +2,7 @@ package com.fullstack.frontend.ui.newOrder;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
@@ -69,6 +70,21 @@ public class EnhancedRadioGroup extends RadioGroup implements View.OnClickListen
             }
         }
         return null;
+    }
+
+    public int getIndexOfSelectedItem() {
+        if (radioButtons.isEmpty()) {
+            Log.d("test","button length 0");
+            return -1;
+        }
+        for (int i=0;i<radioButtons.size();i++) {
+            RadioButton radioButton = radioButtons.get(i);
+            if (radioButton.isChecked()) {
+                return i;
+            }
+        }
+        Log.d("test","no button selected");
+        return -1;
     }
 
     public void setOnSelectionChanged(OnSelectionChangedListener selectionChangedListener) {

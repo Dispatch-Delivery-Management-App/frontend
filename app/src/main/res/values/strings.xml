@@ -63,5 +63,7 @@
     <!--    Address Related-->
     <string name="myAddressesButton">Choose from recent addresses</string>
     <string name="confirmAddressButton">Confirm</string>
+    <string name="editAdd">Edit</string>
+    <string name="saveAdd">Save</string>
 
 </resources>
