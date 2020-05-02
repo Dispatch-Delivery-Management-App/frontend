@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -82,15 +83,24 @@ public class ModalAddressesListDialogFragment extends BottomSheetDialogFragment 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("mnmn",binding.addressGroup.getSelectedItem().toString());
                 sheetCallBack.dismissSheet();
             }
         });
 
         EnhancedRadioGroup radioGroup = binding.addressGroup;
         radioGroup.setOnSelectionChanged(new EnhancedRadioGroup.OnSelectionChangedListener() {
+            private RadioButton lastRadioButton = null;
             @Override
             public void onSelectionChanged(RadioButton radioButton, int index) {
-                binding.saveAddress.setEnabled(true);
+                if (lastRadioButton==null || !lastRadioButton.equals(radioButton)){//if no selected
+                    lastRadioButton=radioButton;
+                    binding.saveAddress.setEnabled(true);
+                    return;
+                }
+                radioButton.setChecked(false);//is selecting the same button
+                lastRadioButton=null;
+                binding.saveAddress.setEnabled(false);
             }
         });
 
@@ -131,6 +141,7 @@ UserInfo.getInstance().setUserId(5);
         final TextView address;
         final TextView cityState;
         final TextView zip;
+        final RadioButton button;
 
         ViewHolder(LayoutInflater inflater, ViewGroup parent) {
             // TODO: Customize the item layout
@@ -140,6 +151,7 @@ UserInfo.getInstance().setUserId(5);
             address = itemView.findViewById(R.id.add);
             cityState = itemView.findViewById(R.id.cityState);
             zip = itemView.findViewById(R.id.zip);
+            button = itemView.findViewById(R.id.selectedAddress);
         }
     }
 
@@ -148,6 +160,7 @@ UserInfo.getInstance().setUserId(5);
 
         ModalAddressesAdapter(List<AddressResponse> addresses) {
             this.addresses = addresses;
+
         }
 
         @NonNull
