@@ -74,6 +74,11 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
+                            <entry key="orderDetailAction">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                           </map>
                         </option>
                       </LayoutPositions>
@@ -106,7 +111,7 @@
                         <option name="myPosition">
                           <Point>
                             <option name="x" value="741" />
-                            <option name="y" value="265" />
+                            <option name="y" value="268" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -117,18 +122,6 @@
                               </value>
                             </entry>
                           </map>
-                        </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
-                  <entry key="onBoardingActivity">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="-28" />
-                            <option name="y" value="-723" />
-                          </Point>
                         </option>
                       </LayoutPositions>
                     </value>

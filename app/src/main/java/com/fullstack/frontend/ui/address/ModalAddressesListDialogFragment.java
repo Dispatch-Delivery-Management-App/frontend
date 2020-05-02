@@ -98,17 +98,9 @@ public class ModalAddressesListDialogFragment extends BottomSheetDialogFragment{
 
         EnhancedRadioGroup radioGroup = binding.addressGroup;
         radioGroup.setOnSelectionChanged(new EnhancedRadioGroup.OnSelectionChangedListener() {
-            private RadioButton lastRadioButton = null;
             @Override
             public void onSelectionChanged(RadioButton radioButton, int index) {
-                if (lastRadioButton==null || !lastRadioButton.equals(radioButton)){//if no selected
-                    lastRadioButton=radioButton;
-                    binding.saveAddress.setEnabled(true);
-                    return;
-                }
-                radioButton.setChecked(false);//is selecting the same button
-                lastRadioButton=null;
-                binding.saveAddress.setEnabled(false);
+                binding.saveAddress.setEnabled(true);
             }
         });
 
@@ -128,7 +120,6 @@ public class ModalAddressesListDialogFragment extends BottomSheetDialogFragment{
     @Override
     public void onDismiss(@NonNull DialogInterface dialog) {
         super.onDismiss(dialog);
-        Log.d("mnmn","cnn");
     }
 
     private AddressViewModel getViewModel() {
@@ -149,29 +140,9 @@ public class ModalAddressesListDialogFragment extends BottomSheetDialogFragment{
         };
     }
 
-    private class ViewHolder extends RecyclerView.ViewHolder {
-
-        final TextView first;
-        final TextView last;
-        final TextView address;
-        final TextView cityState;
-        final TextView zip;
-        final RadioButton button;
-
-        ViewHolder(LayoutInflater inflater, ViewGroup parent) {
-            // TODO: Customize the item layout
-            super(inflater.inflate(R.layout.fragment_modal_addresses_list_dialog_list_dialog_item, parent, false));
-            first = itemView.findViewById(R.id.first);
-            last = itemView.findViewById(R.id.last);
-            address = itemView.findViewById(R.id.add);
-            cityState = itemView.findViewById(R.id.cityState);
-            zip = itemView.findViewById(R.id.zip);
-            button = itemView.findViewById(R.id.selectedAddress);
-        }
-    }
-
-    private class ModalAddressesAdapter extends RecyclerView.Adapter<ViewHolder> {
+    private class ModalAddressesAdapter extends RecyclerView.Adapter<ModalAddressesAdapter.ViewHolder> {
         private List<AddressResponse> addresses;
+        private int lastSelectedPosition = -1;
 
         ModalAddressesAdapter(List<AddressResponse> addresses) {
             this.addresses = addresses;
@@ -192,11 +163,45 @@ public class ModalAddressesListDialogFragment extends BottomSheetDialogFragment{
             holder.cityState.setText(address);
             holder.address.setText(addressResponse.street);
             holder.zip.setText(String.valueOf(addressResponse.zipcode));
+
+            holder.selectionState.setChecked(lastSelectedPosition == position);
         }
 
         @Override
         public int getItemCount() {
             return addresses.size();
+        }
+
+
+        private class ViewHolder extends RecyclerView.ViewHolder {
+
+            final TextView first;
+            final TextView last;
+            final TextView address;
+            final TextView cityState;
+            final TextView zip;
+            final RadioButton selectionState;
+
+            ViewHolder(LayoutInflater inflater, ViewGroup parent) {
+                // TODO: Customize the item layout
+                super(inflater.inflate(R.layout.fragment_modal_addresses_list_dialog_list_dialog_item, parent, false));
+                first = itemView.findViewById(R.id.first);
+                last = itemView.findViewById(R.id.last);
+                address = itemView.findViewById(R.id.add);
+                cityState = itemView.findViewById(R.id.cityState);
+                zip = itemView.findViewById(R.id.zip);
+                selectionState = itemView.findViewById(R.id.selectedAddress);
+
+                selectionState.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        lastSelectedPosition = getAbsoluteAdapterPosition();
+                        notifyDataSetChanged();
+                    }
+                });
+
+
+            }
         }
 
     }
