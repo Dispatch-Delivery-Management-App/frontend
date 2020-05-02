@@ -45,10 +45,11 @@ public class LoginModel extends BaseRepository {
         call.enqueue(new Callback<BaseResponse<OnBoardingResponse>>() {
             @Override
             public void onResponse(Call<BaseResponse<OnBoardingResponse>> call, Response<BaseResponse<OnBoardingResponse>> response) {
-                if (response.code() == 200) {
+                if (response.isSuccessful()) {
                     loginResponse.setValue(response.body().response);
                 } else  {
-
+                    onBoardingResponse.setError("Invalid Username or Password");
+                    loginResponse.setValue(onBoardingResponse);
                 }
             }
 

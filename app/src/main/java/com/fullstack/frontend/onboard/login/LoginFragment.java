@@ -110,51 +110,53 @@ public class LoginFragment extends BaseFragment<LoginViewModel, LoginModel> impl
     @Override
     public void onSuccess(LiveData<OnBoardingResponse> loginResponse) {
         loginResponse.observe(this, it -> {
-            UserInfo.getInstance().setUserId(it.getId());
-            Toast.makeText(getActivity(), "Login Successfully!", Toast.LENGTH_SHORT).show();
+            Util.showToast(getContext(), it.getError()).show();
 
-            FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
-                @Override
-                public void onSuccess(InstanceIdResult instanceIdResult) {
+            if (it.getError().equals("OK")) {
 
 
-                    Log.d("token", instanceIdResult.getToken());
+               Toast.makeText(getActivity(), "Login Successfully!", Toast.LENGTH_SHORT).show();
+                UserInfo.getInstance().setUserId(it.getId());
 
-                    ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-                    //Log.d(TAG, "user id:" + UserInfo.getUser_id());
-                    TokenRequest request = new TokenRequest(UserInfo.getInstance().getUserId(), instanceIdResult.getToken());
-                    Call<BaseResponse> postToken = apiService.postToken(request);
-                    postToken.enqueue(new Callback<BaseResponse>() {
-                        @RequiresApi(api = Build.VERSION_CODES.N)
-                        @Override
-                        public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
-                            if (response.isSuccessful()){
+                FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
+                    @Override
+                    public void onSuccess(InstanceIdResult instanceIdResult) {
 
-                                Log.d("FirebaseService", "Send token: " + response.code());
+
+                        Log.d("token", instanceIdResult.getToken());
+
+                        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+                        //Log.d(TAG, "user id:" + UserInfo.getUser_id());
+                        TokenRequest request = new TokenRequest(UserInfo.getInstance().getUserId(), instanceIdResult.getToken());
+                        Call<BaseResponse> postToken = apiService.postToken(request);
+                        postToken.enqueue(new Callback<BaseResponse>() {
+                            @RequiresApi(api = Build.VERSION_CODES.N)
+                            @Override
+                            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                                if (response.isSuccessful()) {
+
+                                    Log.d("FirebaseService", "Send token: " + response.code());
+                                }
+                                if (response.body() != null) {
+                                    Log.d("FirebaseService", "Send token: " + "Success");
+
+
+                                }
                             }
-                            if (response.body() != null) {
-                                Log.d("FirebaseService", "Send token: " + "Success");
+
+                            @Override
+                            public void onFailure(Call<BaseResponse> call, Throwable t) {
+
+                                Log.d("FirebaseService", "Send token failed");
 
 
                             }
-                        }
+                        });
+                    }
+                });
+                Navigation.findNavController(getView()).navigate(R.id.nav_home);
 
-                        @Override
-                        public void onFailure(Call<BaseResponse> call, Throwable t) {
-
-                            Log.d("FirebaseService", "Send token failed");
-
-
-                        }
-                    });
-                }
-            });
-
-
-
-            Navigation.findNavController(getView()).navigate(R.id.nav_home);
-
-
+            }
 
         });
     }
