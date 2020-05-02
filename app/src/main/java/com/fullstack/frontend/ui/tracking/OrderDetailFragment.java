@@ -73,7 +73,7 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
     MutableLiveData<Double> liveLONG = new MutableLiveData<>();
     List<OrderMapResponse.LatLong> first;
     List<OrderMapResponse.LatLong> second;
-    
+
     double[] lat_list;
     double[] lng_list;
 
@@ -177,7 +177,7 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
                                 j++;
                         }
                     }
-
+                   // Log.d("lat_list", String.valueOf(lat_list.length));
 
 
                 }
@@ -240,22 +240,50 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
             public void onChanged(Integer integer) {
                 if (both.getValue()==2){
                     Log.d("test5:::", liveLAT.getValue().toString());
+//
+//                    MarkerOptions marker = new MarkerOptions().position(
+//                            new LatLng(liveLAT.getValue(), liveLONG.getValue())
+//                    ).title("TRACKING");
+
+                   // Log.d("l",String.valueOf(latitude));
+
                     MarkerOptions marker = new MarkerOptions().position(
-                            new LatLng(liveLAT.getValue(), liveLONG.getValue())
+                            new LatLng(latitude,longitude)
                     ).title("TRACKING");
 
-//                    MarkerOptions fromMarker = new MarkerOptions().position(
-//                        new LatLng(a,b)
-//                    ).title("FROM");
+                    MarkerOptions fromMarker = new MarkerOptions().position(
+                        new LatLng(first.get(0).lat,first.get(0).lng)
+                    ).title("FROM");
+
+                    MarkerOptions stationMarker = new MarkerOptions().position(
+                            new LatLng(second.get(0).lat,second.get(0).lng)
+                    ).title("STATION");
+
+                    int size = second.size();
+                    Log.d("size",String.valueOf(size));
+
+                    MarkerOptions toMarker = new MarkerOptions().position(
+                            new LatLng(second.get(size-1).lat,second.get(size-1).lng)
+                    ).title("TO");
 
                      marker.icon(BitmapDescriptorFactory
                              .defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
 
-//                 //   fromMarker.icon(BitmapDescriptorFactory
-//                    .defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
+                    fromMarker.icon(BitmapDescriptorFactory
+                            .defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
+
+                    toMarker.icon(BitmapDescriptorFactory
+                            .defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
+
+                    stationMarker.icon(BitmapDescriptorFactory
+                            .defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
+
 
                      googleMap.addMarker(marker);
-//                     googleMap.addMarker(fromMarker);
+                     googleMap.addMarker(fromMarker);
+                    googleMap.addMarker(stationMarker);
+                    googleMap.addMarker(toMarker);
+
 
 
                     CameraPosition cameraPosition = new CameraPosition.Builder()
@@ -266,10 +294,11 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
 
 
                     PolylineOptions line = new PolylineOptions();
-                    line.add(new LatLng( latitude , longitude ));
+                    //line.add(new LatLng( latitude , longitude ));
                     for(int i = 0; i < first.size() + second.size(); i++){
                         line.add(new LatLng( lat_list[i] , lng_list[i]));
                     }
+
 
 
                     Polyline polyline = googleMap.addPolyline(line);
