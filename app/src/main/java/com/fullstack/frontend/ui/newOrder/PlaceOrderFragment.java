@@ -164,7 +164,9 @@ public class PlaceOrderFragment extends Fragment implements AdapterView.OnItemSe
                         action.setReturnedPlans(plans1);
                         action.setReturnedRequest(request);
                         confirmButton.setEnabled(true);
+
                         Navigation.findNavController(requireActivity(),R.id.nav_host_fragment).navigate(action);
+
                     }
                 });
             }
