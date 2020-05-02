@@ -190,9 +190,7 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
                                 j++;
                         }
                     }
-                   // Log.d("lat_list", String.valueOf(lat_list.length));
-
-
+                    
                 }
             }
             public void onFailure(Call<BaseResponse<com.fullstack.frontend.Retro.OrderMapResponse>> call, Throwable t) {

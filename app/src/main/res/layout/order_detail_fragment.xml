@@ -88,6 +88,9 @@
             android:textSize="@dimen/order_detail_list" />
 
 
+
+
+
         <TextView
             android:id="@+id/OrderID_filling"
             tools:layout_editor_absoluteX="16dp"
