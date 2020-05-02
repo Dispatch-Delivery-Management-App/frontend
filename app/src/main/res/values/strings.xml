@@ -29,17 +29,17 @@
     <string name="login">Login</string>
 
     <!--    place order-->
-    <string name="item_info">description of this order e.g.my beer </string>
-    <string name="from">SHIPPING FROM</string>
-    <string name="to">SHIPPING TO</string>
+    <string name="item_info">Description of this order e.g.my beer </string>
+    <string name="from">Pick Up Location</string>
+    <string name="to">Drop Off Location</string>
     <string name="weight">Weight in Kg</string>
     <string name="type">Item Category</string>
-    <string name="pack">PACKAGE TYPE</string>
-    <string name="window">WHEN TO PICK UP</string>
+    <string name="pack">Package Type</string>
+    <string name="window">Pick Up Time</string>
 
     <string name="firstName">First Name</string>
     <string name="lastName">Last Name</string>
-    <string name="address">Address Line</string>
+    <string name="address">Street Address</string>
     <string name="city">City</string>
     <string name="state">State</string>
     <string name="orderCountry">Country</string>

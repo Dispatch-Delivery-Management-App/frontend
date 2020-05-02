@@ -133,7 +133,13 @@ public class HomeFragment extends Fragment {
 
         searchRV.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        searchListAdapter.setOnSearchItemListener(view -> Navigation.findNavController(view).navigate(R.id.nav_detail));
+//        searchListAdapter.setOnSearchItemListener(view -> Navigation.findNavController(view).navigate(R.id.nav_detail));
+
+        searchListAdapter.setOnSearchItemListener(orderId -> {
+            HomeFragmentDirections.OrderDetailAction action = HomeFragmentDirections.orderDetailAction();
+            action.setOrderId(orderId);
+            NavHostFragment.findNavController(HomeFragment.this).navigate(action);
+        });
 
         searchViewModel.getSearchResult().observe(getViewLifecycleOwner(), searchResponses -> {
             searchListAdapter.setSearch(searchResponses);
@@ -150,7 +156,7 @@ public class HomeFragment extends Fragment {
         // set layoutManager
         mOrderListRV.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        mOrderListRV.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+//        mOrderListRV.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
 
         // item listener
         mOrderListAdapter.setOnItemClickListener(orderId -> {
