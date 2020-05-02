@@ -147,14 +147,7 @@ public class PlaceOrderFragment extends Fragment implements AdapterView.OnItemSe
                 GetPlansRequest request = viewModel.getRequest();
                 boolean dataValid = setPlaceOrderInfo(request);
                 request.user_id= UserInfo.getInstance().getUserId();
-//    request.fromAddress.street="1000 W Maude Ave";
-//    request.fromAddress.city="Sunnyvale";
-//    request.fromAddress.state="CA";
-//    request.toAddress.street="1200 Getty Center Dr";
-//    request.toAddress.city="Los Angeles";
-//    request.toAddress.state="CA";
-//    request.item_info="Linggg's order";
-//    request.packageWeight=8.0;
+
                 if (!dataValid){
                     return;
                 }
@@ -171,12 +164,9 @@ public class PlaceOrderFragment extends Fragment implements AdapterView.OnItemSe
                         action.setReturnedPlans(plans1);
                         action.setReturnedRequest(request);
                         confirmButton.setEnabled(true);
-                        Navigation.findNavController(v).navigate(action);
+                        Navigation.findNavController(requireActivity(),R.id.nav_host_fragment).navigate(action);
                     }
                 });
-
-
-
             }
         });
 
