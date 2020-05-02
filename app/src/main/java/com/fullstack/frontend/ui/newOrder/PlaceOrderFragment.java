@@ -16,6 +16,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.os.Debug;
 import android.text.TextUtils;
@@ -155,7 +156,7 @@ public class PlaceOrderFragment extends Fragment implements AdapterView.OnItemSe
                 viewModel.postOrder(request);
 
                 MutableLiveData<List<Plan>> planLiveData = viewModel.getReturnedPlans();
-                planLiveData.observe(requireActivity(), new Observer<List<Plan>>() {
+                planLiveData.observe(getViewLifecycleOwner(), new Observer<List<Plan>>() {
                     @Override
                     public void onChanged(List<Plan> plans) {
                         Plan[] plans1 = PlaceOrderFragment.this.convert(plans);
@@ -165,7 +166,7 @@ public class PlaceOrderFragment extends Fragment implements AdapterView.OnItemSe
                         action.setReturnedRequest(request);
                         confirmButton.setEnabled(true);
 
-                        Navigation.findNavController(requireActivity(),R.id.nav_host_fragment).navigate(action);
+                        NavHostFragment.findNavController(PlaceOrderFragment.this).navigate(action);
 
                     }
                 });
