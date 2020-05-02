@@ -96,7 +96,7 @@ public class PlaceOrderFragment extends BaseFragment<PlaceOrderViewModel, PlaceO
         fromAddressBookButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                modalAddressesListDialogFragment = ModalAddressesListDialogFragment.newInstance(10);
+                modalAddressesListDialogFragment = ModalAddressesListDialogFragment.newInstance(UserInfo.getInstance().getUserId());
                 modalAddressesListDialogFragment.setDialogCallBack((ModalAddressesListDialogFragment.SheetCallBack)getParentFragmentManager().getFragments().get(0));
                 modalAddressesListDialogFragment.show((requireActivity()).getSupportFragmentManager(), "dialog");
             }

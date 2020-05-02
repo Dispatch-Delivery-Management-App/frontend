@@ -6,16 +6,18 @@ import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 
 import com.fullstack.frontend.Retro.newOrder.AddressResponse;
+import com.fullstack.frontend.config.UserInfo;
 import com.fullstack.frontend.ui.newOrder.EnhancedRadioGroup;
-import com.fullstack.frontend.ui.newOrder.PlaceOrderFragment;
-import com.fullstack.frontend.ui.newOrder.PlaceOrderViewModel;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,16 +40,16 @@ import java.util.List;
 public class ModalAddressesListDialogFragment extends BottomSheetDialogFragment {
 
     // TODO: Customize parameter argument names
-    private static final String ARG_ITEM_COUNT = "item_count";
+    private static final String USER_ID = "user_id";
     private  FragmentModalAddressesListDialogListDialogBinding binding;
     private SheetCallBack sheetCallBack;
     private AddressViewModel addressViewModel;
 
     // TODO: Customize parameters
-    public static ModalAddressesListDialogFragment newInstance(int addressList) {
+    public static ModalAddressesListDialogFragment newInstance(int userID) {
         final ModalAddressesListDialogFragment fragment = new ModalAddressesListDialogFragment();
         final Bundle args = new Bundle();
-        args.putInt(ARG_ITEM_COUNT, addressList);
+        args.putInt(USER_ID, userID);
         fragment.setArguments(args);
         return fragment;
     }
@@ -92,9 +94,16 @@ public class ModalAddressesListDialogFragment extends BottomSheetDialogFragment 
             }
         });
 
-        final RecyclerView recyclerView = (RecyclerView) binding.list ;
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(new ModalAddressesAdapter(getArguments().getInt(ARG_ITEM_COUNT)));
+        binding.list.setLayoutManager(new LinearLayoutManager(getContext()));
+UserInfo.getInstance().setUserId(5);
+        MutableLiveData<List<AddressResponse>> mutableLiveData = addressViewModel.postRequest(UserInfo.getInstance().getUserId());
+        mutableLiveData.observe(requireActivity(), new Observer<List<AddressResponse>>() {
+            @Override
+            public void onChanged(List<AddressResponse> addressResponses) {
+                binding.list.setAdapter(new ModalAddressesAdapter(addressResponses));
+            }
+        });
+
     }
 
     private AddressViewModel getViewModel() {
@@ -135,12 +144,10 @@ public class ModalAddressesListDialogFragment extends BottomSheetDialogFragment 
     }
 
     private class ModalAddressesAdapter extends RecyclerView.Adapter<ViewHolder> {
+        private List<AddressResponse> addresses;
 
-        private final int mItemCount;
-
-
-        ModalAddressesAdapter(int itemCount) {
-            mItemCount = itemCount;
+        ModalAddressesAdapter(List<AddressResponse> addresses) {
+            this.addresses = addresses;
         }
 
         @NonNull
@@ -151,12 +158,18 @@ public class ModalAddressesListDialogFragment extends BottomSheetDialogFragment 
 
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
-            holder.first.setText(String.valueOf(position));
+            AddressResponse addressResponse = addresses.get(position);
+            holder.first.setText(addressResponse.firstname);
+            holder.last.setText(addressResponse.lastname);
+            String address = String.format("%s, %s ",addressResponse.city,addressResponse.state);
+            holder.cityState.setText(address);
+            holder.address.setText(addressResponse.street);
+            holder.zip.setText(String.valueOf(addressResponse.zipcode));
         }
 
         @Override
         public int getItemCount() {
-            return mItemCount;
+            return addresses.size();
         }
 
     }
