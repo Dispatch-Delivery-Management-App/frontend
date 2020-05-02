@@ -3,11 +3,13 @@ package com.fullstack.frontend.ui.newOrder;
 
 
 import androidx.annotation.RequiresApi;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -15,7 +17,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.navigation.Navigation;
 
+import android.os.Debug;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,24 +30,30 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.fullstack.frontend.R;
+import com.fullstack.frontend.Retro.newOrder.AddressResponse;
 import com.fullstack.frontend.Retro.newOrder.GetPlansRequest;
 import com.fullstack.frontend.Retro.newOrder.Plan;
 import com.fullstack.frontend.base.BaseFragment;
 import com.fullstack.frontend.config.UserInfo;
+import com.fullstack.frontend.databinding.AddressFormBinding;
 import com.fullstack.frontend.databinding.PlaceOrderFragmentBinding;
+import com.fullstack.frontend.ui.address.AddressViewModel;
 import com.fullstack.frontend.ui.address.ModalAddressesListDialogFragment;
 
 import java.util.List;
 
-public class PlaceOrderFragment extends BaseFragment<PlaceOrderViewModel, PlaceOrderRepository> implements AdapterView.OnItemSelectedListener {
+public class PlaceOrderFragment extends Fragment implements AdapterView.OnItemSelectedListener, ModalAddressesListDialogFragment.SheetCallBack {
     private PlaceOrderFragmentBinding binding;
-
+    private ModalAddressesListDialogFragment modalAddressesListDialogFragment;
+    private AddressResponse addressResponse;
+    private PlaceOrderViewModel viewModel;
     public PlaceOrderFragment() {
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        viewModel = getViewModel();
     }
 
     public static PlaceOrderFragment newInstance() {
@@ -83,6 +93,7 @@ public class PlaceOrderFragment extends BaseFragment<PlaceOrderViewModel, PlaceO
         spinner.setOnItemSelectedListener(this);
     }
 
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -93,20 +104,47 @@ public class PlaceOrderFragment extends BaseFragment<PlaceOrderViewModel, PlaceO
         fromAddressBookButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ModalAddressesListDialogFragment.newInstance(30).show((requireActivity()).getSupportFragmentManager(), "dialog");
+                if (fromAddressBookButton.getText().equals(getResources().getString(R.string.myAddressesButton))) {
+                    viewModel.setFormBinding(binding.fromAddForm);
+                    viewModel.setCurForm(0);
+                    modalAddressesListDialogFragment = ModalAddressesListDialogFragment.newInstance(UserInfo.getInstance().getUserId());
+                    modalAddressesListDialogFragment.setDialogCallBack((ModalAddressesListDialogFragment.SheetCallBack) getParentFragmentManager().getFragments().get(0));
+                    modalAddressesListDialogFragment.show((requireActivity()).getSupportFragmentManager(), "dialog");
+                }else{
+                    fromAddressBookButton.setText(R.string.myAddressesButton);
+                    toggleForm(binding.fromAddForm);
+                    viewModel.getRequest().fromAddress.addr_id=0;
+                }
+
             }
         });
 
+        toAddressBookButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (toAddressBookButton.getText().equals(getResources().getString(R.string.myAddressesButton))) {
+                    viewModel.setFormBinding(binding.toAddForm);
+                    viewModel.setCurForm(1);
+                    modalAddressesListDialogFragment = ModalAddressesListDialogFragment.newInstance(UserInfo.getInstance().getUserId());
+                    modalAddressesListDialogFragment.setDialogCallBack((ModalAddressesListDialogFragment.SheetCallBack) getParentFragmentManager().getFragments().get(0));
+                    modalAddressesListDialogFragment.show((requireActivity()).getSupportFragmentManager(), "dialog");
+                }else{
+                    toAddressBookButton.setText(R.string.myAddressesButton);
+                    toggleForm(binding.fromAddForm);
+                    viewModel.getRequest().fromAddress.addr_id=0;
+                }
+
+            }
+        });
 
         //Next Step Button
         Button confirmButton = binding.buttonShowRecommend;
-        //Click Button Next Step
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 // NewOrder order
-                GetPlansRequest request = new GetPlansRequest();
+                GetPlansRequest request = viewModel.getRequest();
                 boolean dataValid = setPlaceOrderInfo(request);
                 request.user_id= UserInfo.getInstance().getUserId();
     request.order_status=2;
@@ -223,18 +261,18 @@ public class PlaceOrderFragment extends BaseFragment<PlaceOrderViewModel, PlaceO
         return false;
     }
 
-    @Override
+
     protected PlaceOrderViewModel getViewModel() {
         return new ViewModelProvider(requireActivity(), getFactory()).get(PlaceOrderViewModel.class);
     }
 
 
-    @Override
+
     protected PlaceOrderRepository getRepository() {
         return new PlaceOrderRepository();
     }
 
-    @Override
+
     protected ViewModelProvider.Factory getFactory() {
         return new ViewModelProvider.Factory() {
             @NonNull
@@ -255,4 +293,57 @@ public class PlaceOrderFragment extends BaseFragment<PlaceOrderViewModel, PlaceO
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+
+    @Override
+    public AddressResponse getAddressResponse(){
+        return this.addressResponse;
+    }
+
+    @Override
+    public void dismissSheet() {
+        modalAddressesListDialogFragment.dismiss();
+        inflateForm();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+
+    private void inflateForm() {
+        AddressFormBinding formBinding = this.viewModel.getFormBinding();
+        AddressResponse response = this.viewModel.getAddressResponse();
+        Log.d("mnmn","chose "+response);
+        formBinding.fromFirst.setText(response.firstname);
+        formBinding.fromLast.setText(response.lastname);
+        formBinding.fromAdd1.setText(response.street);
+        formBinding.fromCity.setText(response.city);
+        formBinding.fromState.setText(response.state);
+        formBinding.fromZIP.setText(String.valueOf(response.zipcode));
+        formBinding.chooseAddressButton.setText(R.string.editAdd);
+        toggleForm(formBinding);
+        GetPlansRequest request = viewModel.getRequest();
+        if (viewModel.getCurForm()==0){
+            request.fromAddress.addr_id=response.address_id;
+        }else {
+            request.toAddress.addr_id=response.address_id;
+        }
+    }
+
+    private void toggleForm(AddressFormBinding formBinding){
+
+        formBinding.fromFirst.setEnabled(!formBinding.fromFirst.isEnabled());
+        formBinding.fromLast.setEnabled(!formBinding.fromLast.isEnabled());
+        formBinding.fromAdd1.setEnabled(!formBinding.fromAdd1.isEnabled());
+        formBinding.fromCity.setEnabled(!formBinding.fromCity.isEnabled());
+        formBinding.fromState.setEnabled(!formBinding.fromState.isEnabled());
+        formBinding.fromZIP.setEnabled(!formBinding.fromZIP.isEnabled());
+
+    }
+
+    @Override
+    public PlaceOrderViewModel getParentViewModel(){
+        return this.viewModel;
+    }
+
 }

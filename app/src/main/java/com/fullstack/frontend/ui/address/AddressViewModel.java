@@ -12,16 +12,17 @@ import java.util.List;
 
 public class AddressViewModel extends BaseViewModel<AddressListRepository> {
 
-    private MutableLiveData<List<AddressResponse>> addresses;
-
     protected AddressViewModel(AddressListRepository baseRepository) {
         super(baseRepository);
     }
 
-    public void getOrders(AddressListRequest request) {
-        repository.getAddresses(request,addresses);
-    }
-    public MutableLiveData<List<AddressResponse>> getAddresses(){
+    public MutableLiveData<List<AddressResponse>> postRequest(int userID) {
+        AddressListRequest request = new AddressListRequest();
+        request.user_id = userID;
+        MutableLiveData<List<AddressResponse>> addresses = repository.getAddresses(request);
         return addresses;
     }
+
+
+
 }

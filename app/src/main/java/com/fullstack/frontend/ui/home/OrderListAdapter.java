@@ -22,7 +22,6 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public static final int order_item = 2;
     public static int index = 0;
     private List<OrderResponse> orderResponses = new LinkedList<>();
-    //private List<Integer> itemViewType = new LinkedList<>();
     private HashMap<Integer, Object> itemHashmap= new HashMap<>();
 
     @Override
@@ -32,15 +31,6 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
         return order_item;
     }
-
-//    // click to order detail
-//    OnItemClickListener listener;
-//    public interface OnItemClickListener {
-//        public void OnItemClick(View v);
-//    }
-//    public void setOnItemClick(OnItemClickListener listener) {
-//        this.listener = listener;
-//    }
 
 
     public OrderListAdapter() {
@@ -77,10 +67,6 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
 
 
-
-
-
-
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -98,10 +84,6 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             itemHolder = new LinearViewHolder(itemView);
             return itemHolder;
         }
-        //return null;
-//        return holder;
-//        View itemView = View.inflate(parent.getContext(), R.layout.orderlist_item, null);
-//        return new LinearViewHolder(itemView);
         return null;
     }
 
@@ -138,26 +120,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             itemHolder.category.setText("Category: " + orderResponse.category);
             itemHolder.receiver.setText("Receiver: " + orderResponse.lastname);
             itemHolder.itemView.setTag(position);
-//
-//            // click to order detail
-//            itemHolder.itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-////                    if (listener != null) {
-////                        listener.OnItemClick(v, position);
-////                    }
-//                }
-//            });
 
-
-//            if (onItemClickListener != null) {
-//                itemHolder.itemView.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        onItemClickListener.OnItemClick(view, position);
-//                    }
-//                });
-//            }
 
             itemHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

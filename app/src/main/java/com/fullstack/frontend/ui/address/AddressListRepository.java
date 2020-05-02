@@ -18,8 +18,8 @@ import retrofit2.Response;
 
 public class AddressListRepository extends BaseRepository {
 
-    public void getAddresses(AddressListRequest request, MutableLiveData<List<AddressResponse>> addresses){
-
+    public MutableLiveData<List<AddressResponse>> getAddresses(AddressListRequest request){
+        MutableLiveData<List<AddressResponse>> addresses = new MutableLiveData<>();
         plansRequestApi.getAddressList(request)
                 .enqueue(new Callback<BaseResponse<List<AddressResponse>>>() {
                              @Override
@@ -40,5 +40,6 @@ public class AddressListRepository extends BaseRepository {
                              }
                          }
                 );
+        return addresses;
     }
 }
