@@ -1,5 +1,6 @@
 package com.fullstack.frontend.ui.address;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -8,6 +9,8 @@ import androidx.annotation.NonNull;
 import com.fullstack.frontend.Retro.newOrder.AddressResponse;
 import com.fullstack.frontend.config.UserInfo;
 import com.fullstack.frontend.ui.newOrder.EnhancedRadioGroup;
+import com.fullstack.frontend.ui.newOrder.PlaceOrderFragment;
+import com.fullstack.frontend.ui.newOrder.PlaceOrderViewModel;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import androidx.lifecycle.MutableLiveData;
@@ -38,13 +41,15 @@ import java.util.List;
  *     ModalAddressesListDialogFragment.newInstance(30).show(getSupportFragmentManager(), "dialog");
  * </pre>
  */
-public class ModalAddressesListDialogFragment extends BottomSheetDialogFragment {
+public class ModalAddressesListDialogFragment extends BottomSheetDialogFragment{
 
     // TODO: Customize parameter argument names
     private static final String USER_ID = "user_id";
     private  FragmentModalAddressesListDialogListDialogBinding binding;
     private SheetCallBack sheetCallBack;
     private AddressViewModel addressViewModel;
+    private PlaceOrderViewModel placeOrderViewModel;
+    private List<AddressResponse> addressResponseList;
 
     // TODO: Customize parameters
     public static ModalAddressesListDialogFragment newInstance(int userID) {
@@ -59,10 +64,14 @@ public class ModalAddressesListDialogFragment extends BottomSheetDialogFragment 
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.addressViewModel = getViewModel();
+        this.placeOrderViewModel = sheetCallBack.getParentViewModel();
     }
+
 
     public interface SheetCallBack{
         void dismissSheet();//return the chosen address's view/id
+        PlaceOrderViewModel getParentViewModel();
+        AddressResponse getAddressResponse();
     }
 
     public void setDialogCallBack(SheetCallBack sheetCallBack) {
@@ -83,7 +92,9 @@ public class ModalAddressesListDialogFragment extends BottomSheetDialogFragment 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("mnmn",binding.addressGroup.getSelectedItem().toString());
+                int selectedIndex = binding.addressGroup.getIndexOfSelectedItem();
+                AddressResponse addressResponse = ModalAddressesListDialogFragment.this.addressResponseList.get(selectedIndex);
+                ModalAddressesListDialogFragment.this.placeOrderViewModel.setAddressResponse(addressResponse);
                 sheetCallBack.dismissSheet();
             }
         });
@@ -110,10 +121,17 @@ UserInfo.getInstance().setUserId(5);
         mutableLiveData.observe(requireActivity(), new Observer<List<AddressResponse>>() {
             @Override
             public void onChanged(List<AddressResponse> addressResponses) {
+                addressResponseList = addressResponses;
                 binding.list.setAdapter(new ModalAddressesAdapter(addressResponses));
             }
         });
 
+    }
+
+    @Override
+    public void onDismiss(@NonNull DialogInterface dialog) {
+        super.onDismiss(dialog);
+        Log.d("mnmn","cnn");
     }
 
     private AddressViewModel getViewModel() {
@@ -160,7 +178,6 @@ UserInfo.getInstance().setUserId(5);
 
         ModalAddressesAdapter(List<AddressResponse> addresses) {
             this.addresses = addresses;
-
         }
 
         @NonNull

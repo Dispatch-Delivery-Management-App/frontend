@@ -22,4 +22,7 @@ public class AddressViewModel extends BaseViewModel<AddressListRepository> {
         MutableLiveData<List<AddressResponse>> addresses = repository.getAddresses(request);
         return addresses;
     }
+
+
+
 }
