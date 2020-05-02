@@ -98,9 +98,6 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
 
         View v =  inflater.inflate(R.layout.order_detail_fragment, container,
                 false);
-
-
-
         int ID = OrderDetailFragmentArgs.fromBundle(getArguments()).getOrderId();
         TextView orderID = (TextView) v.findViewById(R.id.OrderID_filling);
         TextView createdTime = (TextView) v.findViewById(R.id.create_time_filling);
@@ -109,6 +106,8 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
         TextView payment  = (TextView) v.findViewById(R.id.payment);
         TextView from_address = (TextView) v.findViewById(R.id.from_address_filling);
         TextView to_address = (TextView) v.findViewById(R.id.to_address_filling);
+
+
         TextView submit = v.findViewById(R.id.submit);
         RatingBar ratingBar = v.findViewById(R.id.rating);
         ratingBar.setMax(5);
@@ -117,6 +116,7 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
             RatingRequest request = new RatingRequest(ID, (int) ratingBar.getRating());
             goRating(request, ratingBar, submit);
         });
+
         Call<BaseResponse<OrderDetailResponse>> orderDetailResponse = apiService.postOrderDetail(new OrderDetailRequest(ID));
         orderDetailResponse.enqueue(new Callback<BaseResponse<OrderDetailResponse>>() {
             @Override
@@ -144,7 +144,50 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
                     String toAddress = response1.to_street + '\n' + response1.to_city +   '\n' + response1.to_state + " " + String.valueOf(response1.to_zipcode);
                     to_address.setText(toAddress);
                     ratingBar.setRating(response1.feedback);
+                }
+            }
+            @Override
+            public void onFailure(Call<BaseResponse<com.fullstack.frontend.Retro.OrderDetailResponse>> call, Throwable t) {
+                Log.d("test:::", "failed to load from server");
+            }
+        });
 
+
+        Button showButon = v.findViewById(R.id.showModal);
+        showButon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle args = new Bundle();
+                args.putString("ID", String.valueOf(ID));
+                BottomDetailFragment modalBottomsheet = new BottomDetailFragment();
+                Call<BaseResponse<OrderDetailResponse>> orderDetailResponse = apiService.postOrderDetail(new OrderDetailRequest(ID));
+        orderDetailResponse.enqueue(new Callback<BaseResponse<OrderDetailResponse>>() {
+            @Override
+            public void onResponse(Call<BaseResponse<OrderDetailResponse>> call, retrofit2.Response<BaseResponse<OrderDetailResponse>> response) {
+                if (response.isSuccessful()) {
+                    OrderDetailResponse response1 = response.body().response;
+                    orderID.setText(String.valueOf(response1.id));
+                    String times = String.valueOf(response1.create_time);
+                    String date = times.substring(0, 10);
+                    String time = times.substring(11,19);
+                    createdTime.setText(String.valueOf(date+" " + time));
+                    if(response1.status == 1){
+                        status.setText("Draft");
+                    } else  if(response1.status == 2){
+                        status.setText("NOT STARTED");
+                    } if(response1.status == 2){
+                        status.setText("SHIPPED");
+                    } if(response1.status == 3){
+                        status.setText("Completed");
+                    }
+                    category.setText(String.valueOf(response1.category));
+                    payment.setText(String.valueOf(response1.total_cost));
+                    String fromAddress = response1.from_street + '\n' + response1.from_city +   '\n' + response1.from_state + " " +String.valueOf(response1.from_zipcode);
+                    from_address.setText(fromAddress);
+                    String toAddress = response1.to_street + '\n' + response1.to_city +   '\n' + response1.to_state + " " + String.valueOf(response1.to_zipcode);
+                    to_address.setText(toAddress);
+
+                    ratingBar.setRating(response1.feedback);
 
                 }
             }
@@ -153,6 +196,26 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
                 Log.d("test:::", "failed to load from server");
             }
         });
+
+                args.putString("OrderID", (String) orderID.getText());
+                args.putString("createdTime", (String)createdTime.getText());
+                args.putString("status", (String)status.getText());
+
+                args.putString("category", (String)category.getText());
+                args.putString("payment", (String)payment.getText());
+                args.putString("from_address", (String)from_address.getText());
+                args.putString("to_address", (String)to_address.getText());
+
+
+
+                modalBottomsheet.setArguments(args);
+                modalBottomsheet.show(getFragmentManager(), "modalMenu");
+
+            }
+        });
+
+
+
         return v;
     }
 
@@ -233,6 +296,8 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
             }
         });
     }
+
+
     public void onMapReady(GoogleMap googleMap) {
 
         MapsInitializer.initialize(getContext());
@@ -294,13 +359,13 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
                              .defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
 
                     fromMarker.icon(BitmapDescriptorFactory
-                            .defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
+                            .defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
 
                     toMarker.icon(BitmapDescriptorFactory
-                            .defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
+                            .defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
 
                     stationMarker.icon(BitmapDescriptorFactory
-                            .defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
+                            .defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
 
 
                      googleMap.addMarker(marker);
@@ -367,6 +432,8 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
         double distance = currentLocation.distanceTo(destLocation);
 
         double inches = (39.370078 * distance);
+
+
         return Double.parseDouble(String.format(Locale.getDefault(), "%.3f", inches / 63360));
     }
 
