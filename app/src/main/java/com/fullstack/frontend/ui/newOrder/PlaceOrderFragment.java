@@ -142,7 +142,7 @@ public class PlaceOrderFragment extends Fragment implements AdapterView.OnItemSe
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                confirmButton.setEnabled(false);
                 // NewOrder order
                 GetPlansRequest request = viewModel.getRequest();
                 boolean dataValid = setPlaceOrderInfo(request);
@@ -170,7 +170,7 @@ public class PlaceOrderFragment extends Fragment implements AdapterView.OnItemSe
                         PlaceOrderFragmentDirections.PlaceToRecommend action = PlaceOrderFragmentDirections.placeToRecommend();
                         action.setReturnedPlans(plans1);
                         action.setReturnedRequest(request);
-
+                        confirmButton.setEnabled(true);
                         Navigation.findNavController(v).navigate(action);
                     }
                 });

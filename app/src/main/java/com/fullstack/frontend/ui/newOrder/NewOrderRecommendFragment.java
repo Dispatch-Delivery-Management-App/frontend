@@ -80,13 +80,15 @@ public class NewOrderRecommendFragment extends BaseFragment<NewOrderRecommendVie
         buttonConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    setRequest(request);
-                    viewModel.confirmOrder(request);
+                buttonConfirm.setEnabled(false);
+                setRequest(request);
+                viewModel.confirmOrder(request);
                 NewOrderRecommendFragmentDirections.RecommendToDetail action = NewOrderRecommendFragmentDirections.recommendToDetail();
                 viewModel.getOrder_id().observe(requireActivity(), new Observer<Integer>() {
                     @Override
                     public void onChanged(Integer integer) {
                         action.setOrderId(integer);
+                        buttonConfirm.setEnabled(true);
                         Navigation.findNavController(v).navigate(action);
                     }
                 });
