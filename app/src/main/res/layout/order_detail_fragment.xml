@@ -5,7 +5,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.tracking.OrderDetailFragment"
     android:layout_width="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/bottom_sheet">
     <!--    android:layout_width="match_parent"-->
 
 
@@ -13,25 +14,60 @@
         android:id="@+id/event_map_view"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="450dp"
+        android:layout_height="400dp"
         />
 <!--        android:layout_marginStart="43dp"-->
 <!--        android:layout_marginEnd="43dp" -->
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:orientation="horizontal"
+         android:textAlignment="gravity"
+         >
+
+         <TextView
+             android:id="@+id/status"
+             android:layout_width="200dp"
+             android:layout_height="wrap_content"
+             android:ems="10"
+             android:text="Order Status: "
+             android:textColor="@color/colorPrimary"
+             android:textAlignment="viewEnd"
+             android:textSize="20dp"
+             android:textStyle="bold" />
+             <TextView
+                 android:id="@+id/status_filling"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:ems="10"
+                 android:textSize="20dp"
+                 android:textStyle="bold"
+                 android:textColor="@color/colorPrimary"
+                 tools:layout_editor_absoluteX="16dp"
+                 tools:layout_editor_absoluteY="16dp" />
+
+     </LinearLayout>
+
+
+    <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/orderlist_padding">
 
             <TextView
                 android:id="@+id/OrderID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
+                android:fontFamily="@font/roboto_regular"
                 android:text="Order ID:"
-                android:textSize="18sp"
+                android:textSize="@dimen/order_detail_list"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="16dp" />
+
+
 
 
             <TextView
@@ -39,8 +75,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
+                android:fontFamily="@font/roboto_regular"
                 android:text="null"
-                android:textSize="18sp"
+                android:textSize="@dimen/order_detail_list"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="16dp" />
         </LinearLayout>
@@ -48,7 +85,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/orderlist_padding">
 
             <TextView
                 android:id="@+id/create_time"
@@ -56,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:text="placed at:"
-                android:textSize="18sp"
+                android:textSize="@dimen/order_detail_list"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="16dp" />
 
@@ -66,7 +104,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:text="null"
-                android:textSize="18sp"
+                android:textSize="@dimen/order_detail_list"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="16dp" />
 
@@ -75,32 +113,17 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/orderlist_padding">
 
-            <TextView
-                android:id="@+id/status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:text="Order Status:"
-                android:textSize="18sp"
-                tools:layout_editor_absoluteX="16dp"
-                tools:layout_editor_absoluteY="16dp" />
 
-            <TextView
-                android:id="@+id/status_filling"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:textSize="18sp"
-                tools:layout_editor_absoluteX="16dp"
-                tools:layout_editor_absoluteY="16dp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/orderlist_padding">
 
             <TextView
                 android:id="@+id/category"
@@ -108,7 +131,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:text="Package Category:"
-                android:textSize="18sp"
+                android:textSize="@dimen/order_detail_list"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="16dp" />
 
@@ -117,7 +140,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:textSize="18sp"
+                android:textSize="@dimen/order_detail_list"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="16dp" />
         </LinearLayout>
@@ -125,7 +148,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/orderlist_padding">
 
             <TextView
                 android:id="@+id/total_cost"
@@ -133,7 +157,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:text="Payment:"
-                android:textSize="18sp"
+                android:textSize="@dimen/order_detail_list"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="16dp" />
 
@@ -142,7 +166,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:textSize="18sp"
+                android:textSize="@dimen/order_detail_list"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="16dp" />
         </LinearLayout>
@@ -151,15 +175,17 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/orderlist_padding">
 
-            <TextView
+
+        <TextView
                 android:id="@+id/from_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:text="From:"
-                android:textSize="18sp"
+                android:textSize="@dimen/order_detail_list"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="16dp" />
 
@@ -169,7 +195,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:textSize="18sp"
+                android:textSize="@dimen/order_detail_list"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="16dp" />
         </LinearLayout>
@@ -178,7 +204,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/orderlist_padding">
 
 
             <TextView
@@ -187,7 +214,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:text="To:"
-                android:textSize="18sp"
+                android:textSize="@dimen/order_detail_list"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="16dp" />
 
@@ -196,7 +223,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:textSize="18sp"
+                android:textSize="@dimen/order_detail_list"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="16dp" />
 

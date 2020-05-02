@@ -16,7 +16,9 @@
         android:id="@+id/chooseAddressButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/myAddressesButton" />
+        android:text="@string/myAddressesButton"
+        android:textSize="@dimen/btn_size"
+        style="@style/Widget.MaterialComponents.Button.TextButton" />
 
     <LinearLayout
         android:layout_width="match_parent"

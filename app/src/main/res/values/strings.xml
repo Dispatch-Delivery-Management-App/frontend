@@ -35,7 +35,7 @@
     <string name="weight">Weight in Kg</string>
     <string name="type">Item Category</string>
     <string name="pack">Package Type</string>
-    <string name="window">When To Pick Up</string>
+    <string name="window">Pick Up Time</string>
 
     <string name="firstName">First Name</string>
     <string name="lastName">Last Name</string>
