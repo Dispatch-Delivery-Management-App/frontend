@@ -8,8 +8,11 @@ import androidx.annotation.NonNull;
 import com.fullstack.frontend.Retro.newOrder.AddressResponse;
 import com.fullstack.frontend.ui.newOrder.EnhancedRadioGroup;
 import com.fullstack.frontend.ui.newOrder.PlaceOrderFragment;
+import com.fullstack.frontend.ui.newOrder.PlaceOrderViewModel;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -38,14 +41,21 @@ public class ModalAddressesListDialogFragment extends BottomSheetDialogFragment 
     private static final String ARG_ITEM_COUNT = "item_count";
     private  FragmentModalAddressesListDialogListDialogBinding binding;
     private SheetCallBack sheetCallBack;
+    private AddressViewModel addressViewModel;
 
     // TODO: Customize parameters
-    public static ModalAddressesListDialogFragment newInstance(int itemCount) {
+    public static ModalAddressesListDialogFragment newInstance(int addressList) {
         final ModalAddressesListDialogFragment fragment = new ModalAddressesListDialogFragment();
         final Bundle args = new Bundle();
-        args.putInt(ARG_ITEM_COUNT, itemCount);
+        args.putInt(ARG_ITEM_COUNT, addressList);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        this.addressViewModel = getViewModel();
     }
 
     public interface SheetCallBack{
@@ -87,6 +97,24 @@ public class ModalAddressesListDialogFragment extends BottomSheetDialogFragment 
         recyclerView.setAdapter(new ModalAddressesAdapter(getArguments().getInt(ARG_ITEM_COUNT)));
     }
 
+    private AddressViewModel getViewModel() {
+        return new ViewModelProvider(requireActivity(), getFactory()).get(AddressViewModel.class);
+    }
+
+    private AddressListRepository getRepository() {
+        return new AddressListRepository();
+    }
+
+    private ViewModelProvider.Factory getFactory() {
+        return new ViewModelProvider.Factory() {
+            @NonNull
+            @Override
+            public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
+                return (T) new AddressViewModel(getRepository());
+            }
+        };
+    }
+
     private class ViewHolder extends RecyclerView.ViewHolder {
 
         final TextView first;
@@ -109,7 +137,7 @@ public class ModalAddressesListDialogFragment extends BottomSheetDialogFragment 
     private class ModalAddressesAdapter extends RecyclerView.Adapter<ViewHolder> {
 
         private final int mItemCount;
-        private final List<AddressResponse> addressResponseList;
+
 
         ModalAddressesAdapter(int itemCount) {
             mItemCount = itemCount;
