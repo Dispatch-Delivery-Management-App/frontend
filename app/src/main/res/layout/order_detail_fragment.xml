@@ -5,7 +5,7 @@
     tools:context=".ui.tracking.OrderDetailFragment"
     android:layout_width="match_parent"
     android:orientation="vertical">
-    <!--    android:layout_width="match_parent"-->
+    
 
 
     <com.google.android.gms.maps.MapView
@@ -30,6 +30,9 @@
             android:textSize="18sp"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="16dp" />
+
+
+
 
 
         <TextView
