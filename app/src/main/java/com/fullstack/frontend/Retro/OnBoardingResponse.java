@@ -7,6 +7,7 @@ public class OnBoardingResponse {
     private String email;
     private String password;
     private String cpassword;
+    private String error;
 
     public int getId() {
         return id;
@@ -48,4 +49,11 @@ public class OnBoardingResponse {
         this.cpassword = cpassword;
     }
 
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
 }

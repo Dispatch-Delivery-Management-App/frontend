@@ -1,6 +1,5 @@
 package com.fullstack.frontend.onboard.login;
 
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
@@ -48,15 +47,20 @@ public class LoginModel extends BaseRepository {
             public void onResponse(Call<BaseResponse<OnBoardingResponse>> call, Response<BaseResponse<OnBoardingResponse>> response) {
                 if (response.code() == 200) {
                     loginResponse.setValue(response.body().response);
-                } else {
-                    Log.d("TTT", "Invalid username or password");
+                } else  {
+
                 }
             }
 
             @Override
             public void onFailure(Call<BaseResponse<OnBoardingResponse>> call, Throwable t) {
+                onBoardingResponse.setError(t.getMessage());
+                loginResponse.setValue(onBoardingResponse);
             }
+
         });
+
         return loginResponse;
+
     }
 }
