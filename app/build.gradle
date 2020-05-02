@@ -85,7 +85,6 @@ dependencies {
 //recycleview
 
 
-
     implementation 'androidx.recyclerview:recyclerview:1.2.0-alpha02'
 
     // implementation 'com.google.firebase:firebase-database:19.2.1'
@@ -100,3 +99,4 @@ dependencies {
 }
 
 apply plugin: 'com.google.gms.google-services'  // Google Play services Gradle plugin
+

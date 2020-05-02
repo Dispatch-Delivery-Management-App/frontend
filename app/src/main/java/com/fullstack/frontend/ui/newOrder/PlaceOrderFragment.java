@@ -25,16 +25,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.ashokvarma.gander.Gander;
-import com.ashokvarma.gander.imdb.GanderIMDB;
-import com.ashokvarma.gander.persistence.GanderPersistence;
 import com.fullstack.frontend.R;
-import com.fullstack.frontend.Retro.GetPlansRequest;
-import com.fullstack.frontend.Retro.MyApp;
-import com.fullstack.frontend.Retro.Plan;
+import com.fullstack.frontend.Retro.newOrder.GetPlansRequest;
+import com.fullstack.frontend.Retro.newOrder.Plan;
 import com.fullstack.frontend.base.BaseFragment;
 import com.fullstack.frontend.config.UserInfo;
 import com.fullstack.frontend.databinding.PlaceOrderFragmentBinding;
+import com.fullstack.frontend.ui.address.ModalAddressesListDialogFragment;
 
 import java.util.List;
 
@@ -90,10 +87,19 @@ public class PlaceOrderFragment extends BaseFragment<PlaceOrderViewModel, PlaceO
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        Button fromAddressBookButton = binding.fromAddForm.chooseAddressButton;
+        Button toAddressBookButton = binding.toAddForm.chooseAddressButton;
+
+        fromAddressBookButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ModalAddressesListDialogFragment.newInstance(30).show((requireActivity()).getSupportFragmentManager(), "dialog");
+            }
+        });
+
 
         //Next Step Button
-        Button confirmButton = getActivity().findViewById(R.id.button_showRecommend);
-
+        Button confirmButton = binding.buttonShowRecommend;
         //Click Button Next Step
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,7 +108,7 @@ public class PlaceOrderFragment extends BaseFragment<PlaceOrderViewModel, PlaceO
                 // NewOrder order
                 GetPlansRequest request = new GetPlansRequest();
                 boolean dataValid = setPlaceOrderInfo(request);
-                request.user_id= UserInfo.getUser_id();
+                request.user_id= UserInfo.getInstance().getUserId();
     request.order_status=2;
     request.fromAddress.street="1000 W Maude Ave";
     request.fromAddress.city="Sunnyvale";

@@ -3,6 +3,7 @@ package com.fullstack.frontend.ui.tracking;
 import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,6 +13,8 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import android.util.Log;
+import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +29,7 @@ import com.fullstack.frontend.Retro.OrderDetailRequest;
 import com.fullstack.frontend.Retro.OrderDetailResponse;
 import com.fullstack.frontend.Retro.OrderMapRequest;
 import com.fullstack.frontend.Retro.OrderMapResponse;
+import com.fullstack.frontend.Retro.RatingRequest;
 import com.fullstack.frontend.Retro.Response;
 import com.fullstack.frontend.databinding.OrderDetailFragmentBinding;
 
@@ -49,11 +53,14 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.http.Body;
@@ -64,6 +71,7 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
         GoogleMap.OnPolygonClickListener  {
 
     private MapView mapView;
+    private final ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
     private View v;
     double latitude;
     double longitude;
@@ -101,9 +109,14 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
         TextView payment  = (TextView) v.findViewById(R.id.payment);
         TextView from_address = (TextView) v.findViewById(R.id.from_address_filling);
         TextView to_address = (TextView) v.findViewById(R.id.to_address_filling);
+        TextView submit = v.findViewById(R.id.submit);
+        RatingBar ratingBar = v.findViewById(R.id.rating);
+        ratingBar.setMax(5);
 
-
-        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        submit.setOnClickListener(v1 -> {
+            RatingRequest request = new RatingRequest(ID, (int) ratingBar.getRating());
+            goRating(request, ratingBar, submit);
+        });
         Call<BaseResponse<OrderDetailResponse>> orderDetailResponse = apiService.postOrderDetail(new OrderDetailRequest(ID));
         orderDetailResponse.enqueue(new Callback<BaseResponse<OrderDetailResponse>>() {
             @Override
@@ -125,11 +138,13 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
                         status.setText("Completed");
                     }
                     category.setText(String.valueOf(response1.category));
-                    payment.setText(String.valueOf(response1.totalCost));
+                    payment.setText(String.valueOf(response1.total_cost));
                     String fromAddress = response1.from_street + '\n' + response1.from_city +   '\n' + response1.from_state + " " +String.valueOf(response1.from_zipcode);
                     from_address.setText(fromAddress);
                     String toAddress = response1.to_street + '\n' + response1.to_city +   '\n' + response1.to_state + " " + String.valueOf(response1.to_zipcode);
                     to_address.setText(toAddress);
+                    ratingBar.setRating(response1.feedback);
+
 
                 }
             }
@@ -204,7 +219,20 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
     }
 
 
+    private void goRating(RatingRequest request, RatingBar ratingBar, TextView submit) {
+        Call<BaseResponse<String>> rating = apiService.goRating(request);
+        rating.enqueue(new Callback<BaseResponse<String>>() {
+            @Override
+            public void onResponse(Call<BaseResponse<String>> call, retrofit2.Response<BaseResponse<String>> response) {
+                Toast.makeText(getContext(), "Submit Feedback Successfully", Toast.LENGTH_SHORT).show();
+            }
 
+            @Override
+            public void onFailure(Call<BaseResponse<String>> call, Throwable t) {
+
+            }
+        });
+    }
     public void onMapReady(GoogleMap googleMap) {
 
         MapsInitializer.initialize(getContext());
@@ -281,9 +309,9 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
                     googleMap.addMarker(toMarker);
 
 
-
+//                    int zoomLevel = getZoomLevel();
                     CameraPosition cameraPosition = new CameraPosition.Builder()
-                            .target(new LatLng(latitude, longitude)).zoom(10).build();
+                            .target(new LatLng(latitude, longitude)).zoom(8).build();
 
                     googleMap.animateCamera(CameraUpdateFactory
                             .newCameraPosition(cameraPosition));
@@ -319,6 +347,27 @@ public class OrderDetailFragment extends Fragment implements OnMapReadyCallback,
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude), 10));
         googleMap.setOnPolylineClickListener(this);
 
+    }
+
+//    private int getZoomLevel() {
+//        LatLng start = new LatLng(first.get(0).lat,first.get(0).lng);
+//        int size = second.size();
+//        LatLng end = new LatLng(second.get(size-1).lat,second.get(size-1).lng);
+//        double distance = distanceBetweenTwoLocations(start, end);
+//        return (int) (Math.sqrt(distance) / 2.5);
+//    }
+
+    public static double distanceBetweenTwoLocations(LatLng currentLat, LatLng destinationLatLng) {
+        Location currentLocation = new Location(LocationManager.GPS_PROVIDER);
+        currentLocation.setLatitude(currentLat.latitude);
+        currentLocation.setLongitude(currentLat.longitude);
+        Location destLocation = new Location(LocationManager.GPS_PROVIDER);
+        destLocation.setLatitude(destinationLatLng.latitude);
+        destLocation.setLongitude(destinationLatLng.longitude);
+        double distance = currentLocation.distanceTo(destLocation);
+
+        double inches = (39.370078 * distance);
+        return Double.parseDouble(String.format(Locale.getDefault(), "%.3f", inches / 63360));
     }
 
 

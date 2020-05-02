@@ -1,13 +1,23 @@
 package com.fullstack.frontend.config;
 
+// wrong usage. SharePreference or separate class to save user info
 public class UserInfo {
-    private static int user_id = 0;
+    private int userId;
 
-    public static void setUser_id(int user_id) {
-        UserInfo.user_id = user_id;
+    private static UserInfo instance;
+
+    public static UserInfo getInstance() {
+        if (instance == null) {
+            instance = new UserInfo();
+        }
+        return instance;
     }
 
-    public static int getUser_id() {
-        return user_id;
+    public void setUserId(int userId) {
+       this.userId = userId;
+    }
+
+    public int getUserId() {
+        return userId;
     }
 }

@@ -110,10 +110,8 @@ public class LoginFragment extends BaseFragment<LoginViewModel, LoginModel> impl
     @Override
     public void onSuccess(LiveData<OnBoardingResponse> loginResponse) {
         loginResponse.observe(this, it -> {
-            UserInfo.setUser_id(it.getId());
-            Log.d("11", "set user id: " + UserInfo.getUser_id());
+            UserInfo.getInstance().setUserId(it.getId());
             Toast.makeText(getActivity(), "Login Successfully!", Toast.LENGTH_SHORT).show();
-
 
             FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
                 @Override
@@ -124,8 +122,7 @@ public class LoginFragment extends BaseFragment<LoginViewModel, LoginModel> impl
 
                     ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
                     //Log.d(TAG, "user id:" + UserInfo.getUser_id());
-                    TokenRequest request = new TokenRequest(UserInfo.getUser_id(), instanceIdResult.getToken());
-                    Log.d("11", "user id: " + UserInfo.getUser_id() + "token: " + instanceIdResult.getToken());
+                    TokenRequest request = new TokenRequest(UserInfo.getInstance().getUserId(), instanceIdResult.getToken());
                     Call<BaseResponse> postToken = apiService.postToken(request);
                     postToken.enqueue(new Callback<BaseResponse>() {
                         @RequiresApi(api = Build.VERSION_CODES.N)

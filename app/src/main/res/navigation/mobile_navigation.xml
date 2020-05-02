@@ -51,12 +51,12 @@
             <argument android:name="returnedPlans"
                 android:defaultValue="@null"
                 app:nullable="true"
-                app:argType="com.fullstack.frontend.Retro.Plan[]"/>
+                app:argType="com.fullstack.frontend.Retro.newOrder.Plan[]"/>
 
             <argument android:name="returnedRequest"
                 android:defaultValue="@null"
                 app:nullable="true"
-                app:argType="com.fullstack.frontend.Retro.GetPlansRequest"/>
+                app:argType="com.fullstack.frontend.Retro.newOrder.GetPlansRequest"/>
 
         </action>
 
@@ -71,16 +71,21 @@
 
         <argument android:name="returnedPlans"
             app:nullable="false"
-            app:argType="com.fullstack.frontend.Retro.Plan[]"/>
+            app:argType="com.fullstack.frontend.Retro.newOrder.Plan[]"/>
 
         <argument android:name="returnedRequest"
             android:defaultValue="@null"
             app:nullable="true"
-            app:argType="com.fullstack.frontend.Retro.GetPlansRequest"/>
+            app:argType="com.fullstack.frontend.Retro.newOrder.GetPlansRequest"/>
 
         <action
             android:id="@+id/recommend_to_detail"
-            app:destination="@+id/nav_detail"/>
+            app:destination="@+id/nav_detail">
+            <argument
+                android:name="orderId"
+                app:argType="integer"
+                android:defaultValue="0" />
+        </action>
     </fragment>
 
     <fragment
@@ -111,11 +116,7 @@
         android:id="@+id/onBoardingFragment"
         android:name="com.fullstack.frontend.onboard.OnBoardingFragment"
         android:label="OnBoardingFragment" />
-    <activity
-        android:id="@+id/onBoardingActivity"
-        android:name="com.fullstack.frontend.OnBoardingActivity"
-        android:label="activity_on_boarding"
-        tools:layout="@layout/activity_on_boarding" />
+
 
 
 </navigation>

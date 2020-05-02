@@ -3,12 +3,10 @@ package com.fullstack.frontend.ui.newOrder;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
-import com.fullstack.frontend.Retro.GetPlansRequest;
-import com.fullstack.frontend.Retro.Plan;
+import com.fullstack.frontend.Retro.newOrder.GetPlansRequest;
+import com.fullstack.frontend.Retro.newOrder.Plan;
 import com.fullstack.frontend.base.BaseViewModel;
 import com.fullstack.frontend.config.PackageCategory;
 
@@ -27,12 +25,11 @@ public class PlaceOrderViewModel extends BaseViewModel<PlaceOrderRepository> {
 
     // TODO: Implement the ViewModel
     public void postOrder(GetPlansRequest request){
-         repository.getPlans(request,exposedPlans);//以mutableLiveData exposedPlans拿到response
-
+         repository.getPlans(request,exposedPlans);
     }
 
     public MutableLiveData<List<Plan>> getReturnedPlans(){
-        return exposedPlans;//发给fragment,   fragment再以argument传给下一个fragment
+        return exposedPlans;
          }
 
 

@@ -47,6 +47,14 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.LinearView
 //        holder.total_cost.setText(String.valueOf("Total Cost: " + searchResponse.total_cost));
 //        holder.tracking_id.setText(String.valueOf("Tracking Id: " + searchResponse.tracking_id));
 
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onSearchItemListener.onItemClick(searchResponse.id);
+            }
+        });
+
     }
 
     @Override
@@ -78,21 +86,16 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.LinearView
 //            this.onSearchItemClickListener = onSearchItemListener;
 //            itemView.setOnClickListener(this);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onSearchItemListener.onItemClick(v);
-                }
-            });
+
         }
     }
 
     public interface OnSearchItemListener {
-        void onItemClick(View v);
+        void onItemClick(int id);
 //        void onItemClick(int position, SearchAdapter adapter, View itemView);
     }
 
-    private OnSearchItemListener onSearchItemListener = null;
+    private OnSearchItemListener onSearchItemListener;
 
     public void setOnSearchItemListener(OnSearchItemListener onSearchItemListener) {
         this.onSearchItemListener = onSearchItemListener;

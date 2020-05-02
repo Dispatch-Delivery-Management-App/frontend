@@ -23,13 +23,7 @@ public class ManageAddressFragment extends Fragment {
         addressViewModel =
                 ViewModelProviders.of(this).get(AddressViewModel.class);
         View root = inflater.inflate(R.layout.fragment_address, container, false);
-        final TextView textView = root.findViewById(R.id.text_gallery);
-        addressViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+
         return root;
     }
 }

@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.tracking.Map">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.tracking.Map"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -12,6 +14,14 @@
         android:layout_width="match_parent"
         android:layout_height="413dp" />
 
-    <include layout="@layout/order_detail_fragment"/>
 
+        <include layout="@layout/order_detail_fragment"/>
+<!--    <Button-->
+<!--        android:id="@+id/btn_bottom_sheet_dialog_fragment"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="bottom"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:text="Show Bottom Sheet Dialog Fragment"-->
+<!--        android:visibility="gone" />-->
 </FrameLayout>
