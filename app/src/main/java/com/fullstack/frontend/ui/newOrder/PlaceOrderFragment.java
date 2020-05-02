@@ -110,14 +110,14 @@ public class PlaceOrderFragment extends BaseFragment<PlaceOrderViewModel, PlaceO
                 boolean dataValid = setPlaceOrderInfo(request);
                 request.user_id= UserInfo.getUser_id();
     request.order_status=2;
-    request.fromAddress.street="1000 W Maude Ave";
-    request.fromAddress.city="Sunnyvale";
-    request.fromAddress.state="CA";
-    request.toAddress.street="1200 Getty Center Dr";
-    request.toAddress.city="Los Angeles";
-    request.toAddress.state="CA";
-    request.item_info="Linggg's order";
-    request.packageWeight=8.0;
+//    request.fromAddress.street="1000 W Maude Ave";
+//    request.fromAddress.city="Sunnyvale";
+//    request.fromAddress.state="CA";
+//    request.toAddress.street="1200 Getty Center Dr";
+//    request.toAddress.city="Los Angeles";
+//    request.toAddress.state="CA";
+//    request.item_info="Linggg's order";
+//    request.packageWeight=8.0;
                 if (!dataValid){
                     return;
                 }
