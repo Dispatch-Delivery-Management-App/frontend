@@ -46,4 +46,6 @@ public interface ApiInterface {
     @POST("/api/address-list/")
     Call<BaseResponse<List<AddressResponse>>> getAddressList(@Body AddressListRequest addressListRequest);
 
+    @POST("/api/feedback/")
+    Call<BaseResponse<String>> goRating(@Body RatingRequest request);
 }

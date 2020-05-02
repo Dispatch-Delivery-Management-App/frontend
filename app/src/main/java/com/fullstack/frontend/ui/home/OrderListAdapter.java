@@ -50,9 +50,8 @@ public class OrderListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         this.orderResponses.clear();
         this.orderResponses.addAll(orders);
 
-        int i = 1;
+        int i = 0;
         int j = 0;
-        itemHashmap.put(0, "Draft");
         while(j < orderResponses.size() && orderResponses.get((j)).status < 2){
             itemHashmap.put(i, orderResponses.get(j));
             i++;
