@@ -4,7 +4,9 @@
     android:layout_height="wrap_content"
 
     android:orientation="vertical"
-    android:padding="18dp">
+    android:paddingTop="18dp"
+    android:paddingHorizontal="18dp"
+    android:paddingBottom="2dp">
 
     <TextView
         android:id="@+id/status_view"
@@ -15,11 +17,10 @@
         android:textStyle="bold" />
 
 
-    <!--    <Button
-        android:id="@+id/btn_detail"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="36dp"
-        android:text="Detail"
-        android:textSize="14dp" />-->
+        android:layout_height="1dp"
+        android:paddingHorizontal="18dp"
+        android:background="#DDEFE8"/>
 
 </LinearLayout>
