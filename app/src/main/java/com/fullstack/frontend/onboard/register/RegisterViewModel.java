@@ -37,20 +37,22 @@ public class RegisterViewModel extends BaseViewModel<RegisterModel> {
         final String password = repository.getPassword();
 //        final String cpassword = repository.getcPassword();
         if (username == null) {
-            remoteRequestListener.onFailure("please enter user Name");
+            remoteRequestListener.onFailure("please enter user name");
             return;
-        } else if (email == null || !Util.isValidEmail(email)) {
+        }
+        if (email == null || !Util.isValidEmail(email)) {
             remoteRequestListener.onFailure("please enter a valid email");
             return;
-        } else if (password.isEmpty()) {
+        }
+        if (password.isEmpty()) {
             remoteRequestListener.onFailure("please enter password");
             return;
 //        } else if (cpassword != password) {
 //            remoteRequestListener.onFailure("password doesn't match");
 //            return;
-        } else {
-            remoteRequestListener.onSuccess(repository.userRegister());
         }
+        remoteRequestListener.onSuccess(repository.userRegister());
+
     }
 }
 
