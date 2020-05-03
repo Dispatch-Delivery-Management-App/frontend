@@ -7,6 +7,8 @@
 <!--    app:startDestination="@+id/onBoardingFragment">-->
 
 
+
+
     <action
         android:id="@+id/any_to_detail"
         app:destination="@id/nav_detail"/>
