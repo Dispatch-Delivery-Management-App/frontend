@@ -84,7 +84,7 @@ public class NewOrderRecommendFragment extends BaseFragment<NewOrderRecommendVie
                 setRequest(request);
                 viewModel.confirmOrder(request);
                 NewOrderRecommendFragmentDirections.RecommendToDetail action = NewOrderRecommendFragmentDirections.recommendToDetail();
-                viewModel.getOrder_id().observe(requireActivity(), new Observer<Integer>() {
+                viewModel.getOrder_id().observe(getViewLifecycleOwner(), new Observer<Integer>() {
                     @Override
                     public void onChanged(Integer integer) {
                         action.setOrderId(integer);
