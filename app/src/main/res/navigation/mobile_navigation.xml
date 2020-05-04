@@ -117,6 +117,4 @@
         android:name="com.fullstack.frontend.onboard.OnBoardingFragment"
         android:label="OnBoardingFragment" />
 
-
-
 </navigation>
