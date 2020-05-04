@@ -1,4 +1,6 @@
 # Frontend
+This is an Android app that can order and track packages delivering services for customers in California at their scheduled time. 
+
 ## Presentation slides:
 https://docs.google.com/presentation/d/1rspKmpVs7FOaXxPvJMCCxmZBRLXfyqtdlF3PeNhVveg/edit#slide=id.p
 
